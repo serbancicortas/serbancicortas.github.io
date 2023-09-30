@@ -29,6 +29,12 @@ You can contact me at: cicortas [at] princeton.edu
 "2." Scattering for the Wave Equation on de Sitter Space in All Even Spatial Dimensions, submitted, [arXiv:2309.07342](https://arxiv.org/abs/2309.07342)
 
 (1.) Extensions of Lorentzian Hawking--Page Solutions with Null Singularities, Spacelike Singularities, and Cauchy horizons of Taub--NUT type, submitted, [arXiv:2209.06134](https://arxiv.org/abs/2209.06134)
+
+<ol reversed>
+  <li>Coffee</li>
+  <li>Tea</li>
+  <li>Milk</li>
+</ol>
  
 
 ## Talks
@@ -39,11 +45,12 @@ Princeton Graduate Student Seminar, February 2023
 
 ## Resume
 
-*_PhD in Mathematics_, **Princeton University**, September 2021 - Present
+* _PhD in Mathematics_, **Princeton University**, September 2021 - Present
 Advisor: [Igor Rodnianski](https://www.math.princeton.edu/people/igor-rodnianski)
 
-*_Master of Advanced Study in Pure Mathematics_, **University of Cambridge, Trinity College**, October 2020 - July 2021
+* _Master of Advanced Study in Pure Mathematics_, **University of Cambridge, Trinity College**, October 2020 - July 2021
 Part III Essay: The Existence of Naked Singularities and Their Instability (supervised by [Mihalis Dafermos](https://web.math.princeton.edu/~dafermos/))
+
 
 Here is my complete resume.
 
