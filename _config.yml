@@ -7,7 +7,7 @@
 
 # Site Settings
 locale                   : "en-US"
-title                    : "Serban Cicortas' Academic Page"
+title                    : "Serban Cicortas"
 title_separator          : "-"
 name                     : &name "Serban Cicortas"
 description              : &description "personal description"
