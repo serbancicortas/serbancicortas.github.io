@@ -32,20 +32,17 @@ My research interests are partial differential equations, general relativity, an
 
 ### _PhD in Mathematics_, **Princeton University**, September 2021 - Present
 
-* _PhD in Mathematics_, **Princeton University**, September 2021 - Present
-  
 Advisor: [Igor Rodnianski](https://www.math.princeton.edu/people/igor-rodnianski)
 
-* _Master of Advanced Study in Pure Mathematics_, **University of Cambridge, Trinity College**, October 2020 - July 2021
-  
-Part III Essay: [The Existence of Naked Singularities and Their Instability](https://serbancicortas.github.io/files/Weak Cosmic Censorship for Einstein Scalar Field in Spherical Symmetry.pdf) (supervised by [Mihalis Dafermos](https://web.math.princeton.edu/~dafermos/))
+### _Master of Advanced Study in Pure Mathematics_, **University of Cambridge, Trinity College**, October 2020 - July 2021
 
-* _Bachelor of Arts in Mathematics_, **Princeton University**, Princeton University
-  
+Part III Essay: [The Existence of Naked Singularities and Their Instability](https://serbancicortas.github.io/files/WCC.pdf) (supervised by [Mihalis Dafermos](https://web.math.princeton.edu/~dafermos/))
+
+### _Bachelor of Arts in Mathematics_, **Princeton University**, Princeton University
+
 Senior Thesis: [Global Stability for Weak Null Wave Equations with Multi-localized Initial Data](https://dataspace.princeton.edu/handle/88435/dsp01xk81jp40j).
 
 Advisor: [Sergiu Klainerman](https://web.math.princeton.edu/~seri/homepage/)
-
 
 Here is my complete [resume](https://serbancicortas.github.io/files/Resume_Updated.pdf).
 
