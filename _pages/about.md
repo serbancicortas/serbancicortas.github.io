@@ -21,13 +21,7 @@ My research interests are partial differential equations, general relativity, an
 2. Scattering for the Wave Equation on de Sitter Space in All Even Spatial Dimensions, submitted, [arXiv:2309.07342](https://arxiv.org/abs/2309.07342)
 1. Extensions of Lorentzian Hawking--Page Solutions with Null Singularities, Spacelike Singularities, and Cauchy horizons of Taub--NUT type, submitted, [arXiv:2209.06134](https://arxiv.org/abs/2209.06134)
 {: reversed="reversed"}
-
-<ol reversed>
-  <li> Scattering for the Wave Equation on de Sitter Space in All Even Spatial Dimensions, submitted, [arXiv:2309.07342](https://arxiv.org/abs/2309.07342) </li>
-  <li> Extensions of Lorentzian Hawking--Page Solutions with Null Singularities, Spacelike Singularities, and Cauchy horizons of Taub--NUT type, submitted, [arXiv:2209.06134](https://arxiv.org/abs/2209.06134) </li>
-</ol>
  
-
 ## Talks
 
 * Mathematical GR and Hyperbolic PDE Seminar, online talk, March 2023
@@ -35,6 +29,8 @@ My research interests are partial differential equations, general relativity, an
 * Princeton Graduate Student Seminar, February 2023
 
 ## Resume
+
+# _PhD in Mathematics_, **Princeton University**, September 2021 - Present
 
 * _PhD in Mathematics_, **Princeton University**, September 2021 - Present
   
