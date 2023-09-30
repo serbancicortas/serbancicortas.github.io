@@ -14,7 +14,7 @@ UNDER CONSTRUCTION
 
 I am a 3rd year PhD student in the [Mathematics Department](https://www.math.princeton.edu/) at Princeton University. My advisor is [Igor Rodnianski](https://www.math.princeton.edu/people/igor-rodnianski).
 
-Partial Differential Equations, General Relativity, Nonlinear Wave Equations
+My research intersts are partial differential equations, general relativity, and nonlinear wave equations. I am currently working on ...
 
 ## Publications
 bbb
