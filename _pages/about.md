@@ -34,7 +34,7 @@ My research interests are partial differential equations, general relativity, an
 
 Advisor: [Igor Rodnianski](https://www.math.princeton.edu/people/igor-rodnianski)
 
-### MASt in Pure Mathematics, University of Cambridge, Trinity College, October 2020 - July 2021
+### MASt in Mathematics, University of Cambridge, Trinity College, October 2020 - July 2021
 
 Part III Essay: [The Existence of Naked Singularities and Their Instability](https://serbancicortas.github.io/files/WCC.pdf) 
 (supervised by [Mihalis Dafermos](https://web.math.princeton.edu/~dafermos/))
