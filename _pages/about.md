@@ -16,8 +16,12 @@ I am a 3rd year PhD student in the [Mathematics Department](https://www.math.pri
 
 My research interests are partial differential equations, general relativity, and nonlinear wave equations. I am currently working on self similar solutions of the Einstein vacuum equations. I am also interested in the weak cosmic censorship conjecture and examples of naked singularities.
 
+## Contact
+
+You can contact me at: cicortas [at] princeton.edu
+
 <address>
-  1 Infinite Loop<br /> Cupertino, CA 95014<br /> United States
+  Fine Hall A02<br /> Washington Rd<br /> Princeton, NJ 08544
 </address>
 
 ## Publications
