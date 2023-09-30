@@ -38,7 +38,7 @@ Advisor: [Igor Rodnianski](https://www.math.princeton.edu/people/igor-rodnianski
 
 * _Master of Advanced Study in Pure Mathematics_, **University of Cambridge, Trinity College**, October 2020 - July 2021
   
-Part III Essay: The Existence of Naked Singularities and Their Instability (supervised by [Mihalis Dafermos](https://web.math.princeton.edu/~dafermos/))
+Part III Essay: [The Existence of Naked Singularities and Their Instability](https://serbancicortas.github.io/files/Weak Cosmic Censorship for Einstein Scalar Field in Spherical Symmetry.pdf) (supervised by [Mihalis Dafermos](https://web.math.princeton.edu/~dafermos/))
 
 * _Bachelor of Arts in Mathematics_, **Princeton University**, Princeton University
   
