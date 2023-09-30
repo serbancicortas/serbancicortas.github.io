@@ -30,7 +30,8 @@ Mathematical GR and Hyperbolic PDE Seminar, online talk, March 2023
 Princeton Graduate Student Seminar, February 2023
 
 ## Resume
-bbb
+
+PhD in Mathematics, Princeton University, 
 
 Here is my complete resume.
 
