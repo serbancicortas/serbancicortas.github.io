@@ -34,17 +34,15 @@ My research interests are partial differential equations, general relativity, an
 
 Advisor: [Igor Rodnianski](https://www.math.princeton.edu/people/igor-rodnianski)
 
-### _Master of Advanced Study in Pure Mathematics_, **University of Cambridge, Trinity College**, October 2020 - July 2021
+### _MASt in Pure Mathematics_, **University of Cambridge, Trinity College**, October 2020 - July 2021
 
 Part III Essay: [The Existence of Naked Singularities and Their Instability](https://serbancicortas.github.io/files/WCC.pdf) 
+(supervised by [Mihalis Dafermos](https://web.math.princeton.edu/~dafermos/))
 
-Advisor: [Mihalis Dafermos](https://web.math.princeton.edu/~dafermos/)
-
-### _Bachelor of Arts in Mathematics_, **Princeton University**, Princeton University, September 2016 - June 2020
+### _BA in Mathematics_, **Princeton University**, Princeton University, September 2016 - June 2020
 
 Senior Thesis: [Global Stability for Weak Null Wave Equations with Multi-localized Initial Data](http://arks.princeton.edu/ark:/88435/dsp01xk81jp40j).
-
-Advisor: [Sergiu Klainerman](https://web.math.princeton.edu/~seri/homepage/)
+(advised by [Sergiu Klainerman](https://web.math.princeton.edu/~seri/homepage/))
 
 Here is my complete [resume](https://serbancicortas.github.io/files/Resume_Updated.pdf).
 
