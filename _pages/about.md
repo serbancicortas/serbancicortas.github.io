@@ -26,6 +26,7 @@ My research interests are partial differential equations, general relativity, an
 ## Talks
 
 Mathematical GR and Hyperbolic PDE Seminar, online talk, March 2023
+
 Princeton Graduate Student Seminar, February 2023
 
 ## Resume
