@@ -28,7 +28,7 @@ My research interests are partial differential equations, general relativity, an
 
 * Princeton Graduate Student Seminar, February 2023
 
-## Resume
+## Education
 
 ### _PhD in Mathematics_, **Princeton University**, September 2021 - Present
 
