@@ -40,7 +40,7 @@ Part III Essay: [The Existence of Naked Singularities and Their Instability](htt
 
 ### _Bachelor of Arts in Mathematics_, **Princeton University**, Princeton University
 
-Senior Thesis: [Global Stability for Weak Null Wave Equations with Multi-localized Initial Data](https://dataspace.princeton.edu/handle/88435/dsp01xk81jp40j).
+Senior Thesis: [Global Stability for Weak Null Wave Equations with Multi-localized Initial Data](http://arks.princeton.edu/ark:/88435/dsp01xk81jp40j).
 
 Advisor: [Sergiu Klainerman](https://web.math.princeton.edu/~seri/homepage/)
 
