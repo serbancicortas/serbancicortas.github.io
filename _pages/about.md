@@ -16,6 +16,10 @@ I am a 3rd year PhD student in the [Mathematics Department](https://www.math.pri
 
 My research interests are partial differential equations, general relativity, and nonlinear wave equations. I am currently working on self similar solutions of the Einstein vacuum equations. I am also interested in the weak cosmic censorship conjecture and examples of naked singularities.
 
+<address>
+  1 Infinite Loop<br /> Cupertino, CA 95014<br /> United States
+</address>
+
 ## Publications
 
 "2." Scattering for the Wave Equation on de Sitter Space in All Even Spatial Dimensions, submitted, [arXiv:2309.07342](https://arxiv.org/abs/2309.07342)
@@ -31,7 +35,7 @@ Princeton Graduate Student Seminar, February 2023
 
 ## Resume
 
-PhD in Mathematics, Princeton University, 
+*_PhD in Mathematics_, Princeton University, 
 
 Here is my complete resume.
 
