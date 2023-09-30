@@ -30,9 +30,9 @@ My research interests are partial differential equations, general relativity, an
 
 ## Talks
 
-Mathematical GR and Hyperbolic PDE Seminar, online talk, March 2023
+* Mathematical GR and Hyperbolic PDE Seminar, online talk, March 2023
 
-Princeton Graduate Student Seminar, February 2023
+* Princeton Graduate Student Seminar, February 2023
 
 ## Resume
 
@@ -43,6 +43,12 @@ Advisor: [Igor Rodnianski](https://www.math.princeton.edu/people/igor-rodnianski
 * _Master of Advanced Study in Pure Mathematics_, **University of Cambridge, Trinity College**, October 2020 - July 2021
   
 Part III Essay: The Existence of Naked Singularities and Their Instability (supervised by [Mihalis Dafermos](https://web.math.princeton.edu/~dafermos/))
+
+* _Bachelor of Arts in Mathematics_, **Princeton University**, Princeton University
+  
+Senior Thesis: [Global Stability for Weak Null Wave Equations with Multi-localized Initial Data](https://dataspace.princeton.edu/handle/88435/dsp01xk81jp40j).
+
+Advisor: [Sergiu Klainerman](https://web.math.princeton.edu/~seri/homepage/)
 
 
 Here is my complete resume.
