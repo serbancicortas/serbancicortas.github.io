@@ -30,7 +30,7 @@ My research interests are partial differential equations, general relativity, an
 
 ## Resume
 
-# _PhD in Mathematics_, **Princeton University**, September 2021 - Present
+### _PhD in Mathematics_, **Princeton University**, September 2021 - Present
 
 * _PhD in Mathematics_, **Princeton University**, September 2021 - Present
   
@@ -47,7 +47,7 @@ Senior Thesis: [Global Stability for Weak Null Wave Equations with Multi-localiz
 Advisor: [Sergiu Klainerman](https://web.math.princeton.edu/~seri/homepage/)
 
 
-Here is my complete resume.
+Here is my complete [resume](https://serbancicortas.github.io/files/Resume_Updated.pdf).
 
 ## Seminar
 I organize the weekly Princeton-Cambridge Joint General Relativity Seminar. Please contact me if you would like to join the seminar.
