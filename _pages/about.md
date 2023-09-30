@@ -10,24 +10,20 @@ redirect_from:
 
 UNDER CONSTRUCTION
 
-About me
-======
+## About me
 
 I am a 3rd year PhD student in the [Mathematics Department](https://www.math.princeton.edu/) at Princeton University. My advisor is [Igor Rodnianski](https://www.math.princeton.edu/people/igor-rodnianski).
 
 Partial Differential Equations, General Relativity, Nonlinear Wave Equations
 
-Research
-======
+## Publications
 
-### Header three
+## Talks
 bbb
 
-### Header three
-ajd
 
-Resume
-======
+## Resume
+
 1. Register a GitHub account if you don't have one and confirm your e-mail (required!)
 1. Fork [this repository](https://github.com/academicpages/academicpages.github.io) by clicking the "fork" button in the top right. 
 1. Go to the repository's settings (rightmost item in the tabs that start with "Code", should be below "Unwatch"). Rename the repository "[your GitHub username].github.io", which will also be your website's URL.
