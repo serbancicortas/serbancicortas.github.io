@@ -14,7 +14,7 @@ UNDER CONSTRUCTION
 
 I am a 3rd year PhD student in the [Mathematics Department](https://www.math.princeton.edu/) at Princeton University. My advisor is [Igor Rodnianski](https://www.math.princeton.edu/people/igor-rodnianski).
 
-My research intersts are partial differential equations, general relativity, and nonlinear wave equations. I am currently working on ...
+My research interests are partial differential equations, general relativity, and nonlinear wave equations. I am currently working on self similar solutions of the Einstein vacuum equations. I am also interested in the weak cosmic censorship conjecture and examples of naked singularities.
 
 ## Publications
 bbb
