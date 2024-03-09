@@ -20,6 +20,10 @@ My research interests are partial differential equations, general relativity, an
  
 ## Talks
 
+* Princeton Gravity Initiative Workshop, flash talk, March 2024
+
+* Princeton Graduate Student Seminar, February 2024
+
 * Mathematical GR and Hyperbolic PDE Seminar, online talk, March 2023
 
 * Princeton Graduate Student Seminar, February 2023
@@ -46,9 +50,9 @@ Here is my complete [resume](https://serbancicortas.github.io/files/Resume_Updat
 I organize the weekly Princeton-Cambridge Joint General Relativity Seminar. Please contact me if you would like to join the seminar.
 
 ## Teaching
-During Fall 2023 I am a preceptor for [MAT 175 Mathematics for Economics/Life Sciences](https://registrar.princeton.edu/course-offerings/course-details?term=1242&courseid=012060).
+During Spring 2024 I am a preceptor for [MAT 175 Mathematics for Economics/Life Sciences](https://registrar.princeton.edu/course-offerings/course-details?term=1242&courseid=012060).
 
-Previously, I was a TA for [MAT 335 Analysis II: Complex Analysis](https://registrar.princeton.edu/course-offerings/course-details?term=1242&courseid=004194) and [MAT 425 Analysis III: Integration Theory and Hilbert Spaces](https://registrar.princeton.edu/course-offerings/course-details?term=1234&courseid=008172).
+Previously, I was a preceptor for [MAT 175 Mathematics for Economics/Life Sciences](https://registrar.princeton.edu/course-offerings/course-details?term=1242&courseid=012060) and TA for [MAT 335 Analysis II: Complex Analysis](https://registrar.princeton.edu/course-offerings/course-details?term=1242&courseid=004194), [MAT 425 Analysis III: Integration Theory and Hilbert Spaces](https://registrar.princeton.edu/course-offerings/course-details?term=1234&courseid=008172).
 
 ## Contact
 
