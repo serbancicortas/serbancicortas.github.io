@@ -68,5 +68,5 @@ Previously, I was a preceptor for [MAT 175 Mathematics for Economics/Life Scienc
 You can email me at: cicortas [at] princeton.edu
 
 <address>
-  Fine Hall A02<br /> Washington Rd<br /> Princeton, NJ 08544
+  Fine Hall 410<br /> Washington Rd<br /> Princeton, NJ 08544
 </address>
