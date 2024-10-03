@@ -14,11 +14,17 @@ My research interests are partial differential equations, general relativity, an
 
 ## Publications
 
-2. Scattering for the Wave Equation on de Sitter Space in All Even Spatial Dimensions, submitted, [arXiv:2309.07342](https://arxiv.org/abs/2309.07342)
-1. Extensions of Lorentzian Hawking--Page Solutions with Null Singularities, Spacelike Singularities, and Cauchy horizons of Taub--NUT type, submitted, [arXiv:2209.06134](https://arxiv.org/abs/2209.06134)
+4. Systems of Wave Equations on Asymptotically de Sitter Vacuum Solutions in All Even Spatial Dimensions, in preparation.
+3. Nonlinear Scattering Theory for Asymptotically de Sitter Vacuum Solutions in All Even Spatial Dimensions, submitted, [arXiv:2410.01558](https://arxiv.org/abs/2410.01558).
+2. Scattering for the Wave Equation on de Sitter Space in All Even Spatial Dimensions, submitted, [arXiv:2309.07342](https://arxiv.org/abs/2309.07342).
+1. Extensions of Lorentzian Hawking--Page Solutions with Null Singularities, Spacelike Singularities, and Cauchy horizons of Taub--NUT type, submitted, [arXiv:2209.06134](https://arxiv.org/abs/2209.06134).
 {: reversed="reversed"}
  
 ## Talks
+
+* Elaine Hubbard PDE Seminar, Georgia Institute of Technology, November 2024
+
+* Analysis Seminar, University of Toronto, November 2024
 
 * Princeton Gravity Initiative Workshop, flash talk, March 2024
 
@@ -42,7 +48,7 @@ Part III Essay: [The Existence of Naked Singularities and Their Instability](htt
 ### BA in Mathematics, Princeton University, September 2016 - June 2020
 
 Senior Thesis: [Global Stability for Weak Null Wave Equations with Multi-localized Initial Data](http://arks.princeton.edu/ark:/88435/dsp01xk81jp40j).
-(advised by [Sergiu Klainerman](https://web.math.princeton.edu/~seri/homepage/))
+(advised by Sergiu Klainerman)
 
 Here is my complete [resume](https://serbancicortas.github.io/files/Resume_Updated.pdf).
 
@@ -50,9 +56,12 @@ Here is my complete [resume](https://serbancicortas.github.io/files/Resume_Updat
 I organize the weekly Princeton-Cambridge Joint General Relativity Seminar. Please contact me if you would like to join the seminar.
 
 ## Teaching
-During Spring 2024 I am a preceptor for [MAT 175 Mathematics for Economics/Life Sciences](https://registrar.princeton.edu/course-offerings/course-details?term=1242&courseid=012060).
 
-Previously, I was a preceptor for [MAT 175 Mathematics for Economics/Life Sciences](https://registrar.princeton.edu/course-offerings/course-details?term=1242&courseid=012060) and TA for [MAT 335 Analysis II: Complex Analysis](https://registrar.princeton.edu/course-offerings/course-details?term=1242&courseid=004194), [MAT 425 Analysis III: Integration Theory and Hilbert Spaces](https://registrar.princeton.edu/course-offerings/course-details?term=1234&courseid=008172).
+During Fall 2024 I am a TA for [MAT 335 Analysis II: Complex Analysis](https://registrar.princeton.edu/course-offerings/course-details?term=1252&courseid=004194).
+
+During Summer 2024, I was an instructor for the [SLMath Summer School "Mathematics of General Relativity and Fluids"](https://general-relativity-fluids-school.iacm.forth.gr/).
+
+Previously, I was a preceptor for [MAT 175 Mathematics for Economics/Life Sciences](https://registrar.princeton.edu/course-offerings/course-details?term=1242&courseid=012060), [MAT 201 Multivariable Calculus](https://registrar.princeton.edu/course-offerings/course-details?term=1252&courseid=004149) and TA for [MAT 335 Analysis II: Complex Analysis](https://registrar.princeton.edu/course-offerings/course-details?term=1242&courseid=004194), [MAT 425 Analysis III: Integration Theory and Hilbert Spaces](https://registrar.princeton.edu/course-offerings/course-details?term=1234&courseid=008172).
 
 ## Contact
 
