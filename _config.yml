@@ -86,7 +86,7 @@ author:
   location         : "Princeton University"
   employer         :
   pubmed           : #"https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"
-  googlescholar    : #"http://yourfullgooglescholarurl.com"
+  googlescholar    : "https://scholar.google.ch/citations?user=kJFbaEsAAAAJ&hl=en&oi=ao"
   email            :  "cicortas@princeton.edu"
   researchgate     :  "https://www.researchgate.net/profile/Serban-Cicortas"
   uri              :
