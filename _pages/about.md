@@ -23,7 +23,7 @@ My research interests are partial differential equations, general relativity, an
  
 ## Talks
 
-* Simons Center Hyperbolic and Dispersive Equations on Curved Geometries Workshop, flash talk, April 2025
+* Simons Center Workshop on Hyperbolic and Dispersive Equations on Curved Geometries, flash talk, April 2025
 
 * Elaine Hubbard PDE Seminar, Georgia Institute of Technology, November 2024
 
