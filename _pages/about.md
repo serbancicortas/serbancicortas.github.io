@@ -8,9 +8,11 @@ redirect_from:
   - /about.html
 ---
 
-I am a 4th year PhD student in the [Mathematics Department](https://www.math.princeton.edu/) at Princeton University. My advisor is [Igor Rodnianski](https://www.math.princeton.edu/people/igor-rodnianski).
+I am a 5th year PhD student in the [Mathematics Department](https://www.math.princeton.edu/) at Princeton University. My advisor is [Igor Rodnianski](https://www.math.princeton.edu/people/igor-rodnianski).
 
 My research interests are partial differential equations, general relativity, and nonlinear wave equations. I am currently working on self similar solutions of the Einstein vacuum equations. I am also interested in the weak cosmic censorship conjecture and examples of naked singularities.
+
+### I am currently in the postdoc job market.
 
 ## Publications
 
@@ -22,6 +24,8 @@ My research interests are partial differential equations, general relativity, an
 {: reversed="reversed"}
  
 ## Talks
+
+* ”Singularities and Cosmic Censorship, from vacuum to matter” Workshop, Fields Institute, Upcoming talk, May 2026
 
 * Simons Center Workshop on Hyperbolic and Dispersive Equations on Curved Geometries, flash talk, April 2025
 
@@ -60,7 +64,7 @@ I organize the weekly Princeton-Cambridge Joint General Relativity Seminar. Plea
 
 ## Teaching
 
-During Fall 2024 I am a TA for [MAT 335 Analysis II: Complex Analysis](https://registrar.princeton.edu/course-offerings/course-details?term=1252&courseid=004194).
+During Fall 2025 I am a TA for [MAT 335 Analysis II: Complex Analysis](https://registrar.princeton.edu/course-offerings/course-details?term=1252&courseid=004194).
 
 During Summer 2024, I was an instructor for the [SLMath Summer School "Mathematics of General Relativity and Fluids"](https://general-relativity-fluids-school.iacm.forth.gr/).
 
