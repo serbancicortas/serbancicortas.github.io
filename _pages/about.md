@@ -12,7 +12,7 @@ I am a 5th year PhD student in the [Mathematics Department](https://www.math.pri
 
 My research interests are partial differential equations, general relativity, and nonlinear wave equations. I am currently working on self similar solutions of the Einstein vacuum equations. I am also interested in the weak cosmic censorship conjecture and examples of naked singularities.
 
-### I am currently in the postdoc job market.
+### I am currently on the postdoc job market.
 
 ## Publications
 
