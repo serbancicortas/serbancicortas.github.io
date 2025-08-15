@@ -10,7 +10,7 @@ redirect_from:
 
 I am a 5th year PhD student in the [Mathematics Department](https://www.math.princeton.edu/) at Princeton University. My advisor is [Igor Rodnianski](https://www.math.princeton.edu/people/igor-rodnianski).
 
-My research interests are partial differential equations, general relativity, and nonlinear wave equations. I am currently working on self similar solutions of the Einstein vacuum equations. I am also interested in the weak cosmic censorship conjecture and examples of naked singularities.
+My research interests are partial differential equations, general relativity, and nonlinear wave equations. My research focuses on the dynamics of cosmological spacetimes, addressing questions such as scattering and singularity formation. Additionally, I am working on problems motivated by the weak cosmic censorship conjecture and the existence of naked singularities.
 
 ### I am currently on the postdoc job market.
 
@@ -20,7 +20,7 @@ My research interests are partial differential equations, general relativity, an
 4. Systems of Wave Equations on Asymptotically de Sitter Vacuum Spacetimes in all even spatial dimensions, submitted, [arXiv:2411.16655](https://arxiv.org/abs/2411.16655).
 3. Nonlinear scattering theory for asymptotically de Sitter vacuum solutions in all even spatial dimensions, submitted, [arXiv:2410.01558](https://arxiv.org/abs/2410.01558).
 2. Scattering for the wave equation on de Sitter space in all even spatial dimensions, submitted, [arXiv:2309.07342](https://arxiv.org/abs/2309.07342).
-1. Extensions of Lorentzian Hawking--Page solutions with null singularities, spacelike singularities, and Cauchy horizons of Taub--NUT type, [Ann. Henri Poincarè (online first) (2024)](https://doi.org/10.1007/s00023-024-01507-1), [arXiv:2209.06134](https://arxiv.org/abs/2209.06134).
+1. Extensions of Lorentzian Hawking--Page solutions with null singularities, spacelike singularities, and Cauchy horizons of Taub--NUT type, [Ann. Henri Poincarè (2024)](https://doi.org/10.1007/s00023-024-01507-1), [arXiv:2209.06134](https://arxiv.org/abs/2209.06134).
 {: reversed="reversed"}
  
 ## Talks
