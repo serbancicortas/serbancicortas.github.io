@@ -31,7 +31,7 @@ My research interests are partial differential equations, general relativity, an
 
 * PDE/Analysis Seminar, MIT, upcoming talk, September 2025
 
-* Analysis Seminar, Cornell University, upcoming talk, September 2025
+* Analysis Seminar, Cornell University, September 2025
 
 * Simons Center Workshop on Hyperbolic and Dispersive Equations on Curved Geometries, flash talk, April 2025
 
