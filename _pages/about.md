@@ -74,7 +74,7 @@ I organize the weekly Princeton-Cambridge Joint General Relativity Seminar. Plea
 
 ## Teaching
 
-During Fall 2025 I am a TA for [MAT 335 Analysis II: Complex Analysis](https://registrar.princeton.edu/course-offerings/course-details?term=1252&courseid=004194).
+During Fall 2025 I am a TA for [MAT 335 Analysis II: Complex Analysis](https://registrar.princeton.edu/course-offerings/course-details?term=1262&courseid=004194).
 
 During Summer 2024, I was an instructor for the [SLMath Summer School "Mathematics of General Relativity and Fluids"](https://general-relativity-fluids-school.iacm.forth.gr/).
 
