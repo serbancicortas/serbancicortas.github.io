@@ -33,7 +33,7 @@ My research interests are partial differential equations, general relativity, an
 
 * Analysis Seminar, Columbia University, upcoming talk, October 2025
 
-* PDE/Analysis Seminar, MIT, upcoming talk, September 2025
+* PDE/Analysis Seminar, MIT, September 2025
 
 * Analysis Seminar, Cornell University, September 2025
 
