@@ -8,6 +8,18 @@ redirect_from:
   - /about.html
 ---
 
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-T0GR05JR3E"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-T0GR05JR3E');
+</script>
+</head>
+
 I am a 5th year PhD student in the [Mathematics Department](https://www.math.princeton.edu/) at Princeton University. My advisor is [Igor Rodnianski](https://www.math.princeton.edu/people/igor-rodnianski).
 
 My research interests are partial differential equations, general relativity, and nonlinear wave equations. My research focuses on the dynamics of cosmological spacetimes, addressing questions such as scattering and singularity formation. Additionally, I am working on problems motivated by the weak cosmic censorship conjecture and the existence of naked singularities.
