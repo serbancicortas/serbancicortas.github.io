@@ -32,7 +32,7 @@ My research interests are partial differential equations, general relativity, an
 4. Systems of Wave Equations on Asymptotically de Sitter Vacuum Spacetimes in all even spatial dimensions, submitted, [arXiv:2411.16655](https://arxiv.org/abs/2411.16655).
 3. Nonlinear scattering theory for asymptotically de Sitter vacuum solutions in all even spatial dimensions, submitted, [arXiv:2410.01558](https://arxiv.org/abs/2410.01558).
 2. Scattering for the wave equation on de Sitter space in all even spatial dimensions, submitted, [arXiv:2309.07342](https://arxiv.org/abs/2309.07342).
-1. Extensions of Lorentzian Hawking--Page solutions with null singularities, spacelike singularities, and Cauchy horizons of Taub--NUT type, [Ann. Henri Poincarè (2024)](https://doi.org/10.1007/s00023-024-01507-1), [arXiv:2209.06134](https://arxiv.org/abs/2209.06134).
+1. Extensions of Lorentzian Hawking--Page solutions with null singularities, spacelike singularities, and Cauchy horizons of Taub--NUT type, [Ann. Henri Poincaré 26, 3907–3961 (2025)](https://doi.org/10.1007/s00023-024-01507-1), [arXiv:2209.06134](https://arxiv.org/abs/2209.06134).
 {: reversed="reversed"}
  
 ## Talks
