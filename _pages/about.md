@@ -39,6 +39,8 @@ My research interests are partial differential equations, general relativity, an
 
 * ”Singularities and Cosmic Censorship, from vacuum to matter” Workshop, Fields Institute, upcoming talk, May 2026
 
+* Geometric Analysis and PDE seminar, University of Cambridge, upcoming talk,  February 2026
+
 * PDE Seminar, Pennsylvania State University, upcoming talk,  January 2026
 
 * Analysis & PDE Seminar, Stanford University, November 2025
