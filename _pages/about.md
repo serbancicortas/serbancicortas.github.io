@@ -24,8 +24,6 @@ I am a 5th year PhD student in the [Mathematics Department](https://www.math.pri
 
 My research interests are partial differential equations, general relativity, and nonlinear wave equations. My research focuses on the dynamics of cosmological spacetimes, addressing questions such as scattering and singularity formation. Additionally, I am working on problems motivated by the weak cosmic censorship conjecture and the existence of naked singularities.
 
-### I am currently on the postdoc job market.
-
 ## Publications
 
 5. Discretely self-similar exterior-naked singularities for the Einstein-scalar field system, with [Christoph Kehle](https://math.mit.edu/~kehle/index.html), [arXiv:2412.09540](https://arxiv.org/abs/2412.09540).
