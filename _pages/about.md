@@ -39,7 +39,7 @@ My research interests are partial differential equations, general relativity, an
 
 * Geometric Analysis and PDE seminar, University of Cambridge, upcoming talk,  February 2026
 
-* PDE Seminar, Pennsylvania State University, upcoming talk,  January 2026
+* PDE Seminar, Pennsylvania State University,  January 2026
 
 * ICERM Extremal Black Holes and the Third Law of Black Hole Thermodynamics,  January 2026
 
