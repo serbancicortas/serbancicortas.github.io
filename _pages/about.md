@@ -41,7 +41,7 @@ My research interests are partial differential equations, general relativity, an
 
 * Analysis seminar, Yale University, upcoming talk, February 2026
 
-* Geometric Analysis and PDE seminar, University of Cambridge, upcoming talk, February 2026
+* Geometric Analysis and PDE seminar, University of Cambridge, February 2026
 
 * Junior analysis seminar, Imperial College London, upcoming talk, February 2026
 
