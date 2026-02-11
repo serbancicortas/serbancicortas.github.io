@@ -37,13 +37,13 @@ My research interests are partial differential equations, general relativity, an
 
 * ”Singularities and Cosmic Censorship, from vacuum to matter” Workshop, Fields Institute, upcoming talk, May 2026
 
-* Hyperbolic and dispersive PDE seminar, Rutgers University, upcoming talk, March 2026
+* Hyperbolic and Dispersive PDE seminar, Rutgers University, upcoming talk, March 2026
 
-* Analysis seminar, Yale University, upcoming talk, February 2026
+* Analysis Seminar, Yale University, upcoming talk, February 2026
 
 * Geometric Analysis and PDE seminar, University of Cambridge, February 2026
 
-* Junior analysis seminar, Imperial College London, upcoming talk, February 2026
+* Junior Analysis Seminar, Imperial College London, February 2026
 
 * PDE Seminar, Pennsylvania State University, January 2026
 
