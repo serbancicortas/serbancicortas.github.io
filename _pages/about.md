@@ -9,6 +9,15 @@ redirect_from:
 ---
 
 <head>
+
+<script type="text/javascript">
+var _iub = _iub || [];
+_iub.csConfiguration = {"siteId":4246993,"cookiePolicyId":23097946,"storage":{"useSiteId":true}};
+_iub.csLangConfiguration = {"en":{"cookiePolicyId":23097946}};
+</script>
+<script type="text/javascript" src="https://cs.iubenda.com/autoblocking/4246993.js"></script>
+<script type="text/javascript" src="//cdn.iubenda.com/cs/gpp/stub.js"></script>
+<script type="text/javascript" src="//cdn.iubenda.com/cs/iubenda_cs.js" charset="UTF-8" async></script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-T0GR05JR3E"></script>
 <script>
