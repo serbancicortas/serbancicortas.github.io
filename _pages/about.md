@@ -10,7 +10,7 @@ redirect_from:
 
 <head>
 
-<script type="text/javascript" src="https://embeds.iubenda.com/widgets/7f003f48-8055-48b9-acae-547d48faee3c.js"></script>
+<!--<script type="text/javascript" src="https://embeds.iubenda.com/widgets/7f003f48-8055-48b9-acae-547d48faee3c.js"></script> -->
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-T0GR05JR3E"></script>
 <script>
