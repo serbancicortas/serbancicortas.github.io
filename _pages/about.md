@@ -28,7 +28,7 @@ My research interests are partial differential equations, general relativity, an
 
 ## Publications
 
-5. Discretely self-similar exterior-naked singularities for the Einstein-scalar field system, with [Christoph Kehle](https://math.mit.edu/~kehle/index.html), [Arch. Ration. Mech. Anal. (2026, to appear)](https://link.springer.com/journal/205), [arXiv:2412.09540](https://arxiv.org/abs/2412.09540).
+5. Discretely self-similar exterior-naked singularities for the Einstein-scalar field system, with [Christoph Kehle](https://math.mit.edu/~kehle/index.html), [Arch Rational Mech Anal 250, 37 (2026)](https://doi.org/10.1007/s00205-026-02194-4), [arXiv:2412.09540](https://arxiv.org/abs/2412.09540).
 4. Systems of wave equations on asymptotically de Sitter vacuum spacetimes in all even spatial dimensions, [Journal of Functional Analysis 290, no. 11 (2026)](https://doi.org/10.1016/j.jfa.2026.111414), [arXiv:2411.16655](https://arxiv.org/abs/2411.16655).
 3. Nonlinear scattering theory for asymptotically de Sitter vacuum solutions in all even spatial dimensions, submitted, [arXiv:2410.01558](https://arxiv.org/abs/2410.01558).
 2. Scattering for the wave equation on de Sitter space in all even spatial dimensions, submitted, [arXiv:2309.07342](https://arxiv.org/abs/2309.07342).
