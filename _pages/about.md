@@ -24,10 +24,11 @@ redirect_from:
 
 I am a 5th year PhD student in the [Mathematics Department](https://www.math.princeton.edu/) at Princeton University. My advisor is [Igor Rodnianski](https://www.math.princeton.edu/people/igor-rodnianski).
 
-My research interests are partial differential equations, general relativity, and nonlinear wave equations. My research focuses on the dynamics of cosmological spacetimes, addressing questions such as scattering and singularity formation. Additionally, I am working on problems motivated by the weak cosmic censorship conjecture and the existence of naked singularities.
+My research interests are partial differential equations, general relativity, and nonlinear wave equations. My research focuses on problems motivated by the weak cosmic censorship conjecture and the existence of naked singularities. I am also interested in the dynamics of cosmological spacetimes, addressing questions such as scattering and singularity formation.
 
 ## Publications
 
+6. Weak cosmic censorship for the circularly symmetric Einstein-scalar field system in 2+1 dimensions, [arXiv:2605.19143](https://arxiv.org/abs/2605.19143).
 5. Discretely self-similar exterior-naked singularities for the Einstein-scalar field system, with [Christoph Kehle](https://math.mit.edu/~kehle/index.html), [Arch Rational Mech Anal 250, 37 (2026)](https://doi.org/10.1007/s00205-026-02194-4), [arXiv:2412.09540](https://arxiv.org/abs/2412.09540).
 4. Systems of wave equations on asymptotically de Sitter vacuum spacetimes in all even spatial dimensions, [Journal of Functional Analysis 290, no. 11 (2026)](https://doi.org/10.1016/j.jfa.2026.111414), [arXiv:2411.16655](https://arxiv.org/abs/2411.16655).
 3. Nonlinear scattering theory for asymptotically de Sitter vacuum solutions in all even spatial dimensions, submitted, [arXiv:2410.01558](https://arxiv.org/abs/2410.01558).
