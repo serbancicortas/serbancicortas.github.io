@@ -38,7 +38,7 @@ My research interests are partial differential equations, general relativity, an
  
 ## Talks
 
-* ”Singularities and Cosmic Censorship, from vacuum to matter” Workshop, Fields Institute, upcoming talk, May 2026
+* ”Singularities and Cosmic Censorship, from vacuum to matter” Workshop, Fields Institute, May 2026
 
 * Hyperbolic and Dispersive PDE seminar, Rutgers University, March 2026
 
@@ -78,7 +78,7 @@ My research interests are partial differential equations, general relativity, an
 
 ## Education
 
-### PhD in Mathematics, Princeton University, September 2021 - Present
+### PhD in Mathematics, Princeton University, September 2021 - May 2026
 
 Advisor: [Igor Rodnianski](https://www.math.princeton.edu/people/igor-rodnianski)
 
@@ -93,9 +93,6 @@ Senior Thesis: [Global Stability for Weak Null Wave Equations with Multi-localiz
 (advised by Sergiu Klainerman)
 
 Here is my complete [resume](https://serbancicortas.github.io/files/Resume_Updated.pdf).
-
-## Seminar
-I organize the weekly Princeton-Cambridge Joint General Relativity Seminar. Please contact me if you would like to join the seminar.
 
 ## Teaching
 
