@@ -22,7 +22,7 @@ redirect_from:
 </script>
 </head>
 
-Starting August 2026, I will be a Courant Instructor at [NYU Courant](https://cims.nyu.edu/dynamic/), working with [Vlad Vicol](https://cims.nyu.edu/~vicol/). Previously, I completed my PhD at [Princeton University](https://www.math.princeton.edu/) under the supervision of [Igor Rodnianski](https://www.math.princeton.edu/people/igor-rodnianski).
+Starting August 2026, I will be a Courant Instructor at the [Courant Institute of Mathematical Sciences, New York University](https://cims.nyu.edu/dynamic/), working with [Vlad Vicol](https://cims.nyu.edu/~vicol/). Previously, I completed my PhD at [Princeton University](https://www.math.princeton.edu/) under the supervision of [Igor Rodnianski](https://www.math.princeton.edu/people/igor-rodnianski).
 
 My research interests are partial differential equations, general relativity, and nonlinear wave equations. My research focuses on problems motivated by the weak cosmic censorship conjecture and the existence of naked singularities. I am also interested in the dynamics of cosmological spacetimes, addressing questions such as scattering and singularity formation.
 
