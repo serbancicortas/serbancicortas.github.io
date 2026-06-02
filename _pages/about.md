@@ -80,7 +80,8 @@ My research interests are partial differential equations, general relativity, an
 
 ### PhD in Mathematics, Princeton University, September 2021 - May 2026
 
-PhD Thesis: Nonlinear Scattering Theory for Asymptotically de Sitter Vacuum Solutions in All Even Spatial Dimensions
+PhD Thesis: [Nonlinear Scattering Theory for Asymptotically de Sitter Vacuum Solutions in All Even Spatial Dimensions](https://serbancicortas.github.io/files/print_PhD_Thesis_formated.pdf)
+
 Advisor: [Igor Rodnianski](https://www.math.princeton.edu/people/igor-rodnianski)
 
 ### MASt in Mathematics, University of Cambridge, Trinity College, October 2020 - July 2021
