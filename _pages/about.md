@@ -91,7 +91,7 @@ Part III Essay: [The Existence of Naked Singularities and Their Instability](htt
 
 ### BA in Mathematics, Princeton University, September 2016 - June 2020
 
-Senior Thesis: [Global Stability for Weak Null Wave Equations with Multi-localized Initial Data](http://arks.princeton.edu/ark:/88435/dsp01xk81jp40j).
+Senior Thesis: [Global Stability for Weak Null Wave Equations with Multi-localized Initial Data](http://arks.princeton.edu/ark:/88435/dsp01xk81jp40j)
 (advised by Sergiu Klainerman)
 
 Here is my complete [resume](https://serbancicortas.github.io/files/Resume_Updated.pdf).
