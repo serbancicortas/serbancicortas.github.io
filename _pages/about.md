@@ -107,5 +107,5 @@ At Princeton, I was a preceptor for [MAT 175 Mathematics for Economics/Life Scie
 You can email me at: serbancicortas [at] nyu.edu
 
 <address>
-  Courant Institute of Mathematical Sciences <br /> 251 Mercer Street<br /> New York, N.Y. 10012
+  Courant Institute of Mathematical Sciences <br /> 251 Mercer Street<br /> New York, NY 10012
 </address>
