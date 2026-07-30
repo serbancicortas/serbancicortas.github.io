@@ -22,7 +22,7 @@ redirect_from:
 </script>
 </head>
 
-Starting August 2026, I will be a Courant Instructor at the [Courant Institute of Mathematical Sciences, New York University](https://cims.nyu.edu/dynamic/), hosted by [Vlad Vicol](https://cims.nyu.edu/~vicol/). Previously, I completed my PhD at [Princeton University](https://www.math.princeton.edu/) under the supervision of [Igor Rodnianski](https://www.math.princeton.edu/people/igor-rodnianski).
+I am a Courant Instructor at the [Courant Institute of Mathematical Sciences, New York University](https://cims.nyu.edu/dynamic/), hosted by [Vlad Vicol](https://cims.nyu.edu/~vicol/). Previously, I completed my PhD at [Princeton University](https://www.math.princeton.edu/) under the supervision of [Igor Rodnianski](https://www.math.princeton.edu/people/igor-rodnianski).
 
 My research interests are partial differential equations, general relativity, and nonlinear wave equations. My research focuses on problems motivated by the weak cosmic censorship conjecture and the existence of naked singularities. I am also interested in the dynamics of cosmological spacetimes, addressing questions such as scattering and singularity formation.
 
@@ -104,8 +104,8 @@ At Princeton, I was a preceptor for [MAT 175 Mathematics for Economics/Life Scie
 
 ## Contact
 
-You can email me at: cicortas [at] princeton.edu
+You can email me at: serbancicortas [at] nyu.edu
 
 <address>
-  Fine Hall 410<br /> Washington Rd<br /> Princeton, NJ 08544
+  Courant Institute of Mathematical Sciences <br /> 251 Mercer Street<br /> New York, N.Y. 10012
 </address>
