@@ -38,6 +38,8 @@ My research interests are partial differential equations, general relativity, an
  
 ## Talks
 
+* Analysis Seminar, upcoming talk, Stony Brook University, November 2026
+
 * Analysis Seminar, upcoming talk, NYU, October 2026
 
 * Princeton Gravity Initiative seminar, upcoming talk, Princeton University, September 2026
