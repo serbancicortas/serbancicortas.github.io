@@ -102,6 +102,8 @@ Here is my complete [resume](https://serbancicortas.github.io/files/Resume_Updat
 
 ## Teaching
 
+During Fall 2026, I am teaching Analysis ([MATH-UA 325](https://math.nyu.edu/dynamic/courses/undergrad/math-ua-325/)).
+
 During Summer 2024, I was an instructor for the [SLMath Summer School "Mathematics of General Relativity and Fluids"](https://general-relativity-fluids-school.iacm.forth.gr/).
 
 At Princeton, I was a preceptor for [MAT 175 Mathematics for Economics/Life Sciences](https://registrar.princeton.edu/course-offerings/course-details?term=1242&courseid=012060), [MAT 201 Multivariable Calculus](https://registrar.princeton.edu/course-offerings/course-details?term=1252&courseid=004149) and TA for [MAT 330 Complex Analysis with Applications](https://registrar.princeton.edu/course-offerings/course-details?term=1264&courseid=004180), [MAT 335 Analysis II: Complex Analysis](https://registrar.princeton.edu/course-offerings/course-details?term=1242&courseid=004194), [MAT 425 Analysis III: Integration Theory and Hilbert Spaces](https://registrar.princeton.edu/course-offerings/course-details?term=1234&courseid=008172).
