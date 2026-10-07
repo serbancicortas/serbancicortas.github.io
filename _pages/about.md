@@ -26,6 +26,8 @@ I am a Courant Instructor at the [Courant Institute of Mathematical Sciences, Ne
 
 My research interests are partial differential equations, general relativity, and nonlinear wave equations. My research focuses on problems motivated by the weak cosmic censorship conjecture and the existence of naked singularities. I am also interested in the dynamics of cosmological spacetimes, addressing questions such as scattering and singularity formation.
 
+Lean verified proof of the following [extension_principle](https://serbancicortas.github.io/files/extension_principle.pdf): spherically symmetric solutions of the Einstein-scalar field system with uniformly bounded blueshift do not form singularities.
+
 ## Publications
 
 6. Weak cosmic censorship for the circularly symmetric Einstein-scalar field system in 2+1 dimensions, [arXiv:2605.19143](https://arxiv.org/abs/2605.19143).
