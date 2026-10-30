@@ -26,7 +26,7 @@ I am a Courant Instructor at the [Courant Institute of Mathematical Sciences, Ne
 
 My research interests are partial differential equations, general relativity, and nonlinear wave equations. My research focuses on problems motivated by the weak cosmic censorship conjecture and the existence of naked singularities. I am also interested in the dynamics of cosmological spacetimes, addressing questions such as scattering and singularity formation.
 
-Lean verified proof of the following AI written [extension principle](https://serbancicortas.github.io/files/extension_principle.pdf): spherically symmetric solutions of the Einstein-scalar field system with uniformly bounded blueshift do not form singularities.
+Lean verified proof (10/27/2026) of the following AI written [extension principle](https://serbancicortas.github.io/files/general_extension_principle.pdf), in collaboration with Christoph Kehle, Yakov Shlapentokh-Rothman, and Maxime Van de Moortel: spherically symmetric solutions of the Einstein–Maxwell-charged-scalar-field equations with absolutely continuous initial data and bounded blue-shift along the terminal ingoing cone do not form singularities. Older AI written version, Lean verified (10/07/2026) for the uncharged case, under the uniform bounded blueshift assumption available [here](https://serbancicortas.github.io/files/extension_principle.pdf).
 
 ## Publications
 
