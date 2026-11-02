@@ -30,7 +30,7 @@ Lean verified proof (10/27/2026) of the following AI written [extension principl
 
 ## Publications
 
-6. Weak cosmic censorship for the circularly symmetric Einstein-scalar field system in 2+1 dimensions, [arXiv:2605.19143](https://arxiv.org/abs/2605.19143). Interactive version [available here].
+6. Weak cosmic censorship for the circularly symmetric Einstein-scalar field system in 2+1 dimensions, [arXiv:2605.19143](https://arxiv.org/abs/2605.19143). Interactive version [available here](https://serbancicortas.github.io/files/cosmic-censorship-2plus1.html).
 5. Discretely self-similar exterior-naked singularities for the Einstein-scalar field system, with [Christoph Kehle](https://math.mit.edu/~kehle/index.html), [Arch Rational Mech Anal 250, 37 (2026)](https://doi.org/10.1007/s00205-026-02194-4), [arXiv:2412.09540](https://arxiv.org/abs/2412.09540).
 4. Systems of wave equations on asymptotically de Sitter vacuum spacetimes in all even spatial dimensions, [Journal of Functional Analysis 290, no. 11 (2026)](https://doi.org/10.1016/j.jfa.2026.111414), [arXiv:2411.16655](https://arxiv.org/abs/2411.16655).
 3. Nonlinear scattering theory for asymptotically de Sitter vacuum solutions in all even spatial dimensions, to appear in J. Differ. Geom., [arXiv:2410.01558](https://arxiv.org/abs/2410.01558).
