@@ -1,0 +1,2388 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Weak Cosmic Censorship in 2+1</title>
+<meta name="description" content="An interactive guide to the proof of Weak Cosmic Censorship for the circularly symmetric Einstein-scalar field system in 2+1 dimensions with a negative cosmological constant (arXiv:2605.19143), for readers familiar with general relativity.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,300..800;1,7..72,300..800&display=swap">
+<style>
+:root{
+  /* Layout: a 40rem essay column set left of a 17rem sidenote gutter; figure plates span both.
+     One family, Literata, for text, labels, controls and figures.
+     Penrose-diagram ink on cool paper. Gold = light, blue = blueshift / regular, crimson = singular / trapped. */
+  --paper:#F4F6F9;
+  --plate:#FFFFFF;
+  --ink:#141A2B;
+  --ink-2:#394355;
+  --ink-3:#5D677A;
+  --rule:#D3D9E3;
+  --wash:#E8ECF3;
+  --ray:#B5760A;
+  --blue:#2350D6;
+  --sing:#C2173A;
+  --ray-wash:rgba(181,118,10,.16);
+  --blue-wash:rgba(35,80,214,.08);
+  --sing-wash:rgba(194,23,58,.12);
+  --font:"Literata",Georgia,"Times New Roman",serif;
+  --measure:40rem;
+  --gutter:17rem;
+  --gap:3rem;
+  /* Light only, whatever the reader's system theme. */
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);font-size:1.1rem;line-height:1.66;font-optical-sizing:auto;font-variant-numeric:lining-nums;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+button,input,output{font-family:inherit}
+a{color:var(--blue);text-decoration-thickness:1px;text-underline-offset:2px}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+p{text-wrap:pretty}
+.wrap{padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:0 3rem}
+.col{max-width:var(--measure);margin-inline:auto}
+.spread{max-width:calc(var(--measure) + var(--gutter) + var(--gap));margin-inline:auto}
+@media (min-width:1040px){
+  .col{margin-left:max(0px, calc((100% - var(--measure) - var(--gutter) - var(--gap)) / 2));margin-right:auto}
+  .plate.wide{margin-right:calc(-1 * (var(--gutter) + var(--gap)))}
+}
+
+/* ---------- type ---------- */
+/* Headings keep a text optical size, so their strokes never thin out at large sizes. */
+h1,h2,h3,.plate-title{font-weight:650;text-wrap:balance;font-optical-sizing:none;font-variation-settings:"opsz" 24}
+h1{font-size:clamp(2.2rem,4.6vw,3.3rem);line-height:1.1;letter-spacing:-.012em;margin:.4rem 0 1rem}
+h2{font-size:clamp(1.55rem,2.8vw,1.95rem);line-height:1.2;letter-spacing:-.006em;margin:4rem 0 1rem}
+h3{font-size:1.25rem;line-height:1.3;margin:2.8rem 0 .6rem}
+.secno{color:inherit;margin-right:.45rem}
+.eyebrow{font-size:.85rem;font-weight:600;line-height:1.3;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-2);margin:0}
+.dek{font-size:1.15rem;line-height:1.6;color:var(--ink-2);margin:0 0 1.1rem;max-width:36rem}
+.byline{font-size:.95rem;color:var(--ink-2);margin:0}
+.byline em{color:var(--ink)}
+dfn{font-style:italic;font-weight:650}
+.lede-claim{font-size:1.1rem;border-left:3px solid var(--blue);padding-left:1rem;margin:1.4rem 0}
+.callout{background:var(--blue-wash);border:1px solid var(--rule);border-radius:6px;padding:.8rem 1rem;margin:1.3rem 0;font-size:1rem;line-height:1.55}
+.callout b{font-weight:700}
+mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;max-width:100%;padding-block:.15rem}
+ul.props{margin:.8rem 0 1rem;padding-left:1.3rem}
+ul.props li{margin:.35rem 0}
+
+/* ---------- sidenotes ---------- */
+.sn{display:block;font-size:.93rem;line-height:1.55;color:var(--ink-2);margin:.2rem 0 1.2rem;padding-left:.85rem;border-left:2px solid var(--rule)}
+@media (min-width:1040px){
+  .sn{float:right;clear:right;width:var(--gutter);margin:.35rem calc(-1 * (var(--gutter) + var(--gap))) 1rem 0;padding:.5rem 0 0;border-left:0;border-top:1px solid var(--rule)}
+}
+
+/* ---------- hero ---------- */
+.hero{padding-block:clamp(1.25rem,4vw,3rem) .5rem}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,22.5rem);grid-template-areas:"text note" "text fig";grid-template-rows:auto 1fr;column-gap:clamp(1.5rem,4vw,3.25rem);row-gap:.9rem;align-items:start}
+@media (max-width:880px){.hero-grid{grid-template-columns:minmax(0,1fr);grid-template-areas:"note" "text" "fig";grid-template-rows:auto;row-gap:1.5rem}}
+.hero-text{grid-area:text;padding-top:clamp(0rem,3vw,2.5rem);min-width:0}
+.version-note{grid-area:note;margin:0;padding:.75rem .9rem .8rem;background:var(--wash);border:1px solid var(--rule);border-radius:6px;font-size:.95rem;line-height:1.5;color:var(--ink-2)}
+.version-note a{display:inline-block;margin-top:.3rem;font-weight:650}
+.hero-fig{grid-area:fig;margin:0;background:var(--plate);border:1px solid var(--rule);border-radius:6px;padding:.75rem .75rem .85rem;min-width:0}
+#hero-svg{display:block;width:100%;height:auto;max-height:min(74vh,600px);margin-inline:auto}
+.hero-controls{display:flex;flex-wrap:wrap;gap:.5rem .7rem;align-items:center;margin-top:.7rem}
+.status{font-size:.98rem;line-height:1.5;color:var(--ink);margin:.7rem 0 0;min-height:4.5em}
+.status b{font-weight:700}
+.ray-out{font-size:.92rem;font-style:italic;line-height:1.45;color:var(--ink-2);margin:.35rem 0 0;min-height:1.4em}
+.ray-out:empty{display:none}
+.legend{list-style:none;margin:.75rem 0 0;padding:.6rem 0 0;border-top:1px solid var(--rule);display:flex;flex-wrap:wrap;gap:.35rem 1rem;font-size:.88rem;line-height:1.3;color:var(--ink-2)}
+.legend li{display:inline-flex;align-items:center;gap:.4rem}
+.legend svg{width:22px;height:10px;overflow:visible}
+.lg-center{stroke:var(--ink);stroke-width:1.6}
+.lg-scri{stroke:var(--ink);stroke-width:1.4;stroke-dasharray:4 3}
+.lg-sing{stroke:var(--sing);stroke-width:2.2;stroke-dasharray:6 2 1.5 2}
+.lg-ray{stroke:var(--ray);stroke-width:2.2}
+.lg-trap{fill:var(--sing)}
+.toc{margin-top:2.2rem;padding-top:.9rem;border-top:1px solid var(--rule)}
+.toc ol{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.35rem 1.2rem;font-size:.95rem;line-height:1.45}
+.toc a{color:var(--ink);text-decoration:none}
+.toc a:hover{color:var(--blue);text-decoration:underline}
+.toc span{color:inherit;font-weight:700;margin-right:.35rem}
+
+/* ---------- controls ---------- */
+.seg-wrap{display:inline-flex;align-items:center;gap:.55rem}
+.seg-label{font-size:.93rem;font-weight:650;color:var(--ink-2)}
+.seg{display:inline-flex;border:1px solid var(--ink);border-radius:999px;overflow:hidden}
+.seg button{font-size:.9rem;font-weight:700;letter-spacing:.03em;line-height:1;padding:.55rem .9rem;background:transparent;color:var(--ink);border:0;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.seg button[data-on][aria-pressed="true"]{background:var(--sing);color:#fff}
+.btn{font-size:.88rem;font-weight:650;line-height:1;padding:.55rem .85rem;border:1px solid var(--rule);background:var(--plate);color:var(--ink);border-radius:999px;cursor:pointer}
+.btn:hover{border-color:var(--ink-3)}
+.btn.quiet{color:var(--ink-2)}
+.presets{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.6rem}
+.ctrl{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:.4rem .8rem;align-items:center;margin-top:.8rem}
+.ctrl label{font-size:.93rem;font-weight:650;line-height:1.3;color:var(--ink-2)}
+.ctrl output{font-size:1rem;font-weight:650;line-height:1;font-variant-numeric:lining-nums tabular-nums;min-width:4.5rem;text-align:right}
+input[type="range"]{width:100%;accent-color:var(--blue);margin:0}
+.range-ends{display:flex;align-items:center;gap:.5rem;min-width:0}
+.range-ends>span{flex:none;font-size:.95rem;color:var(--ink-2)}
+.ctrl output#ex-lv{min-width:3rem}
+.readout{display:grid;grid-template-columns:auto minmax(0,1fr);gap:.3rem .9rem;margin:.9rem 0 0;font-size:.97rem}
+.readout dt{font-weight:650;color:var(--ink-2)}
+.readout dd{margin:0;font-variant-numeric:lining-nums tabular-nums;color:var(--ink)}
+.hint{font-size:.9rem;font-style:italic;line-height:1.4;color:var(--ink-3);margin:.45rem 0 0}
+.out{font-size:1rem;line-height:1.55;margin:.9rem 0 0;min-height:3.2em}
+.out b{font-weight:700}
+
+/* ---------- plates ---------- */
+.plate{clear:both;background:var(--plate);border:1px solid var(--rule);border-radius:6px;margin:2.2rem 0 2.6rem;padding:clamp(.85rem,2.4vw,1.4rem)}
+.plate-head{display:flex;flex-wrap:wrap;gap:.25rem .75rem;align-items:baseline;margin-bottom:.9rem}
+.fig-no{font-size:.88rem;font-weight:700;line-height:1;color:var(--blue)}
+.plate-title{font-size:1.22rem;margin:0;line-height:1.25}
+.badge{display:inline-block;font-size:.8rem;font-weight:700;letter-spacing:.02em;line-height:1.2;padding:.22rem .6rem;border-radius:999px;background:var(--ray-wash);color:#6E4700}
+.badge.blue{background:var(--blue-wash);color:var(--blue)}
+.caption{font-size:.95rem;line-height:1.55;color:var(--ink-2);margin:1rem 0 0;padding-top:.75rem;border-top:1px solid var(--rule)}
+.regime{font-size:1rem;line-height:1.5;margin:.8rem 0 0;min-height:3em}
+.regime b{font-weight:700}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1.4rem;align-items:start}
+@media (max-width:760px){.two{grid-template-columns:minmax(0,1fr)}}
+
+/* ---------- theorem boxes ---------- */
+/* Theorems are set as cards, so they stand out from the text. */
+.thm{background:var(--plate);border:1px solid var(--rule);border-top:3px solid var(--ink);border-radius:10px;padding:1.2rem 1.4rem 1.1rem;margin:2rem 0 2.2rem;box-shadow:0 2px 10px rgba(20,26,43,.06)}
+.thm-label{font-size:1.3rem;font-weight:700;line-height:1.4;color:var(--ink);margin:0 0 .6rem}
+.thm p{margin:.4rem 0;font-style:italic;font-size:1.1rem;line-height:1.62}
+@media (max-width:520px){.thm{padding:1rem 1rem .9rem}}
+details.precise{margin:.7rem 0 0;padding-top:.6rem;border-top:1px dashed var(--rule)}
+details.precise summary{cursor:pointer;font-weight:650;color:var(--blue);font-size:.97rem}
+details.precise[open] summary{margin-bottom:.3rem}
+details.precise p{font-style:normal}
+
+/* ---------- Penrose diagrams ---------- */
+svg.pd{display:block;width:100%;height:auto;cursor:crosshair;touch-action:manipulation;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
+svg.pd.static{cursor:default}
+.pd-center{fill:none;stroke:var(--ink);stroke-width:1.7}
+.pd-cone{fill:none;stroke:var(--ink);stroke-width:1.3}
+.pd-scri{fill:none;stroke:var(--ink);stroke-width:1.5;stroke-dasharray:6 4}
+.pd-B{fill:none;stroke:var(--sing);stroke-width:2.6;stroke-dasharray:8 3 1.6 3;stroke-linecap:round}
+.pd-B0{fill:none;stroke:var(--sing);stroke-width:2;stroke-dasharray:6 4}
+.pd-H{fill:none;stroke:var(--ink-2);stroke-width:1.2}
+.pd-cminus{fill:none;stroke:var(--ink-3);stroke-width:1.1;stroke-dasharray:2 3}
+.pd-u0{fill:none;stroke:var(--ink-3);stroke-width:1;stroke-dasharray:1.5 3}
+.pd-edge{fill:none;stroke:var(--ink-3);stroke-width:1.1;stroke-dasharray:3 3}
+.pd-pert{fill:none;stroke:var(--blue);stroke-width:2;stroke-linecap:round}
+.pd-curveC{fill:none;stroke:var(--sing);stroke-width:1;stroke-dasharray:1.5 2.5}
+.pd-curveC2{fill:none;stroke:var(--sing);stroke-width:1.4;stroke-dasharray:5 3}
+.pd-lead{fill:none;stroke:var(--ink-3);stroke-width:.9}
+.pd-anno-line{fill:none;stroke:var(--ink-2);stroke-width:1.3}
+.pd-arrowhead{fill:var(--ink-2)}
+.pd-pt{fill:var(--plate);stroke:var(--ink);stroke-width:1.4}
+.pd-label{fill:var(--ink);font-family:var(--font);font-style:italic}
+.pd-label.dim{fill:var(--ink-3)}
+.pd-label.sing,.pd-note.sing{fill:var(--sing)}
+.pd-label.blue{fill:var(--blue)}
+.pd-note{fill:var(--ink-2);font-family:var(--font)}
+.pd-anno{fill:var(--ink-2);font-family:var(--font);font-weight:600}
+.pd-anno.sing{fill:var(--sing);font-weight:700}
+.pd-state{fill:var(--ink);font-family:var(--font);font-weight:700}
+.shade-past{fill:var(--blue-wash)}
+.shade-bh{fill:var(--wash)}
+.shade-T{fill:var(--sing-wash)}
+.shade-reg{fill:rgba(35,80,214,.09)}
+.shade-reg-strong{fill:rgba(35,80,214,.22)}
+.shade-unk{fill:rgba(93,103,122,.2)}
+.shade-P{fill:rgba(93,103,122,.12)}
+.mark-T{fill:var(--sing)}
+.ray{stroke:var(--ray);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;fill:none}
+.ray-src{fill:var(--ray)}
+.ray-obs{fill:none;stroke:var(--ray);stroke-width:2}
+.ray-x{stroke:var(--sing);stroke-width:2.4;stroke-linecap:round;fill:none}
+.ray-bounce{fill:var(--plate);stroke:var(--ray);stroke-width:1.8}
+.ray-g.old{opacity:.42}
+.photon{fill:var(--ray)}
+.photon-trail{stroke:var(--ray);stroke-width:2.2;stroke-linecap:round;opacity:.5}
+.flash{fill:none;stroke:var(--sing);stroke-width:1.6}
+.eye-glow{fill:var(--ray-wash)}
+.eye-shape{fill:var(--plate);stroke:var(--ink-3);stroke-width:1.5}
+.eye-shape.lit{fill:#FFF3D6;stroke:var(--ray)}
+.eye-pupil{fill:var(--ink)}
+
+/* ---------- gallery ---------- */
+.gmode{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem .8rem;margin:0 0 1rem}
+.gmode .hint{margin:0}
+.gallery{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.1rem}
+@media (max-width:900px){.gallery{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.gcard{min-width:0;display:flex;flex-direction:column}
+.gcard h4{font-weight:650;font-size:1rem;line-height:1.3;margin:.45rem 0 .1rem;text-wrap:balance}
+.gtag{font-weight:700;color:var(--blue);margin-right:.3rem}
+.gset{font-size:.95rem;margin:.15rem 0 .2rem;color:var(--ink-2)}
+.gdesc{font-size:.93rem;line-height:1.5;color:var(--ink-2);margin:.2rem 0 0}
+.gstatus{font-size:.88rem;font-style:italic;line-height:1.35;color:var(--ink-2);min-height:2.7em;margin:.35rem 0 0}
+
+/* ---------- theorem figure ---------- */
+.duo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.4rem;align-items:end}
+.duo h4{font-size:1rem;font-weight:650;line-height:1.3;margin:0 0 .4rem;min-height:2.6em;text-wrap:balance}
+.duo svg{max-height:420px}
+.duo-ctrl{display:flex;flex-wrap:wrap;gap:.5rem .8rem;align-items:center;margin-top:.9rem}
+
+/* ---------- BTZ ---------- */
+.btz-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:1.2rem;align-items:start}
+@media (max-width:760px){.btz-grid{grid-template-columns:minmax(0,1fr)}}
+#btz-canvas{display:block;width:100%;aspect-ratio:4/3;max-width:100%;cursor:grab;touch-action:pan-y}
+#btz-canvas:active{cursor:grabbing}
+.slice-tag{display:inline-block;margin:.2rem 0 0;font-size:.9rem;font-weight:650;color:var(--ink-2)}
+#btz-cut{display:block;width:100%;max-width:15rem;height:auto;margin-inline:auto}
+.cut-keep{fill:var(--blue-wash);stroke:var(--ink);stroke-width:1.3}
+.cut-gone{fill:none;stroke:var(--ink-3);stroke-width:1;stroke-dasharray:3 3}
+.cut-edge{stroke:var(--blue);stroke-width:2}
+.cut-glue{fill:none;stroke:var(--blue);stroke-width:1.2}
+.cut-tip{fill:var(--sing)}
+.cut-txt{fill:var(--ink-2);font-family:var(--font);font-size:13px}
+.cut-hor{fill:none;stroke:var(--blue);stroke-width:2}
+.scale{position:relative;height:1.6rem;margin:.2rem 0 0;font-size:.86rem;line-height:1;color:var(--ink-2)}
+.scale span{position:absolute;top:.4rem;transform:translateX(-50%);white-space:nowrap}
+.scale span:first-child{transform:none}
+.scale span:last-child{transform:translateX(-100%)}
+
+/* ---------- moduli cartoons ---------- */
+.mod-grid{display:grid;grid-template-columns:minmax(0,1fr) 15.5rem;gap:1.2rem;align-items:center}
+@media (max-width:780px){.mod-grid{grid-template-columns:minmax(0,1fr)}}
+#mod-svg,#ex-svg{display:block;width:100%;height:auto}
+.mod-side{display:grid;grid-template-columns:minmax(0,1fr);gap:.7rem;justify-items:center}
+.mod-side>div{justify-self:stretch}
+#mod-mini,#ex-mini{display:block;width:100%;max-width:8.5rem;height:auto}
+#mod-mini{max-width:5.5rem}
+/* a few labels sit at the very edge of their figure; let them spill into the plate padding instead of being cut */
+#hero-svg,#thm-a,#thm-b,#gap-plot,#win-svg,#b-svg{overflow:visible}
+.mod-title{font-weight:700;margin:0 0 .25rem;font-size:1.02rem}
+.mod-text{font-size:.95rem;line-height:1.5;color:var(--ink-2);margin:0}
+.mod-non{fill:var(--blue-wash)}
+.mod-bh{fill:var(--sing-wash)}
+.mod-thr{fill:none;stroke:var(--ink);stroke-width:1.6;stroke-dasharray:6 3}
+.mod-outline{fill:none;stroke:var(--ink-3);stroke-width:1.2}
+.mod-fam{stroke:var(--ink-2);stroke-width:1.4;fill:none;stroke-linecap:round}
+.mod-fam.sel{stroke:var(--ink);stroke-width:2.6}
+.mod-dot{fill:var(--ink);stroke:var(--plate);stroke-width:2}
+.mod-star{fill:var(--sing)}
+/* --k (set from script) keeps figure text near its intended screen size when a figure is drawn small. */
+.mod-lab{fill:var(--ink);font-family:var(--font);font-style:italic;font-size:calc(19px * var(--k, 1))}
+.mod-note{fill:var(--ink-2);font-family:var(--font);font-size:calc(13.5px * var(--k, 1))}
+.mod-note.sing{fill:var(--sing);font-weight:650}
+.qbtns{display:inline-flex;gap:.3rem;flex-wrap:wrap}
+.qbtns button{min-width:2.6rem}
+.qbtns button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+/* ---------- proof map ---------- */
+.pmap{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-areas:"gap . crit" "blue . ctrl" ". inst ." "ext thm .";gap:2.6rem 1.4rem}
+.pmap-edges{position:absolute;left:0;top:0;pointer-events:none;overflow:visible}
+.pnode{position:relative;z-index:1;text-align:left;background:var(--plate);border:1px solid var(--rule);border-radius:6px;padding:.65rem .75rem .7rem;cursor:pointer;color:var(--ink);font:inherit;display:flex;flex-direction:column;gap:.15rem;min-width:0}
+.pnode:hover{border-color:var(--ink-3)}
+.pnode[aria-pressed="true"]{border-color:var(--blue);box-shadow:0 0 0 1px var(--blue) inset}
+.ptag{font-size:.86rem;font-weight:700;line-height:1.3;color:var(--blue)}
+.pname{font-weight:650;font-size:1.02rem;line-height:1.25}
+.pline{font-size:.9rem;color:var(--ink-2);line-height:1.35}
+.pfrom{display:none;font-size:.86rem;font-style:italic;color:var(--ink-3)}
+.pnode[data-node="gap"]{grid-area:gap}.pnode[data-node="crit"]{grid-area:crit}.pnode[data-node="blue"]{grid-area:blue}.pnode[data-node="ctrl"]{grid-area:ctrl}.pnode[data-node="inst"]{grid-area:inst}.pnode[data-node="ext"]{grid-area:ext}.pnode[data-node="thm"]{grid-area:thm}
+.pnode[data-node="thm"]{border-color:var(--ink)}
+.edge{fill:none;stroke:var(--ink-3);stroke-width:1.3}
+.edge-lab{fill:var(--ink-2);font-family:var(--font);font-style:italic;font-size:13.5px;paint-order:stroke;stroke:var(--plate);stroke-width:5px;stroke-linejoin:round}
+.arrowhead{fill:var(--ink-3)}
+@media (max-width:700px){
+  .pmap{grid-template-columns:minmax(0,1fr);grid-template-areas:"gap" "crit" "blue" "ctrl" "inst" "ext" "thm";gap:.6rem}
+  .pmap-edges{display:none}
+  .pfrom{display:block}
+}
+.pdetail{margin-top:1.3rem;padding:1rem 1.1rem;background:var(--wash);border-radius:6px;font-size:1rem;line-height:1.6}
+.pdetail h4{margin:0 0 .35rem;font-size:1.05rem;font-weight:700}
+.pdetail p{margin:.35rem 0}
+
+/* ---------- plots ---------- */
+.plot{display:block;width:100%;height:auto;overflow:visible}
+.grid{stroke:var(--rule);stroke-width:1}
+.axis{stroke:var(--ink-3);stroke-width:1;fill:none}
+.tick{fill:var(--ink-3);font-family:var(--font);font-size:calc(13px * var(--k, 1));font-variant-numeric:lining-nums tabular-nums}
+.axlab{fill:var(--ink-2);font-family:var(--font);font-size:calc(13.5px * var(--k, 1))}
+.plot-lab{fill:var(--ink);font-family:var(--font);font-style:italic;font-size:calc(14.5px * var(--k, 1))}
+.plot-lab.blue{fill:var(--blue)}
+.plot-lab.sing{fill:var(--sing)}
+.reg-trap{fill:var(--sing-wash)}
+.reg-gap{fill:var(--blue-wash)}
+.reg-txt-trap{fill:var(--sing);font-family:var(--font);font-size:calc(13.5px * var(--k, 1))}
+.reg-txt-gap{fill:var(--blue);font-family:var(--font);font-size:calc(13.5px * var(--k, 1))}
+.floor{stroke:var(--blue);stroke-width:1.4;stroke-dasharray:5 3}
+.ceiling{fill:none;stroke:var(--sing);stroke-width:1.6}
+.prof{fill:none;stroke:var(--ink);stroke-width:2.6;stroke-linecap:round}
+.bG{fill:var(--sing)}
+.handle{fill:var(--plate);stroke:var(--blue);stroke-width:2.6;cursor:ns-resize;touch-action:none}
+.handle:hover,.handle.drag{fill:var(--blue)}
+.bcurve{fill:none;stroke:var(--blue);stroke-width:2.8}
+.bbound{fill:none;stroke:var(--ink);stroke-width:1.8;stroke-dasharray:6 4}
+.mcurve-lo{fill:none;stroke:var(--blue);stroke-width:2.8}
+.mcurve-hi{fill:none;stroke:var(--ink-3);stroke-width:2.8}
+.mline{stroke:var(--sing);stroke-width:1.5;stroke-dasharray:5 3}
+.Mline{stroke:var(--ink-3);stroke-width:1.2;stroke-dasharray:2 3}
+.pdot{fill:var(--plate);stroke:var(--blue);stroke-width:2.6}
+.sline{stroke:var(--blue);stroke-width:1.2;stroke-dasharray:4 3}
+
+/* ---------- mass gap ---------- */
+.gap-dline{fill:none;stroke:var(--blue);stroke-width:1.5}
+.gap-dline.unk{stroke:var(--ink-3)}
+.gap-star{fill:none;stroke:var(--blue);stroke-width:1.5;stroke-dasharray:4 3}
+.gap-S{fill:var(--plate);stroke:var(--blue);stroke-width:2.6}
+.gap-q{fill:var(--ink-3);font-family:var(--font);font-style:italic}
+#gap-svg{max-height:500px}
+#trap-pd{max-height:440px}
+#inst-svg{max-height:560px}
+
+/* ---------- trapped surfaces criterion ---------- */
+.trap-c{fill:none;stroke:var(--ink);stroke-width:1.3}
+.trap-c2{fill:none;stroke:var(--ink);stroke-width:1.3;stroke-dasharray:5 3}
+.trap-c2.on{stroke:var(--sing);stroke-dasharray:none;stroke-width:1.6}
+.trap-ann{fill:none;stroke:var(--sing);stroke-width:7;stroke-linecap:round}
+.ring-fill{fill:var(--sing)}
+.ring-line{fill:none;stroke:var(--ink);stroke-width:1.3}
+.ring-rad{stroke:var(--ink-2);stroke-width:1.1}
+.ring-c{fill:var(--ink)}
+.ring-txt{fill:var(--ink);font-family:var(--font);font-style:italic;font-size:calc(15px * var(--k, 1))}
+
+/* ---------- blueshift instability ---------- */
+.inst-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1.4rem;align-items:center}
+@media (max-width:760px){.inst-grid{grid-template-columns:minmax(0,1fr)}}
+.ingoing{fill:none;stroke:var(--blue);stroke-linecap:round}
+.pulse{fill:var(--blue)}
+.trap-seg{fill:none;stroke:var(--sing);stroke-width:3.4;stroke-linecap:round}
+.step-c{fill:var(--ink)}
+.step-t{fill:#fff;font-family:var(--font);font-weight:700}
+.steps{margin:0;padding-left:1.5rem;font-size:1rem;line-height:1.55}
+.steps li{margin:.5rem 0}
+.steptabs{display:flex;flex-wrap:wrap;gap:.4rem;margin:0 0 .8rem}
+.steptabs button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.pane{font-size:1rem;line-height:1.55}
+.pane p{margin:.45rem 0}
+.shade-R{fill:rgba(35,80,214,.16)}
+.trap-curve{fill:none;stroke:var(--sing);stroke-width:3.4;stroke-linecap:round;opacity:.8}
+.mod-off{cursor:pointer;outline:none}
+.mod-off-ring{fill:transparent;stroke:none;stroke-width:2}
+.mod-off:hover .mod-off-ring,.mod-off:focus-visible .mod-off-ring{stroke:var(--ink-3)}
+.mod-off.sel .mod-off-ring{stroke:var(--sing)}
+.mod-off-curve{fill:none;stroke:var(--sing);stroke-width:3.4;stroke-linecap:round}
+.mod-off-hit{fill:none;stroke:transparent;stroke-width:16;stroke-linecap:round}
+.mod-off:hover .mod-off-hit,.mod-off:focus-visible .mod-off-hit{stroke:rgba(93,103,122,.16)}
+.mod-off.sel .mod-off-hit{stroke:var(--sing-wash)}
+.pd-thin{fill:none;stroke:var(--ink-2);stroke-width:1.1}
+
+/* ---------- TeX labels and light ---------- */
+.tex{color:var(--ink)}
+.tex.sing{color:var(--sing)}
+.tex.blue{color:var(--blue)}
+.tex.dim{color:var(--ink-3)}
+.tex.edge{color:var(--ink-2)}
+.nobr{white-space:nowrap}
+.ray.in{stroke-dasharray:7 4}
+.beam{fill:var(--blue)}
+.beam-trail{stroke:var(--blue);stroke-linecap:round;opacity:.45}
+.lg-beam{fill:var(--blue)}
+.lg-in{stroke:var(--ray);stroke-width:2.2;stroke-dasharray:4 3}
+svg.lg{width:22px;height:10px;vertical-align:middle;overflow:visible}
+
+/* ---------- table ---------- */
+.table-wrap{overflow-x:auto;margin:1.4rem 0}
+.cmp{border-collapse:collapse;width:100%;min-width:30rem;font-size:.97rem}
+.cmp th,.cmp td{text-align:left;vertical-align:top;padding:.55rem .6rem;border-bottom:1px solid var(--rule)}
+.cmp thead th{font-size:.93rem;font-weight:700;color:var(--ink);border-bottom:1.5px solid var(--ink)}
+.cmp tbody th{font-weight:650;color:var(--ink-2);font-size:.95rem}
+
+.cite{color:var(--blue);text-decoration:none;white-space:nowrap}
+.cite:hover{text-decoration:underline}
+.xref{color:var(--blue);text-decoration:none}
+.xref:hover{text-decoration:underline}
+#fig-proof{scroll-margin-top:1rem}
+.refs{list-style:none;margin:1rem 0 0;padding:0;font-size:.95rem;line-height:1.5}
+.refs li{display:grid;grid-template-columns:4.8rem minmax(0,1fr);gap:.5rem;margin:0 0 .65rem;padding:.1rem .3rem;border-radius:4px;scroll-margin-top:1.2rem}
+.refs li:target{background:var(--blue-wash)}
+.ref-label{color:var(--ink-2);font-variant-numeric:lining-nums}
+.ref-link{font-size:.85rem;white-space:nowrap}
+.refs li>span:last-child{overflow-wrap:anywhere}
+@media (max-width:520px){.refs li{grid-template-columns:minmax(0,1fr);gap:0}}
+footer{margin-top:4.5rem;padding-top:1.2rem;border-top:1px solid var(--rule);font-size:.95rem;color:var(--ink-2)}
+footer p{margin:.4rem 0}
+@media (prefers-reduced-motion: reduce){*{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+</style>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+  svg: { fontCache: 'none' },
+  options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code', 'svg', 'canvas'] },
+  startup: {
+    pageReady: function () {
+      return MathJax.startup.defaultPageReady().then(function () { if (window.onTexReady) window.onTexReady(); });
+    }
+  }
+};
+</script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <div class="spread hero-grid">
+    <div class="hero-text">
+      <p class="eyebrow">An interactive guide by Serban Cicortas</p>
+      <h1>Weak Cosmic Censorship in 2<span class="plus">+</span>1&nbsp;dimensions</h1>
+      <p class="dek">Penrose's Weak Cosmic Censorship conjecture states that, for generic initial data, singularities are hidden inside black holes. This paper establishes the conjecture for the circularly symmetric Einstein-scalar field system in 2+1 dimensions with \(\Lambda&lt;0\), in the \(C^k\) initial data topology, for any \(k\geq2\). An essential step of the proof is establishing the presence of a mass gap. In particular, this implies that all naked singularities have infinite blueshift, which represents the main instability mechanism.</p>
+      <p class="byline">Serban Cicortas, <em>Weak cosmic censorship for the circularly symmetric Einstein-scalar field system in 2+1 dimensions</em>, 2026. <a href="https://arxiv.org/abs/2605.19143">Abstract</a> · <a href="https://arxiv.org/pdf/2605.19143">PDF</a></p>
+      <nav class="toc" aria-label="Contents">
+        <ol>
+          <li><a href="#wcc"><span>1.</span>Weak Cosmic Censorship</a></li>
+          <li><a href="#model"><span>2.</span>The model for gravity in 2+1 dimensions</a></li>
+          <li><a href="#structure"><span>3.</span>Global structure of spacetimes</a></li>
+          <li><a href="#result"><span>4.</span>The main result</a></li>
+          <li><a href="#proof"><span>5.</span>Idea of the proof</a></li>
+          <li><a href="#christodoulou"><span>6.</span>Comparison with 3+1 dimensions</a></li>
+          <li><a href="#examples"><span>7.</span>Upcoming work</a></li>
+        </ol>
+      </nav>
+    </div>
+    <aside class="version-note" aria-label="About this version">
+      This version assumes the reader is familiar with general relativity.
+      <a href="cosmic-censorship-2plus1-general.html">Switch to the version for a general mathematical audience&nbsp;→</a>
+    </aside>
+    <figure class="hero-fig" aria-labelledby="hero-cap">
+      <svg id="hero-svg" role="img" aria-label="Penrose diagram of a naked singularity spacetime. Turn the perturbation on to see the singularity hidden inside a black hole."></svg>
+      <div class="hero-controls">
+        <div class="seg-wrap">
+          <span class="seg-label" id="pert-label">Perturbation</span>
+          <div class="seg" role="group" aria-labelledby="pert-label">
+            <button type="button" id="hero-off" aria-pressed="true">OFF</button>
+            <button type="button" id="hero-on" data-on aria-pressed="false">ON</button>
+          </div>
+        </div>
+        <button type="button" class="btn quiet" id="hero-clear">Clear</button>
+      </div>
+      <p class="status" id="hero-status" aria-live="polite"></p>
+      <p class="ray-out" id="hero-ray-out" aria-live="polite"></p>
+      <ul class="legend" aria-label="Legend">
+        <li><svg aria-hidden="true"><line x1="1" y1="5" x2="21" y2="5" class="lg-center"/></svg>center Γ</li>
+        <li><svg aria-hidden="true"><line x1="1" y1="5" x2="21" y2="5" class="lg-scri"/></svg>null infinity \(\mathcal I\)</li>
+        <li><svg aria-hidden="true"><line x1="1" y1="5" x2="21" y2="5" class="lg-sing"/></svg>singularity</li>
+        <li><svg aria-hidden="true"><line x1="1" y1="5" x2="21" y2="5" class="lg-ray"/></svg>light</li>
+        <li><svg aria-hidden="true"><circle cx="11" cy="5" r="3.5" class="lg-trap"/></svg>trapped surface</li>
+        <li><svg aria-hidden="true"><circle cx="11" cy="5" r="3.5" class="lg-beam"/></svg>amplified perturbation</li>
+      </ul>
+      <p class="caption" id="hero-cap"><b>Fig. 1.</b> A naked singularity spacetime, before and after an arbitrarily small perturbation of the initial data. The perturbation is supported to the future of the past light cone \(C_0^-\) of the first singularity at the center \(b_\Gamma\), so the causal past of \(b_\Gamma\) is unchanged.</p>
+    </figure>
+  </div>
+</header>
+
+<main>
+
+<section class="col" id="wcc">
+  <h2><span class="secno">1.</span>Weak Cosmic Censorship</h2>
+  <p>One of the main open problems in general relativity is the Weak Cosmic Censorship conjecture, proposed by Penrose in 1969 [<a class="cite" href="#ref-P69">Pen69</a>]. It states that, for generic initial data, naked singularities do not form. That is to say, singularities are generically hidden inside black holes and invisible to far-away observers who exist for all time: null infinity \(\mathcal I\) is future complete [<a class="cite" href="#ref-GH78">GH78</a>, <a class="cite" href="#ref-C99-GL">Chr99b</a>]. The conjecture is motivated by the fact that a future incomplete \(\mathcal I\) would threaten the predictability of general relativity as a physical theory.</p>
+  <aside class="sn">The paper defines naked singularity spacetimes according to the Penrose diagram in Figure 3(d). In particular, every spacetime with a future incomplete \(\mathcal I\) is a naked singularity spacetime.</aside>
+  <p>Christodoulou proved a suitable formulation of the conjecture for the model problem of the spherically symmetric Einstein-scalar field system in 3+1 dimensions. The argument of [<a class="cite" href="#ref-ChrWCC">Chr99a</a>] relies on a novel blueshift effect to show that, while explicit naked singularity spacetimes can be constructed [<a class="cite" href="#ref-C94">Chr94</a>, <a class="cite" href="#ref-Cho93">Cho93</a>], all naked singularities are in fact unstable to black hole formation and the set of naked singularity spacetimes is indeed non-generic in a suitable sense. However, the instability mechanism in [<a class="cite" href="#ref-ChrWCC">Chr99a</a>] required working in a topology defined by a low-regularity class of solutions. Thus, the question of Weak Cosmic Censorship in a smoother topology remains open even in this setting.</p>
+  <p class="lede-claim">This paper initiates the mathematical study of gravitational collapse for the circularly symmetric Einstein-scalar field system in 2+1 dimensions with \(\Lambda&lt;0\), and proves Weak Cosmic Censorship in a topology of arbitrary smoothness: in \(C^k\), for any \(k\ge2\).</p>
+</section>
+
+<section class="col" id="model">
+  <h2><span class="secno">2.</span>The model for gravity in 2+1 dimensions</h2>
+  <p>The paper considers the Einstein-scalar field system with a negative cosmological constant:</p>
+  \[\mathrm{Ric}_{\mu\nu}-\tfrac12 R\,g_{\mu\nu}+\Lambda g_{\mu\nu}=\nabla_\mu\phi\,\nabla_\nu\phi-\tfrac12 g_{\mu\nu}\lvert\nabla\phi\rvert^2,\qquad \square_g\phi=0.\]
+  <p>In 2+1 dimensions this is perhaps the most elementary model for gravitational collapse that allows for the dynamical formation of singularities [<a class="cite" href="#ref-Pretorius">PC00</a>, <a class="cite" href="#ref-jalmuzna">JGC15</a>]. It was first studied in numerical relativity by Pretorius and Choptuik [<a class="cite" href="#ref-Pretorius">PC00</a>].</p>
+  <p>The simplest solution is anti-de Sitter (AdS) spacetime, with \(\phi=0\) and</p>
+  \[g_{\mathrm{AdS}}=-\big(1+\lvert\Lambda\rvert r^2\big)dt^2+\big(1+\lvert\Lambda\rvert r^2\big)^{-1}dr^2+r^2d\sigma_1^2.\]
+  <p>It is circularly symmetric, contains no singularities, is geodesically complete, and has a timelike asymptotic boundary, null infinity \(\mathcal I\).</p>
+  <p>The paper studies circularly symmetric solutions, written in global double null coordinates as</p>
+  \[g=-\Omega^2(u,v)\,du\,dv+r^2(u,v)\,d\sigma_1^2,\qquad \phi=\phi(u,v).\]
+  <p>We consider maximal developments of \(C^k\) asymptotically AdS characteristic data on an outgoing null cone \(C_0^+\), obtained by solving an initial-boundary value problem with reflective boundary conditions at \(\mathcal I\), adapting the 3+1-dimensional theory of Holzegel–Smulevici [<a class="cite" href="#ref-localwellposed">HS12</a>].</p>
+  <div class="callout"><b>Gravitational collapse.</b> The paper only considers solutions with a regular center \(\Gamma=\{r=0\}\). AdS spacetime itself is in this class.</div>
+
+  <h3>The BTZ family</h3>
+  <p>The Bañados–Teitelboim–Zanelli (BTZ) spacetimes [<a class="cite" href="#ref-BTZ">BTZ92</a>] are a 1-parameter family of circularly symmetric static solutions with \(M\geq0\):</p>
+  \[g_M=-\big(1-M+\lvert\Lambda\rvert r^2\big)dt^2+\big(1-M+\lvert\Lambda\rvert r^2\big)^{-1}dr^2+r^2d\sigma_1^2,\quad \phi_M=0.\]
+  <p>For \(M=0\) this is AdS. For \(M\in(0,1)\) the metric has a conical singularity at \(r=0\), and for \(M=1\) a cusp singularity. For \(M&gt;1\) the spacetime has no center, but it extends to a two-ended black hole. See the survey [<a class="cite" href="#ref-BTZsurvey">Car95</a>] for more on these solutions.</p>
+  <aside class="sn">The paper translates the mass parameter by 1 relative to [<a class="cite" href="#ref-BTZ">BTZ92</a>], so that AdS has \(M=0\) rather than \(M=-1\).</aside>
+
+  <figure class="plate wide" id="fig-btz" aria-labelledby="btz-title">
+    <div class="plate-head"><span class="fig-no">Fig. 2</span><h3 class="plate-title" id="btz-title">A space slice of the BTZ solutions</h3><span class="badge blue">\(t=\text{const}\) slice</span></div>
+    <div class="btz-grid">
+      <div>
+        <canvas id="btz-canvas" role="img" aria-label="Surface showing the geometry of a t = const slice of the BTZ solution near r = 0, with the symmetry axis vertical"></canvas>
+        <p class="hint">Not a spacetime diagram. Drag to rotate.</p>
+      </div>
+      <div>
+        <svg id="btz-cut" viewBox="0 0 240 240" role="img" aria-label="Paper cut-out: a disk with a wedge removed folds into the cone"></svg>
+        <dl class="readout">
+          <dt>Cone angle</dt><dd id="btz-angle">180.0°</dd>
+          <dt>1 − M</dt><dd id="btz-f0">0.250</dd>
+          <dt>Horizon</dt><dd><span id="btz-hor-none">none</span><span id="btz-hor-r" hidden>\(r=\) <span id="btz-hor-v"></span> \(/\sqrt{\lvert\Lambda\rvert}\)</span></dd>
+        </dl>
+      </div>
+    </div>
+    <div class="ctrl">
+      <label for="btz-m">Mass M</label>
+      <input type="range" id="btz-m" min="0" max="2" step="0.005" value="0.75">
+      <output id="btz-mv" for="btz-m">0.750</output>
+    </div>
+    <div class="scale" aria-hidden="true"><span style="left:0">0 · AdS</span><span style="left:25%">conical</span><span style="left:50%">1 · cusp</span><span style="left:75%">black holes</span><span style="left:100%">2</span></div>
+    <div class="presets">
+      <button type="button" class="btn" data-m="0">AdS</button>
+      <button type="button" class="btn" data-m="0.75">M = 0.75</button>
+      <button type="button" class="btn" data-m="0.97">M = 0.97</button>
+      <button type="button" class="btn" data-m="1">Cusp</button>
+      <button type="button" class="btn" data-m="1.5">Black hole</button>
+    </div>
+    <p class="regime" id="btz-regime" aria-live="polite">
+      <span data-reg="ads" hidden><b>AdS spacetime.</b> A regular center: the only member of the BTZ family with one.</span>
+      <span data-reg="cone" hidden><b>Conical singularity at \(r=0\).</b> The slice is a cone of angle \(2\pi\sqrt{1-M}\) = <span id="btz-deg">180°</span>.</span>
+      <span data-reg="cusp" hidden><b>Cusp singularity at \(r=0\).</b> The cone angle has closed up, and the tip has become an infinitely long spike.</span>
+      <span data-reg="bh" hidden><b>No center.</b> The spacetime extends to a two-ended black hole. The slice through the horizon is a throat joining two ends, with the horizon circle \(r=\sqrt{(M-1)/\lvert\Lambda\rvert}\) at its waist.</span>
+    </p>
+  </figure>
+
+  <p>Since the paper only considers spacetimes with a regular center, the only member of the BTZ family in this class is AdS. Nonetheless, the entire BTZ family plays an important role in the asymptotic behavior of the solutions at \(\mathcal I\). It also already exhibits the threshold \(M=1\), which reappears as the mass gap.</p>
+</section>
+
+<section class="col" id="structure">
+  <h2><span class="secno">3.</span>Global structure of spacetimes</h2>
+  <p>The moduli space \(\mathfrak M\) consists of \(C^k\) asymptotically AdS characteristic data <span style="white-space:nowrap">on \(C_0^+\).</span> To each data set we associate its unique maximal development. Adapting the work of Kommemi [<a class="cite" href="#ref-kommemi">Kom13</a>] and of Holzegel–Smulevici [<a class="cite" href="#ref-localwellposed">HS12</a>] to 2+1 dimensions, the paper shows that its Penrose diagram is one of the following four.</p>
+
+  <figure class="plate wide" id="fig-gallery" aria-labelledby="gal-title">
+    <div class="plate-head"><span class="fig-no">Fig. 3</span><h3 class="plate-title" id="gal-title">The possible Penrose diagrams of the maximal development</h3></div>
+    <div class="gmode">
+      <p class="hint">Click inside a diagram to send light both ways: <svg class="lg" aria-hidden="true"><line x1="1" y1="5" x2="21" y2="5" class="lg-ray"/></svg> outgoing and <svg class="lg" aria-hidden="true"><line x1="1" y1="5" x2="21" y2="5" class="lg-in"/></svg> ingoing.</p>
+      <button type="button" class="btn quiet" id="gal-clear">Clear</button>
+    </div>
+    <div class="gallery">
+      <div class="gcard" data-kind="bhs">
+        <svg role="img" aria-label="Penrose diagram of a black hole spacetime with a spacelike-only singularity"></svg>
+        <p class="gstatus" aria-live="polite"></p>
+        <h4><span class="gtag">(a)</span>Black hole spacetime, spacelike-only singularity</h4>
+        <p class="gset">\(\mathfrak M^{\mathrm{spacelike}}_{\mathrm{black}}\)</p>
+        <p class="gdesc">An event horizon \(\mathcal H\) forms, and the singularity inside the black hole is spacelike.</p>
+      </div>
+      <div class="gcard" data-kind="bhl">
+        <svg role="img" aria-label="Penrose diagram of a black hole spacetime with a locally naked singularity"></svg>
+        <p class="gstatus" aria-live="polite"></p>
+        <h4><span class="gtag">(b)</span>Black hole spacetime, locally naked singularity</h4>
+        <p class="gset">\(\mathfrak M^{\mathrm{loc.naked}}_{\mathrm{black}}\)</p>
+        <p class="gdesc">A null component \(\mathcal B_0\) arises out of \(b_\Gamma\) before the spacelike singularity \(\mathcal B\).</p>
+      </div>
+      <div class="gcard" data-kind="non">
+        <svg role="img" aria-label="Penrose diagram of a non-collapsing spacetime"></svg>
+        <p class="gstatus" aria-live="polite"></p>
+        <h4><span class="gtag">(c)</span>Non-collapsing spacetime</h4>
+        <p class="gset">\(\mathfrak M_{\mathrm{non}}\)</p>
+        <p class="gdesc">\(\Gamma\) and \(\mathcal I\) are future complete. AdS spacetime is an example.</p>
+      </div>
+      <div class="gcard" data-kind="nak">
+        <svg role="img" aria-label="Penrose diagram of a naked singularity spacetime"></svg>
+        <p class="gstatus" aria-live="polite"></p>
+        <h4><span class="gtag">(d)</span>Naked singularity spacetime</h4>
+        <p class="gset">\(\mathfrak M_{\mathrm{naked}}\)</p>
+        <p class="gdesc">The first singularity \(b_\Gamma\) is not hidden behind an event horizon: \(\mathcal B_0\) reaches \(\mathcal I\).</p>
+      </div>
+    </div>
+  </figure>
+
+  <p>The spacetimes (b) and (d) are <em>locally naked singularity spacetimes</em>. Light from points arbitrarily close to \(b_\Gamma\) reaches the observers near \(\mathcal B_0\). Equivalently, locally naked singularity spacetimes contain no trapped surfaces in a neighborhood of \(b_\Gamma\). We denote the corresponding set of initial data by \(\mathfrak M_{\mathrm{loc.naked}}\).</p>
+  <p>We denote by \(\mathfrak M_{\mathrm{black}}\subset\mathfrak M\) the set of initial data whose maximal development is a black hole spacetime. Equivalently, the maximal development contains a trapped surface. Since having a trapped surface is an open condition, \(\mathfrak M_{\mathrm{black}}\) is open.</p>
+</section>
+
+<section class="col" id="result">
+  <h2><span class="secno">4.</span>The main result</h2>
+  <div class="thm">
+    <p class="thm-label">Theorem 1.1 · Weak Cosmic Censorship</p>
+    <p>For any \(k\ge2\), the maximal development of generic \(C^k\) asymptotically AdS characteristic data does not contain naked singularities.</p>
+    <p>In particular, naked singularity spacetimes are non-generic and are unstable to black hole formation. Additionally, locally naked singularities are unstable to the formation of spacelike-only singularities.</p>
+    <details class="precise">
+      <summary>Precise statement</summary>
+      <p>More precisely, \(\mathfrak M_{\mathrm{generic}}:=\mathfrak M_{\mathrm{black}}\sqcup\mathrm{int}\big(\mathfrak M_{\mathrm{non}}\big)\) is open and dense <span style="white-space:nowrap">in \(\mathfrak M\), and:</span></p>
+      \[\mathfrak M_{\mathrm{naked}}\subset\mathrm{cl}\big(\mathfrak M_{\mathrm{black}}\big)\setminus\mathfrak M_{\mathrm{black}}\subset\mathfrak M\setminus\mathfrak M_{\mathrm{generic}}\]
+      \[\mathfrak M_{\mathrm{loc.naked}}\subset\mathrm{cl}\big(\mathfrak M^{\mathrm{spacelike}}_{\mathrm{black}}\big)\setminus\mathfrak M^{\mathrm{spacelike}}_{\mathrm{black}}\]
+    </details>
+  </div>
+
+  <figure class="plate wide" id="fig-thm" aria-labelledby="thm-title">
+    <div class="plate-head"><span class="fig-no">Fig. 4</span><h3 class="plate-title" id="thm-title">Theorem 1.1 in pictures</h3></div>
+    <div class="duo">
+      <div><h4 id="thm-a-title">Naked singularity spacetime</h4><svg id="thm-a" role="img" aria-label="A naked singularity spacetime and its perturbation"></svg></div>
+      <div><h4 id="thm-b-title">Black hole spacetime with a locally naked singularity</h4><svg id="thm-b" role="img" aria-label="A black hole with a locally naked singularity and its perturbation"></svg></div>
+    </div>
+    <div class="duo-ctrl">
+      <div class="seg-wrap">
+        <span class="seg-label" id="thm-label">Perturbation</span>
+        <div class="seg" role="group" aria-labelledby="thm-label">
+          <button type="button" id="thm-off" aria-pressed="true">OFF</button>
+          <button type="button" id="thm-on" data-on aria-pressed="false">ON</button>
+        </div>
+      </div>
+      <button type="button" class="btn quiet" id="thm-clear">Clear</button>
+    </div>
+    <p class="caption">Both kinds of locally naked singularity spacetimes, (d) and (b) of Figure 3, are perturbed by an arbitrarily small amount in \(C^k\). Trapped surfaces then form arbitrarily close to \(b_\Gamma\), and the maximal development is a black hole with a spacelike-only singularity, as in Figure 3(a). Click inside either diagram to send light outward.</p>
+  </figure>
+
+  <p>The paper chooses a more elementary notion of genericity than Christodoulou [<a class="cite" href="#ref-ChrWCC">Chr99a</a>]. It proves that naked singularity data lie in the complement of an open and dense subset of \(\mathfrak M\), rather than that they have positive codimension. The reason is the need to extend initial data perturbations globally and satisfy the boundary conditions at \(\mathcal I\).</p>
+
+  <figure class="plate wide" id="fig-mod" aria-labelledby="mod-title-h">
+    <div class="plate-head"><span class="fig-no">Fig. 5</span><h3 class="plate-title" id="mod-title-h">A conjectural picture of the moduli space \(\mathfrak M\)</h3><span class="badge">Conjecture, based on numerics</span></div>
+    <div class="mod-grid">
+      <svg id="mod-svg" viewBox="0 0 640 300" role="img" aria-label="Cartoon of the moduli space: non-collapsing data on the left, black holes on the right, a threshold between them, and a one-parameter family crossing it"></svg>
+      <div class="mod-side">
+        <svg id="mod-mini" role="img" aria-label="Penrose diagram of the current outcome"></svg>
+        <div aria-live="polite">
+          <p class="mod-title" id="mod-title"></p>
+          <p class="mod-text" id="mod-text"></p>
+        </div>
+      </div>
+    </div>
+    <div class="ctrl">
+      <label for="mod-p">Amplitude p</label>
+      <input type="range" id="mod-p" min="0" max="1" step="0.001" value="0.3">
+      <output id="mod-pv" for="mod-p">0.30</output>
+    </div>
+    <div class="presets"><button type="button" class="btn" id="mod-snap">Go to the threshold p*</button></div>
+    <p class="caption">This conjectural picture comes from numerical work on critical collapse. Theorem 1.1 implies that naked singularities are on the threshold, or they are surrounded by \(\mathfrak M_{\mathrm{black}}\). Click a point or a curve to see its Penrose diagram.</p>
+  </figure>
+
+  <p>Numerical relativity works on critical collapse ([<a class="cite" href="#ref-Cho93">Cho93</a>] in 3+1 dimensions, see also the review [<a class="cite" href="#ref-Gundlach2007">GMG07</a>]; [<a class="cite" href="#ref-Pretorius">PC00</a>] and [<a class="cite" href="#ref-jalmuzna">JGC15</a>] in 2+1 dimensions) suggest the above conjectural picture of the moduli space. Take an initial data profile \(\Phi\) and any scaling parameter \(p\). For small \(p\) the solution does not collapse, for large \(p\) it forms a black hole, and at the threshold \(p=p^*\) it is expected to form a naked singularity. In this picture the threshold is a codimension-1 set of naked singularity spacetimes, consistent with Theorem 1.1. The theorem also covers naked singularities off the threshold, if they exist, showing they are surrounded by \(\mathfrak M_{\mathrm{black}}\).</p>
+</section>
+
+<section class="col" id="proof">
+  <h2><span class="secno">5.</span>Idea of the proof</h2>
+  <p>The overall strategy goes back to Christodoulou [<a class="cite" href="#ref-ChrWCC">Chr99a</a>]. The main step is to show that locally naked singularities are unstable to the formation of spacelike-only singularities, and for this it suffices to perturb them so that trapped surfaces form arbitrarily close to \(b_\Gamma\). The proof relies on two fundamental results about circularly symmetric solutions: a mass gap, and a quantitative criterion for the formation of trapped surfaces. Together they show that every first singularity at the center has unbounded blueshift, and the blueshift instability then produces the trapped surfaces.</p>
+
+  <figure class="plate wide" id="fig-proof" aria-labelledby="proof-title">
+    <div class="plate-head"><span class="fig-no">Fig. 6</span><h3 class="plate-title" id="proof-title">The structure of the proof</h3></div>
+    <div class="pmap" id="pmap">
+      <svg class="pmap-edges" id="pmap-edges" aria-hidden="true"></svg>
+      <button type="button" class="pnode" data-node="gap" aria-pressed="true"><span class="ptag">Theorem 1.2</span><span class="pname">Mass gap</span><span class="pline">\(m&lt;1\) ⇒ regular domain of dependence</span></button>
+      <button type="button" class="pnode" data-node="crit" aria-pressed="false"><span class="ptag">Theorem 1.3</span><span class="pname">Trapped surfaces criterion</span><span class="pline">\(\eta_0&gt;\delta_0\) ⇒ trapped surface</span></button>
+      <button type="button" class="pnode" data-node="blue" aria-pressed="false"><span class="ptag">Proposition 5.1</span><span class="pname">Unbounded blueshift</span><span class="pline">\(\mathbf b(u)\ge2\log(u_0/u)\)</span><span class="pfrom">uses Theorem 1.2</span></button>
+      <button type="button" class="pnode" data-node="ctrl" aria-pressed="false"><span class="ptag">Proposition 5.2</span><span class="pname">Bounds near \(b_\Gamma\)</span><span class="pline">no trapped surfaces ⇒ energy bound</span><span class="pfrom">uses Theorem 1.3 (contrapositive)</span></button>
+      <button type="button" class="pnode" data-node="inst" aria-pressed="false"><span class="ptag">Proposition 6.1</span><span class="pname">Blueshift instability</span><span class="pline">\(\theta+\lambda v^n\) ⇒ trapped surfaces at \(b_\Gamma\)</span><span class="pfrom">uses 5.1, 5.2 and Theorem 1.3</span></button>
+      <button type="button" class="pnode" data-node="ext" aria-pressed="false"><span class="ptag">Appendix A</span><span class="pname">Asymptotically AdS extension</span><span class="pline">extend the perturbation to null infinity</span></button>
+      <button type="button" class="pnode" data-node="thm" aria-pressed="false"><span class="ptag">Theorem 1.1</span><span class="pname">Weak Cosmic Censorship</span><span class="pline">naked singularities are non-generic</span><span class="pfrom">uses 6.1 and Appendix A</span></button>
+    </div>
+    <div class="pdetail" id="pdetail" aria-live="polite">
+      <div data-detail="gap">
+        <h4>Mass gap</h4>
+        <p>No singularities form in the domain of dependence of a disk bounded by a circle with Hawking mass \(m&lt;1\). <b>Corollary:</b> on the past light cone of a first singularity at the center, \(m\ge1\), and \(m\to1^+\) at the singularity.</p>
+      </div>
+      <div data-detail="crit" hidden>
+        <h4>Formation of trapped surfaces criterion</h4>
+        <p>If the energy content of a thin annular region on an outgoing null cone is large compared to its size, \(\eta_0&gt;\delta_0\), a marginally trapped surface forms.</p>
+      </div>
+      <div data-detail="blue" hidden>
+        <h4>Unbounded blueshift</h4>
+        <p>On the past light cone \(C_0^-\) of \(b_\Gamma\), the mass gap gives \(m\ge1\) and the absence of trapped surfaces gives \(m\le1+\lvert\Lambda\rvert r^2\). Hence the blueshift satisfies \(\mathbf b(u)\ge2\log(u_0/u)\). This holds for any first singularity at the center.</p>
+      </div>
+      <div data-detail="ctrl" hidden>
+        <h4>Bounds for locally naked singularity spacetimes</h4>
+        <p>Locally naked singularities have no trapped surfaces near \(b_\Gamma\), so the contrapositive of Theorem 1.3 gives \(\eta\le\delta\) in a region \(\mathcal P\) near \(b_\Gamma\), which bounds the energy of the scalar field.</p>
+      </div>
+      <div data-detail="inst" hidden>
+        <h4>The blueshift instability</h4>
+        <p>For any \(n&gt;k+1\) and \(\lambda\ne0\), the evolution of the perturbed data contains a sequence of trapped surfaces converging to \(b_\Gamma\). The blueshift amplifies the perturbation, and along a curve \(\mathcal C_\lambda\), the formation of trapped surfaces criterion \(\eta_\lambda&gt;\delta_\lambda\) holds.</p>
+      </div>
+      <div data-detail="ext" hidden>
+        <h4>Asymptotically AdS characteristic data</h4>
+        <p>The perturbation is constructed on a compact subset of \(C_0^+\). For \(\lambda\) small it extends to asymptotically AdS data. This is a nontrivial step, necessary because of the timelike boundary \(\mathcal I\).</p>
+      </div>
+      <div data-detail="thm" hidden>
+        <h4>Proof of Theorem 1.1</h4>
+        <p>Cauchy stability reduces the problem to the case where \(C_0^-\) intersects \(C_0^+\). The instability then gives \(\mathfrak M_{\mathrm{loc.naked}}\subset\mathrm{cl}(\mathfrak M^{\mathrm{spacelike}}_{\mathrm{black}})\), and the rest follows from the decomposition of \(\mathfrak M\) and the openness of \(\mathfrak M_{\mathrm{black}}\).</p>
+      </div>
+    </div>
+  </figure>
+
+  <h3 id="massgap"><span class="secno">5.1.</span>The mass gap</h3>
+  <p>The paper defines the Hawking mass by</p>
+  \[m=-g(\nabla r,\nabla r)-\Lambda r^2+1,\]
+  <p>translated by 1 as for the BTZ family. It is non-negative for solutions arising in gravitational collapse, and it vanishes on a circle exactly when the solution is AdS in the domain of dependence of the disk bounded by that circle.</p>
+  <p>A circle is trapped exactly when \(m&gt;1+\lvert\Lambda\rvert r^2\).</p>
+  <p>The Bondi mass is \(M=\lim_{r\to\infty}m|_{C_0^+}\), and the reflective boundary conditions are \(m|_{\mathcal I}=M\).</p>
+  <div class="thm">
+    <p class="thm-label">Theorem 1.2 · Mass gap</p>
+    <p>No singularities form in the domain of dependence of a disk bounded by a circle with Hawking mass strictly less than 1.</p>
+    <details class="precise">
+      <summary>Proof idea</summary>
+      <p>For the proof of Theorem 1.2, the bound on \(m\) first gives quantitative control of the geometry. A non-concentration estimate then shows that the scalar field cannot blow up at a faster than self-similar rate, so \(r\partial_r\phi\) is bounded. This improves by a small power of \(r\): \(r^{1-\rho}\partial_r\phi\) is bounded for some small \(\rho&gt;0\). These bounds propagate the local well-posedness norm from the initial data, so no singularities form.</p>
+    </details>
+  </div>
+
+  <figure class="plate wide" id="fig-gap" aria-labelledby="gap-title">
+    <div class="plate-head"><span class="fig-no">Fig. 7</span><h3 class="plate-title" id="gap-title">The mass gap</h3></div>
+    <div class="two">
+      <svg id="gap-svg" role="img" aria-label="Penrose diagram with a circle S on the initial cone and the domain of dependence of the disk it bounds"></svg>
+      <div>
+        <svg id="gap-plot" class="plot" viewBox="0 0 360 250" role="img" aria-label="Hawking mass along the initial cone, compared with 1"></svg>
+        <div class="ctrl">
+          <label for="gap-s">Circle S</label>
+          <input type="range" id="gap-s" min="0.04" max="0.985" step="0.005" value="0.4">
+          <output id="gap-sv" for="gap-s"></output>
+        </div>
+        <div class="ctrl">
+          <label for="gap-M">Bondi mass M</label>
+          <input type="range" id="gap-M" min="0.2" max="2" step="0.01" value="1.6">
+          <output id="gap-Mv" for="gap-M"></output>
+        </div>
+        <div class="presets">
+          <button type="button" class="btn" data-gm="1.6">M = 1.6</button>
+          <button type="button" class="btn" data-gm="0.8">M = 0.8 (below the gap)</button>
+        </div>
+      </div>
+    </div>
+    <p class="out" id="gap-out" aria-live="polite">
+      <span data-gap="glob" hidden><b>Bondi mass \(M\) = <span class="gap-M"></span> &lt; 1.</b> Every circle on \(C_0^+\) has \(m&lt;1\), so no singularities form: the solution is non-collapsing (Corollary 1.2). This proves the conjecture of Bizoń and Jałmużna.</span>
+      <span data-gap="lo" hidden><b>\(m(S)\) = <span class="gap-m"></span> &lt; 1.</b> By <a class="xref" href="#fig-proof" data-pnode="gap">Theorem 1.2</a>, no singularities form in the domain of dependence of the disk bounded by \(S\) (shaded).</span>
+      <span data-gap="hi" hidden><b>\(m(S)\) = <span class="gap-m"></span> ≥ 1.</b> <a class="xref" href="#fig-proof" data-pnode="gap">Theorem 1.2</a> says nothing about this disk. It applies to every smaller disk with \(m&lt;1\), up to the dashed outline, so a singularity can only form outside that region.</span>
+    </p>
+    <p class="caption">Example data on \(C_0^+\), with Hawking mass \(m=Mr^2/(1+r^2)\) increasing from 0 at the center to the Bondi mass \(M\) at \(\mathcal I\) (units \(\lvert\Lambda\rvert=1\)). Move the circle \(S\) along \(C_0^+\), or drag it in the diagram. While \(m(S)&lt;1\), the domain of dependence of the disk bounded by \(S\) is regular. When \(M&lt;1\) this holds for every circle.</p>
+  </figure>
+
+  <p>The main use of the mass gap is the following description of first singularities at the center:</p>
+  <div class="thm">
+    <p class="thm-label">Corollary 1.1</p>
+    <p>Let \(b_\Gamma=(u_*,v_*)\) be a first singularity at the center \(\Gamma\). Then \(m(u,v_*)\to1^+\) as \(u\to u_*^-\).</p>
+  </div>
+  <p>Globally, the Hawking mass is non-decreasing along \(C_0^+\) and tends to the Bondi mass at \(\mathcal I\). As a corollary, we obtain the mass gap in terms of the Bondi mass:</p>
+  <div class="thm">
+    <p class="thm-label">Corollary 1.2</p>
+    <p>Solutions with Bondi mass less than 1 do not form singularities. More precisely, if \(\mathfrak D\in\mathfrak M\) has \(M&lt;1\), then \(\mathfrak D\in\mathrm{int}\big(\mathfrak M_{\mathrm{non}}\big)\). In particular, small perturbations of AdS spacetime are non-collapsing.</p>
+  </div>
+  <p>This proves a conjecture of Bizoń and Jałmużna [<a class="cite" href="#ref-ADS3">BJ13</a>], who gave numerical evidence for very small Bondi mass. It marks a sharp contrast with AdS spacetime in 3+1 dimensions, which is unstable to black hole formation, see [<a class="cite" href="#ref-dafhol">DH06</a>, <a class="cite" href="#ref-BzRo">BR11</a>, <a class="cite" href="#ref-nulldust">Mos20</a>, <a class="cite" href="#ref-vlasov">Mos23</a>].</p>
+  <h3 id="trapping"><span class="secno">5.2.</span>Formation of trapped surfaces criterion</h3>
+  <p>The second ingredient is a quantitative criterion for trapped surface formation, inspired by Christodoulou's work in 3+1 dimensions [<a class="cite" href="#ref-ChrBH">Chr91</a>]. Intuitively, if the energy content of an annular region bounded by two circles on the outgoing null cone \(C_0^+\) is large compared to the size of the region, then a trapped surface forms in evolution.</p>
+  <div class="thm">
+    <p class="thm-label">Theorem 1.3 · Formation of trapped surfaces</p>
+    <p>Let \(C_1=\{v=v_1\}\) be an ingoing cone along which \(r\to0\) and \(m\ge1\), and let \(C_2=\{v=v_2\}\) with \(v_2&gt;v_1\). On \(C_0^+\) set</p>
+    \[\delta_0=\frac{r(u_0,v_2)}{r(u_0,v_1)}-1,\qquad \eta_0=\frac{m(u_0,v_2)-m(u_0,v_1)}{\lvert\Lambda\rvert\,r^2(u_0,v_2)}.\]
+    <p>If \(\delta_0&gt;0\) is small enough and \(\eta_0&gt;\delta_0\), then a marginally trapped surface forms on \(C_2\), at radius at least \(\frac{5\delta_0/4}{1+\delta_0}\,r(u_0,v_2)\).</p>
+    <details class="precise">
+      <summary>Proof idea</summary>
+      <p>The proof adapts Christodoulou's argument [<a class="cite" href="#ref-ChrBH">Chr91</a>] to 2+1 dimensions: the monotonicity properties of the system give a differential inequality for \(\eta=\lvert\Lambda\rvert^{-1}r^{-2}(u,v_2)\big(m(u,v_2)-m(u,v_1)\big)\) along \(C_2\).</p>
+    </details>
+  </div>
+
+  <figure class="plate wide" id="fig-trap" aria-labelledby="trap-title">
+    <div class="plate-head"><span class="fig-no">Fig. 8</span><h3 class="plate-title" id="trap-title">Formation of trapped surfaces</h3></div>
+    <div class="two">
+      <svg id="trap-pd" role="img" aria-label="Penrose diagram with the initial cone, the ingoing cones C1 and C2, and the annulus between them"></svg>
+      <div>
+        <svg id="trap-ring" class="plot" viewBox="0 0 240 240" role="img" aria-label="The annulus between the circles r1 and r2, seen in space" style="max-width:15rem;margin-inline:auto"></svg>
+        <div class="ctrl">
+          <label for="trap-d">Width \(\delta_0\)</label>
+          <input type="range" id="trap-d" min="0.02" max="0.3" step="0.005" value="0.1">
+          <output id="trap-dv" for="trap-d"></output>
+        </div>
+        <div class="ctrl">
+          <label for="trap-e">Energy content \(\eta_0\)</label>
+          <input type="range" id="trap-e" min="0" max="0.6" step="0.005" value="0.22">
+          <output id="trap-ev" for="trap-e"></output>
+        </div>
+      </div>
+    </div>
+    <p class="out" id="trap-out" aria-live="polite">
+      <span data-trap="yes" hidden><b>\(\eta_0\) = <span class="trap-e"></span> &gt; \(\delta_0\) = <span class="trap-d"></span>.</b> A marginally trapped surface forms on \(C_2\), at radius at least <span class="trap-r"></span> \(r_2\).</span>
+      <span data-trap="no" hidden><b>\(\eta_0\) = <span class="trap-e"></span> ≤ \(\delta_0\) = <span class="trap-d"></span>.</b> The energy content is not large compared to the width, and the criterion gives no trapped surface.</span>
+    </p>
+    <p class="caption">The annulus between the circles \(r_1&lt;r_2\) on \(C_0^+\) has relative width \(\delta_0\) and energy content \(\eta_0\). When \(\eta_0&gt;\delta_0\), the marginally trapped surface on \(C_2\) is drawn at a radius above the theorem's lower bound.</p>
+  </figure>
+
+  <p>Following Christodoulou [<a class="cite" href="#ref-ChrWCC">Chr99a</a>], the criterion is used in two ways: directly, after the perturbation, and through its contrapositive, to get a priori control of the scalar field for any locally naked singularity spacetime.</p>
+
+  <h3 id="blueshift"><span class="secno">5.3.</span>Locally naked singularity spacetimes</h3>
+  <p>Let \(b_\Gamma\) be a first singularity at the center whose past light cone \(C_0^-\) intersects \(C_0^+\), and choose double null coordinates such that</p>
+  \[b_\Gamma=(0,0),\qquad C_0^-=\{v=0,\ 2r=-u\},\qquad C_0^+=\{u=u_0,\ 2r=v-u_0\}.\]
+  <p>The renormalized outgoing derivative of the scalar field \(\theta=\sqrt r\,\partial_v\phi/\partial_vr\) satisfies</p>
+  \[\partial_u\theta=\frac{2\lvert\Lambda\rvert r(-\partial_ur)}{1+\lvert\Lambda\rvert r^2-m}\,\theta-\frac{1}{2\sqrt r}\,\partial_u\phi,\]
+  <p>and the blueshift is the integrating factor of this equation:</p>
+  \[\mathbf b(u,v)=\int_{u_0}^{u}\frac{2\lvert\Lambda\rvert r(-\partial_ur)}{1+\lvert\Lambda\rvert r^2-m}(u',v)\,du',\qquad \mathbf b(u)=\mathbf b(u,0).\]
+  <p>Near \(C_0^-\) the mass gap gives \(m\ge1\), and the absence of trapped surfaces gives \(m\le1+\lvert\Lambda\rvert r^2\). Thus, we get <a class="xref" href="#fig-proof" data-pnode="blue">Proposition 5.1</a>:</p>
+  \[\mathbf b(u)\ \ge\ 2\log\frac{u_0}{u}.\]
+  <p>So all first singularities at the center have infinite blueshift, whether or not they are locally naked.</p>
+
+  <figure class="plate wide" id="fig-window" aria-labelledby="win-title">
+    <div class="plate-head"><span class="fig-no">Fig. 9</span><h3 class="plate-title" id="win-title">Infinite blueshift from the mass gap</h3></div>
+    <div class="two">
+      <svg id="win-svg" class="plot" viewBox="0 0 560 330" role="img" aria-label="Hawking mass on the past light cone of the singularity, between m = 1 and m = 1 + r squared, with four draggable points"></svg>
+      <svg id="b-svg" class="plot" viewBox="0 0 420 300" role="img" aria-label="The blueshift for the chosen mass profile, compared with 2 log(u0/u)"></svg>
+    </div>
+    <div class="presets">
+      <button type="button" class="btn" data-w="0,0,0,0">m ≡ 1</button>
+      <button type="button" class="btn" data-w="0.15,0.3,0.45,0.6">Example</button>
+      <button type="button" class="btn" data-w="0.05,0.2,0.5,0.85">Steeper outward</button>
+      <button type="button" class="btn" data-w="0.88,0.88,0.88,0.88">Near the ceiling</button>
+    </div>
+    <p class="caption">On \(C_0^-\), the Hawking mass stays between the floor \(m=1\) (mass gap) and the ceiling \(m=1+\lvert\Lambda\rvert r^2\) (no trapped surfaces), and it increases with \(r\). Drag the four points to choose such a profile (units \(\lvert\Lambda\rvert=1\), \(r(u_0,0)=1\)). The right panel shows \(\mathbf b(u)=\int_{u_0}^u\frac{\lvert\Lambda\rvert r}{1+\lvert\Lambda\rvert r^2-m}\,du'\) for that profile. It always stays above \(2\log(u_0/u)\), with equality exactly when \(m\equiv1\).</p>
+  </figure>
+
+  <p>Moreover, the absence of trapped surfaces near \(b_\Gamma\) gives, by the contrapositive of <a class="xref" href="#fig-proof" data-pnode="crit">Theorem 1.3</a>, bounds for the energy of the scalar field in a region \(\mathcal P\) near \(b_\Gamma\), whose size depends on the strength of the blueshift, proving <a class="xref" href="#fig-proof" data-pnode="ctrl">Proposition 5.2</a>:</p>
+  \[\int_0^v\theta^2(u,v')\,dv'\lesssim\frac{v\lvert u\rvert}{(1+\lvert\Lambda\rvert r^2-m)(u,0)}.\]
+  <p>In \(\mathcal P\) one also has \(e^{\mathbf b(u,v)}\sim e^{\mathbf b(u)}\) and \(\partial_vr(u,v)\sim e^{-\mathbf b(u)}\).</p>
+
+  <h3 id="instability"><span class="secno">5.4.</span>The blueshift instability</h3>
+  <p>Consider perturbations of the initial data on \(C_0^+\) supported on \(\{v\ge0\}\), so that they leave the causal past of \(b_\Gamma\) unchanged. For any integer \(n&gt;k+1\) and any \(\lambda\ne0\), set</p>
+  \[r_\lambda=r,\ \ \phi_\lambda=\phi\ \text{ for } v\le0,\qquad r_\lambda=r,\ \ \theta_\lambda=\theta+\lambda v^n\ \text{ for } 0\le v\le v_0'.\]
+  <p>The main role of the blueshift is to amplify this perturbation: the main contribution in \(\theta_\lambda-\theta\) comes from the integrating factor acting on \(\lambda v^n\),</p>
+  \[\int_0^v\Big\lvert(\theta_\lambda-\theta)(u,v')-e^{\mathbf b_\lambda(u,v')}(\theta_\lambda-\theta)(u_0,v')\Big\rvert^2dv'\ \le\ \lambda^2v^{2n+\frac43}e^{2\mathbf b(u)}\ \ll\ \lambda^2v^{2n+1}e^{2\mathbf b(u)}.\]
+
+  <figure class="plate wide" id="fig-inst" aria-labelledby="inst-title">
+    <div class="plate-head"><span class="fig-no">Fig. 10</span><h3 class="plate-title" id="inst-title">The blueshift instability, step by step</h3></div>
+    <div class="inst-grid">
+      <svg id="inst-svg" role="img" aria-label="Near the first singularity: the perturbation of the data, its amplification along ingoing cones, the trapped surfaces criterion on the curve C lambda, the trapped surfaces that form, and the spacelike singularity"></svg>
+      <div>
+        <div class="steptabs" role="group" aria-label="Steps of the proof">
+          <button type="button" class="btn" data-step="1" aria-pressed="true">1 · Growth</button>
+          <button type="button" class="btn" data-step="2" aria-pressed="false">2 · The criterion applies</button>
+          <button type="button" class="btn" data-step="3" aria-pressed="false">3 · Trapped surfaces form</button>
+          <button type="button" class="btn" data-step="4" aria-pressed="false">4 · A spacelike singularity</button>
+        </div>
+        <div class="pane" data-pane="1">
+          <p><b>Growth.</b> The perturbation \(\theta_\lambda-\theta=\lambda v^n\) on \(C_0^+\) is carried along the ingoing null cones toward \(b_\Gamma\), and the blueshift amplifies it:</p>
+          \[\theta_\lambda-\theta\approx e^{\mathbf b_\lambda(u,v)}\,\lambda v^n,\]
+          <p>up to an error of lower order in \(L^2\), in the region \(\mathcal P_\lambda\) where the perturbed solution is controlled. Near \(b_\Gamma\) the amplification factor is at least \((u_0/u)^2\).</p>
+        </div>
+        <div class="pane" data-pane="2" hidden>
+          <p><b>The criterion applies.</b> The curve \(\mathcal C_\lambda=\{(u,v_\sharp(u))\}\) is suitably chosen and lies in \(\mathcal P_\lambda\) near \(b_\Gamma\). At \(S_\lambda=(u,v_\sharp(u))\), use <a class="xref" href="#fig-proof" data-pnode="crit">Theorem 1.3</a> with \(C_1=C_0^-\), along which \(m\ge1\) and \(r\to0\), and \(C_2=\{v=v_\sharp(u)\}\). The amplified energy of the scalar field gives</p>
+          \[\delta_\lambda\lesssim v_\sharp(u)\,\lvert u\rvert^{-1}e^{-\mathbf b(u)},\]
+          \[\eta_\lambda\gtrsim v_\sharp(u)\,\lvert u\rvert^{-1-\frac1{5n}}e^{-\mathbf b(u)},\]
+          <p>so \(\eta_\lambda/\delta_\lambda\gtrsim\lvert u\rvert^{-1/(5n)}\to\infty\). Hence \(\eta_\lambda&gt;\delta_\lambda\), with \(\delta_\lambda\) small, at every point of \(\mathcal C_\lambda\) close enough to \(b_\Gamma\) (thick).</p>
+        </div>
+        <div class="pane" data-pane="3" hidden>
+          <p><b>Trapped surfaces form.</b> By <a class="xref" href="#fig-proof" data-pnode="crit">Theorem 1.3</a>, a marginally trapped surface \((u_{\mathcal A},v_\sharp(u))\) forms on \(C_2\). This holds for every \(S_\lambda\in\mathcal C_\lambda\) close enough to \(b_\Gamma\), so the spacetime contains a sequence of trapped surfaces converging to \(b_\Gamma\) (<a class="xref" href="#fig-proof" data-pnode="inst">Proposition 6.1</a>).</p>
+        </div>
+        <div class="pane" data-pane="4" hidden>
+          <p><b>A spacelike singularity.</b> Since trapped surfaces form arbitrarily close to \(b_\Gamma\), the null piece \(\mathcal B_0\) of the background disappears: the singularity \(\mathcal B\) is spacelike-only, starting at \(b_\Gamma\). Once the perturbation is extended to asymptotically AdS data, these data lie in \(\mathfrak M_{\mathrm{black}}^{\mathrm{spacelike}}\).</p>
+          <p>The smaller \(\lvert\lambda\rvert\), the closer to \(b_\Gamma\) the trapped surfaces form, but the singularity is still spacelike-only.</p>
+        </div>
+        <div class="ctrl">
+          <label for="inst-l">Size of λ</label>
+          <input type="range" id="inst-l" min="-3" max="-1" step="0.01" value="-1.3">
+          <output id="inst-lv" for="inst-l"></output>
+        </div>
+      </div>
+    </div>
+  </figure>
+
+  <p>Concretely, along the curve \(\mathcal C_\lambda=\{(u,v_\sharp(u))\}\) the two estimates above give</p>
+  \[\int_0^{v_\sharp(u)}\big\lvert\theta_\lambda(u,v')\big\rvert^2dv'\gtrsim\lambda^2\big[v_\sharp(u)\big]^{2n+1}e^{2\mathbf b(u)},\]
+  <p>which implies \(\eta_\lambda\big(u,v_\sharp(u)\big)&gt;\delta_\lambda\big(u,v_\sharp(u)\big)\) for all \(\lvert u\rvert\) small. So the perturbed spacetime contains a sequence of trapped surfaces converging to \(b_\Gamma\) (<a class="xref" href="#fig-proof" data-pnode="inst">Proposition 6.1</a>), and its singularity is spacelike-only.</p>
+  <p>Finally, the perturbation is constructed only on a compact subset of \(C_0^+\). For \(\lambda\) small, Appendix A extends it to asymptotically AdS data, a nontrivial step needed because of the timelike boundary \(\mathcal I\). Cauchy stability and the decomposition of \(\mathfrak M\) complete the proof of Theorem 1.1.</p>
+</section>
+
+<section class="col" id="christodoulou">
+  <h2><span class="secno">6.</span>Comparison with 3+1 dimensions</h2>
+  <div class="table-wrap">
+    <table class="cmp">
+      <thead><tr><th scope="col"></th><th scope="col"><span class="nobr">Christodoulou [<a class="cite" href="#ref-ChrWCC">Chr99a</a>]</span></th><th scope="col">This paper</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Setting</th><td>3+1 dimensions<br>spherical symmetry<br>\(\Lambda=0\)</td><td>2+1 dimensions<br>circular symmetry<br>\(\Lambda&lt;0\)</td></tr>
+        <tr><th scope="row">Initial data</th><td>\(\theta\) absolutely continuous</td><td>\(\phi\in C^k\), any \(k\ge2\)</td></tr>
+        <tr><th scope="row">Genericity</th><td>positive codimension</td><td>complement of an open dense set</td></tr>
+        <tr><th scope="row">Blueshift</th><td>unbounded, without a rate</td><td>unbounded, with \(\mathbf b(u)\ge2\log(u_0/u)\)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Both proofs use the formation of trapped surfaces criterion and its contrapositive, and both rely on the fact that locally naked singularity spacetimes have unbounded blueshift. In Christodoulou's theorem [<a class="cite" href="#ref-ChrWCC">Chr99a</a>] the low-regularity topology is necessary to activate the blueshift instability. Here, the different scaling of the problem and the quantitative lower bound \(\mathbf b(u)\ge2\log(u_0/u)\) allow the blueshift instability to work in \(C^k\).</p>
+  <p>The two approaches also differ. Christodoulou derives refined necessary conditions for a spacetime to be a locally naked singularity, as compatibility conditions between the data on \(C_0^+\) and the solution on \(C_0^-\), and then violates them by perturbing the initial data. This paper starts with the perturbation and carries out most of the argument in the perturbed spacetime, describing in detail how the solution enters the regime where <a class="xref" href="#fig-proof" data-pnode="crit">Theorem 1.3</a> applies.</p>
+</section>
+
+<section class="col" id="examples">
+  <h2><span class="secno">7.</span>Upcoming work</h2>
+  <p>Constructing examples of naked singularities plays a fundamental role in understanding their general properties and their instability. Moreover, the existence of such examples justifies the need to include genericity conditions in any formulation of the Weak Cosmic Censorship conjecture.</p>
+  <p>In 3+1 dimensions, Choptuik's numerical work on critical collapse [<a class="cite" href="#ref-Cho93">Cho93</a>] suggests the existence of naked singularities on the threshold between black hole formation and non-collapse. This threshold behavior has never been constructed rigorously. The examples of naked singularities that do exist, by Christodoulou [<a class="cite" href="#ref-C94">Chr94</a>] for the spherically symmetric Einstein-scalar field system and by Rodnianski and Shlapentokh-Rothman [<a class="cite" href="#ref-RSR23">RSR23</a>, <a class="cite" href="#ref-SR22">SR22</a>] for the Einstein vacuum equations, are not proved to be on the threshold, and they arise from low-regularity initial data.</p>
+  <aside class="sn">For the Einstein-dust system (Christodoulou [<a class="cite" href="#ref-dust">Chr84</a>]) and the Einstein–Euler system (Guo, Hadžić and Jang [<a class="cite" href="#ref-euler">GHJ23</a>]), there are naked singularities arising from smooth data, but these matter models are prone to singularity formation even in the absence of gravity.</aside>
+  <p>In 2+1 dimensions with \(\Lambda&lt;0\), the numerical works of Pretorius–Choptuik [<a class="cite" href="#ref-Pretorius">PC00</a>] and Jałmużna–Gundlach–Chmaj [<a class="cite" href="#ref-jalmuzna">JGC15</a>] see the same threshold behavior.</p>
+  <div class="callout"><b>The first threshold examples.</b> In upcoming work with Igor Rodnianski [<a class="cite" href="#ref-preparation">CR26</a>], we give the first rigorous construction of naked singularities on the threshold of gravitational collapse: locally naked singularities arising in (local) critical collapse. Unlike all previous naked singularity examples for scalar field models, our examples arise from high-regularity data, as the numerics predict.</div>
+  <p>On the finite outgoing cone \(C_0^+=\{u=u_0,\ 0\le r&lt;r_0\}\), we construct a 2-parameter family of \(C^3\) characteristic data \(\mathfrak D^q_\lambda\), for any integer \(q\ge4\) and \(\lambda\in(-\epsilon,\epsilon)\), with the following properties:</p>
+  <ul class="props">
+    <li>For \(\lambda&lt;0\), the development of \(\mathfrak D^q_\lambda\) does not form singularities.</li>
+    <li>For \(\lambda=0\), the development is a locally naked singularity spacetime and contains no trapped surfaces. The case \((\lambda,q)=(0,4)\) corresponds to the numerical examples of [<a class="cite" href="#ref-Pretorius">PC00</a>, <a class="cite" href="#ref-jalmuzna">JGC15</a>].</li>
+    <li>For \(\lambda&gt;0\), the development contains trapped surfaces.</li>
+  </ul>
+
+  <figure class="plate wide" id="fig-ex" aria-labelledby="ex-title-h">
+    <div class="plate-head"><span class="fig-no">Fig. 11</span><h3 class="plate-title" id="ex-title-h">Threshold examples</h3><span class="badge blue">Upcoming work with Igor Rodnianski</span></div>
+    <div class="mod-grid">
+      <svg id="ex-svg" viewBox="0 0 640 300" role="img" aria-label="Cartoon of the space of data on a finite cone: a threshold, and one-parameter families crossing it, one for each q"></svg>
+      <div class="mod-side">
+        <svg id="ex-mini" role="img" aria-label="Penrose diagram of the local development for the current data"></svg>
+        <div aria-live="polite">
+          <p class="mod-title" id="ex-title"><span data-sign="reg" hidden>\(\lambda&lt;0\)</span><span data-sign="naked" hidden>\(\lambda=0\)</span><span data-sign="trap" hidden>\(\lambda&gt;0\)</span></p>
+          <p class="mod-text" id="ex-text"></p>
+        </div>
+      </div>
+    </div>
+    <div class="duo-ctrl">
+      <span class="seg-label">Family q</span>
+      <div class="qbtns">
+        <button type="button" class="btn" data-q="4" aria-pressed="true">4</button>
+        <button type="button" class="btn" data-q="5" aria-pressed="false">5</button>
+        <button type="button" class="btn" data-q="6" aria-pressed="false">6</button>
+        <button type="button" class="btn" data-q="7" aria-pressed="false">7</button>
+      </div>
+    </div>
+    <div class="ctrl">
+      <label for="ex-l">Parameter λ</label>
+      <div class="range-ends"><span aria-hidden="true">\(-\epsilon\)</span><input type="range" id="ex-l" min="-1" max="1" step="0.01" value="-0.5"><span aria-hidden="true">\(\epsilon\)</span></div>
+      <output id="ex-lv" for="ex-l"><span data-sign="reg" hidden>\(\lambda&lt;0\)</span><span data-sign="naked" hidden>\(\lambda=0\)</span><span data-sign="trap" hidden>\(\lambda&gt;0\)</span></output>
+    </div>
+    <div class="presets"><button type="button" class="btn" id="ex-zero">Go to λ = 0</button></div>
+    <p class="out" id="ex-rate" aria-live="polite">
+      <span data-rate="move" hidden>Move \(\lambda\) to 0 to see the locally naked singularity of the family \(q\) = <span class="ex-q"></span>.</span>
+      <span data-rate="4" hidden><b>Blueshift at \(\lambda=0\), \(q=4\):</b> \(\mathbf b(u)=\big(3-\tfrac{1}{8}\big)\log(u_0/u)+O(1)\), above the general lower bound \(2\log(u_0/u)\).</span>
+      <span data-rate="5" hidden><b>Blueshift at \(\lambda=0\), \(q=5\):</b> \(\mathbf b(u)=\big(3-\tfrac{1}{10}\big)\log(u_0/u)+O(1)\), above the general lower bound \(2\log(u_0/u)\).</span>
+      <span data-rate="6" hidden><b>Blueshift at \(\lambda=0\), \(q=6\):</b> \(\mathbf b(u)=\big(3-\tfrac{1}{12}\big)\log(u_0/u)+O(1)\), above the general lower bound \(2\log(u_0/u)\).</span>
+      <span data-rate="7" hidden><b>Blueshift at \(\lambda=0\), \(q=7\):</b> \(\mathbf b(u)=\big(3-\tfrac{1}{14}\big)\log(u_0/u)+O(1)\), above the general lower bound \(2\log(u_0/u)\).</span>
+    </p>
+    <p class="caption">These are data on a finite cone, so this is a picture of the local problem. Each family \(\lambda\mapsto\mathfrak D^q_\lambda\) is a short curve and it crosses the threshold at \(\lambda=0\), where the development is a locally naked singularity with no trapped surfaces.</p>
+  </figure>
+
+  <p>For \(\lambda=0\) the blueshift has the exact rate</p>
+  \[\mathbf b(u)=\Big(3-\frac1{2q}\Big)\log\frac{u_0}{u}+O(1),\]
+  <p>which should be compared with the general lower bound \(2\log(u_0/u)\) of <a class="xref" href="#fig-proof" data-pnode="blue">Proposition 5.1</a>.</p>
+  <p>An immediate consequence is that \(\mathfrak D^q_0\) extends to asymptotically AdS data in \(\mathfrak M_{\mathrm{loc.naked}}\). In particular \(\mathfrak M_{\mathrm{loc.naked}}\neq\emptyset\): locally naked singularities do occur in the class of solutions of this paper, and by Theorem 1.1 each of them is unstable to the formation of spacelike-only singularities.</p>
+</section>
+
+<section class="col" id="references">
+  <h2>References</h2>
+  <ol class="refs">
+    <li id="ref-ADS3"><span class="ref-label">[BJ13]</span><span>P. Bizoń and J. Jałmużna, <em>Globally regular instability of 3-dimensional Anti–de Sitter spacetime</em>, Phys. Rev. Lett. <b>111</b> (2013). <a class="ref-link" href="https://doi.org/10.1103/PhysRevLett.111.041102">DOI</a></span></li>
+    <li id="ref-BzRo"><span class="ref-label">[BR11]</span><span>P. Bizoń and A. Rostworowski, <em>Weakly turbulent instability of Anti–de Sitter spacetime</em>, Phys. Rev. Lett. <b>107</b> (2011). <a class="ref-link" href="https://doi.org/10.1103/PhysRevLett.107.031102">DOI</a></span></li>
+    <li id="ref-BTZ"><span class="ref-label">[BTZ92]</span><span>M. Bañados, C. Teitelboim, and J. Zanelli, <em>Black hole in three-dimensional spacetime</em>, Phys. Rev. Lett. <b>69</b> (1992), 1849–1851. <a class="ref-link" href="https://doi.org/10.1103/PhysRevLett.69.1849">DOI</a></span></li>
+    <li id="ref-BTZsurvey"><span class="ref-label">[Car95]</span><span>S. Carlip, <em>The (2 + 1)-dimensional black hole</em>, Classical and Quantum Gravity <b>12</b> (1995), no. 12, 2853. <a class="ref-link" href="https://doi.org/10.1088/0264-9381/12/12/005">DOI</a></span></li>
+    <li id="ref-Cho93"><span class="ref-label">[Cho93]</span><span>M. Choptuik, <em>Universality and scaling in gravitational collapse of a massless scalar field</em>, Phys. Rev. Lett. <b>70</b> (1993), 9–12. <a class="ref-link" href="https://doi.org/10.1103/PhysRevLett.70.9">DOI</a></span></li>
+    <li id="ref-dust"><span class="ref-label">[Chr84]</span><span>D. Christodoulou, <em>Violation of cosmic censorship in the gravitational collapse of a dust cloud</em>, Comm. Math. Phys. <b>93</b> (1984), no. 2, 171–195. <a class="ref-link" href="http://projecteuclid.org/euclid.cmp/1103941053">Link</a></span></li>
+    <li id="ref-ChrBH"><span class="ref-label">[Chr91]</span><span>D. Christodoulou, <em>The formation of black holes and singularities in spherically symmetric gravitational collapse</em>, Comm. Pure Appl. Math. <b>44</b> (1991), no. 3, 339–373. <a class="ref-link" href="https://doi.org/10.1002/cpa.3160440305">DOI</a></span></li>
+    <li id="ref-C94"><span class="ref-label">[Chr94]</span><span>D. Christodoulou, <em>Examples of naked singularity formation in the gravitational collapse of a scalar field</em>, Ann. of Math. (2) <b>140</b> (1994), no. 3, 607–653. <a class="ref-link" href="https://doi.org/10.2307/2118619">DOI</a></span></li>
+    <li id="ref-ChrWCC"><span class="ref-label">[Chr99a]</span><span>D. Christodoulou, <em>The instability of naked singularities in the gravitational collapse of a scalar field</em>, Ann. of Math. (2) <b>149</b> (1999), no. 1, 183–217. <a class="ref-link" href="https://doi.org/10.2307/121023">DOI</a></span></li>
+    <li id="ref-C99-GL"><span class="ref-label">[Chr99b]</span><span>D. Christodoulou, <em>On the global initial value problem and the issue of singularities</em>, Classical Quantum Gravity <b>16</b> (1999), no. 12A, A23–A35. <a class="ref-link" href="https://doi.org/10.1088/0264-9381/16/12A/302">DOI</a></span></li>
+    <li id="ref-preparation"><span class="ref-label">[CR26]</span><span>S. Cicortas and I. Rodnianski, <em>Critical collapse in 2+1 gravity</em>, in preparation (2026).</span></li>
+    <li id="ref-dafhol"><span class="ref-label">[DH06]</span><span>M. Dafermos and G. Holzegel, <em>Dynamic instability of solitons in 4+1-dimensional gravity with negative cosmological constant</em>, 2006, available online at <a href="https://www.dpmms.cam.ac.uk/~md384/ADSinstability.pdf">https://www.dpmms.cam.ac.uk/~md384/ADSinstability.pdf</a>.</span></li>
+    <li id="ref-GH78"><span class="ref-label">[GH78]</span><span>R. Geroch and G. Horowitz, <em>Asymptotically simple does not imply asymptotically Minkowskian</em>, Phys. Rev. Lett. <b>40</b> (1978), 203–206. <a class="ref-link" href="https://doi.org/10.1103/PhysRevLett.40.203">DOI</a></span></li>
+    <li id="ref-euler"><span class="ref-label">[GHJ23]</span><span>Y. Guo, M. Hadžić, and J. Jang, <em>Naked singularities in the Einstein-Euler system</em>, Ann. PDE <b>9</b> (2023), no. 1, Paper No. 4, 182. <a class="ref-link" href="https://doi.org/10.1007/s40818-022-00144-3">DOI</a></span></li>
+    <li id="ref-Gundlach2007"><span class="ref-label">[GMG07]</span><span>C. Gundlach and J. Martín-García, <em>Critical phenomena in gravitational collapse</em>, Living Rev. Relativ. <b>10</b> (2007), no. 1. <a class="ref-link" href="https://doi.org/10.12942/lrr-2007-5">DOI</a></span></li>
+    <li id="ref-localwellposed"><span class="ref-label">[HS12]</span><span>G. Holzegel and J. Smulevici, <em>Self-gravitating Klein-Gordon fields in asymptotically anti-de-Sitter spacetimes</em>, Ann. Henri Poincaré <b>13</b> (2012), no. 4, 991–1038. <a class="ref-link" href="https://doi.org/10.1007/s00023-011-0146-8">DOI</a></span></li>
+    <li id="ref-jalmuzna"><span class="ref-label">[JGC15]</span><span>J. Jałmużna, C. Gundlach, and T. Chmaj, <em>Scalar field critical collapse in 2+1 dimensions</em>, Phys. Rev. D <b>92</b> (2015). <a class="ref-link" href="https://doi.org/10.1103/PhysRevD.92.124044">DOI</a></span></li>
+    <li id="ref-kommemi"><span class="ref-label">[Kom13]</span><span>J. Kommemi, <em>The global structure of spherically symmetric charged scalar field spacetimes</em>, Comm. Math. Phys. <b>323</b> (2013), no. 1, 35–106. <a class="ref-link" href="https://doi.org/10.1007/s00220-013-1759-1">DOI</a></span></li>
+    <li id="ref-nulldust"><span class="ref-label">[Mos20]</span><span>G. Moschidis, <em>A proof of the instability of AdS for the Einstein-null dust system with an inner mirror</em>, Anal. PDE <b>13</b> (2020), no. 6, 1671–1754. <a class="ref-link" href="https://doi.org/10.2140/apde.2020.13.1671">DOI</a></span></li>
+    <li id="ref-vlasov"><span class="ref-label">[Mos23]</span><span>G. Moschidis, <em>A proof of the instability of AdS for the Einstein-massless Vlasov system</em>, Invent. Math. <b>231</b> (2023), no. 2, 467–672. <a class="ref-link" href="https://doi.org/10.1007/s00222-022-01152-7">DOI</a></span></li>
+    <li id="ref-Pretorius"><span class="ref-label">[PC00]</span><span>F. Pretorius and M. Choptuik, <em>Gravitational collapse in 2+1 dimensional AdS spacetime</em>, Phys. Rev. D <b>62</b> (2000). <a class="ref-link" href="https://doi.org/10.1103/PhysRevD.62.124012">DOI</a></span></li>
+    <li id="ref-P69"><span class="ref-label">[Pen69]</span><span>R. Penrose, <em>Gravitational collapse: The role of general relativity</em>, Riv. Nuovo Cim. <b>1</b> (1969), 252–276. <a class="ref-link" href="https://doi.org/10.1023/A:1016578408204">DOI</a></span></li>
+    <li id="ref-RSR23"><span class="ref-label">[RSR23]</span><span>I. Rodnianski and Y. Shlapentokh-Rothman, <em>Naked singularities for the Einstein vacuum equations: the exterior solution</em>, Ann. of Math. (2) <b>198</b> (2023), no. 1, 231–391. <a class="ref-link" href="https://doi.org/10.4007/annals.2023.198.1.3">DOI</a></span></li>
+    <li id="ref-SR22"><span class="ref-label">[SR22]</span><span>Y. Shlapentokh-Rothman, <em>Naked singularities for the Einstein vacuum equations: The interior solution</em>, arXiv e-prints (2022), <a href="https://arxiv.org/abs/2204.09891">arxiv:2204.09891</a>.</span></li>
+  </ol>
+</section>
+
+</main>
+
+<footer class="col">
+  <p>Serban Cicortas. <em>Weak cosmic censorship for the circularly symmetric Einstein-scalar field system in 2+1 dimensions.</em> arXiv:2605.19143 [gr-qc], 2026. <a href="https://arxiv.org/abs/2605.19143">arxiv.org/abs/2605.19143</a></p>
+  <p>Acknowledgement: this webpage was created with the help of Claude (Claude Opus 5.5, by Anthropic), using <a href="https://claude.com/claude-code">Claude Code</a>.</p>
+</footer>
+
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var NS = 'http://www.w3.org/2000/svg';
+  var RM = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
+  function $(q, r) { return (r || document).querySelector(q); }
+  function $$(q, r) { return Array.prototype.slice.call((r || document).querySelectorAll(q)); }
+  function sv(tag, a, parent) {
+    var e = document.createElementNS(NS, tag);
+    if (a) for (var k in a) if (a[k] !== null && a[k] !== undefined) e.setAttribute(k, a[k]);
+    if (parent) parent.appendChild(e);
+    return e;
+  }
+  function lerp(a, b, t) { return a + (b - a) * t; }
+  function clamp(x, a, b) { return Math.max(a, Math.min(b, x)); }
+  function lp(p, q, t) { return [lerp(p[0], q[0], t), lerp(p[1], q[1], t)]; }
+  function lc(c, d, t) { return c.map(function (p, i) { return lp(p, d[i], t); }); }
+  function bez(c, t) {
+    var u = 1 - t, a = u * u * u, b = 3 * u * u * t, d = 3 * u * t * t, e = t * t * t;
+    return [a * c[0][0] + b * c[1][0] + d * c[2][0] + e * c[3][0], a * c[0][1] + b * c[1][1] + d * c[2][1] + e * c[3][1]];
+  }
+  function L(a, b) { return [a, lp(a, b, 1 / 3), lp(a, b, 2 / 3), b]; }
+  function samp(c, n, t0, t1) {
+    if (t0 == null) t0 = 0; if (t1 == null) t1 = 1;
+    var o = []; for (var i = 0; i <= n; i++) o.push(bez(c, lerp(t0, t1, i / n))); return o;
+  }
+  function solveT(c, fn) {
+    var prev = fn(bez(c, 0)), tp = 0;
+    for (var i = 1; i <= 400; i++) {
+      var t = i / 400, v = fn(bez(c, t));
+      if ((prev <= 0) !== (v <= 0)) {
+        var a = tp, b = t, fa = prev;
+        for (var k = 0; k < 50; k++) { var m = (a + b) / 2, fm = fn(bez(c, m)); if ((fa <= 0) === (fm <= 0)) { a = m; fa = fm; } else b = m; }
+        return (a + b) / 2;
+      }
+      prev = v; tp = t;
+    }
+    return 1;
+  }
+  function hit(p, d, poly) {
+    var best = Infinity;
+    for (var i = 0; i < poly.length - 1; i++) {
+      var a = poly[i], b = poly[i + 1], ex = b[0] - a[0], ey = b[1] - a[1], den = d[0] * ey - d[1] * ex;
+      if (Math.abs(den) < 1e-12) continue;
+      var ax = a[0] - p[0], ay = a[1] - p[1], t = (ax * ey - ay * ex) / den, s = (ax * d[1] - ay * d[0]) / den;
+      if (t > 1e-6 && s >= -1e-9 && s <= 1 + 1e-9 && t < best) best = t;
+    }
+    return best;
+  }
+  function inPoly(pt, poly) {
+    var c = false;
+    for (var i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+      var xi = poly[i][0], yi = poly[i][1], xj = poly[j][0], yj = poly[j][1];
+      if ((yi > pt[1]) !== (yj > pt[1]) && pt[0] < (xj - xi) * (pt[1] - yi) / (yj - yi) + xi) c = !c;
+    }
+    return c;
+  }
+  // SVG text with _{sub} and ^{sup}. Offsets are in em, so CSS can rescale a whole label.
+  function rich(parent, x, y, str, size, cls, anchor) {
+    var t = sv('text', { x: x.toFixed(2), y: y.toFixed(2), 'font-size': size.toFixed(2), 'class': cls || 'pd-label', 'text-anchor': anchor || 'start' }, parent);
+    var parts = String(str).split(/(_\{[^}]*\}|\^\{[^}]*\}|\*[^*]+\*)/).filter(function (s) { return s.length; });
+    var shift = 0, prevSub = null;
+    parts.forEach(function (part) {
+      var txt = part, target = 0, small = false, ital = false;
+      if (part.charAt(0) === '_' && part.charAt(1) === '{') { txt = part.slice(2, -1); target = 0.3; small = true; }
+      else if (part.charAt(0) === '^' && part.charAt(1) === '{') { txt = part.slice(2, -1); target = -0.42; small = true; }
+      else if (part.charAt(0) === '*' && part.length > 2) { txt = part.slice(1, -1); ital = true; }
+      var sp = sv('tspan', { dy: ((target - shift) / (small ? 0.7 : 1)).toFixed(3) + 'em' }, t);
+      if (small) sp.setAttribute('font-size', '70%');
+      if (ital) sp.setAttribute('font-style', 'italic');
+      // A superscript right after a subscript is stacked above it, as in C_0^+.
+      if (target < 0 && prevSub) sp.setAttribute('dx', (-0.58 * prevSub.length).toFixed(2) + 'em');
+      sp.textContent = txt; shift = target; prevSub = target > 0 ? txt : null;
+    });
+    return t;
+  }
+  // A figure drawn in a fixed viewBox shrinks on narrow screens; --k scales its text back up.
+  function fitText(svg, viewW, onChange) {
+    var last = 0;
+    function fit() {
+      var w = svg.getBoundingClientRect().width; if (!w) return;
+      var k = Math.max(1, Math.min(2.2, Math.round(viewW / w * 20) / 20));
+      if (k === last) return;
+      last = k; svg.style.setProperty('--k', k);
+      if (onChange) onChange(k);
+    }
+    if (window.ResizeObserver) new ResizeObserver(fit).observe(svg); else window.addEventListener('resize', fit);
+    fit();
+  }
+  // Math labels in the diagrams use MathJax's TeX glyphs (\mathcal I for null infinity, as in the paper).
+  // Until MathJax has loaded they show plain text, and every diagram is redrawn once it is ready.
+  var TEX = { ready: false, cache: {}, waiting: [] }, ALL = [];
+  function texNode(tex) {
+    if (!TEX.ready) return null;
+    if (!(tex in TEX.cache)) {
+      try { TEX.cache[tex] = window.MathJax.tex2svg(tex, { display: false }).querySelector('svg'); }
+      catch (err) { TEX.cache[tex] = null; }
+    }
+    return TEX.cache[tex] ? TEX.cache[tex].cloneNode(true) : null;
+  }
+  function texLabel(parent, x, y, tex, size, cls, anchor, fallback, rot) {
+    var s = texNode(tex), node;
+    if (!s) node = rich(parent, x, y, fallback || tex, size, 'pd-label ' + (cls || ''), anchor);
+    else {
+      var vb = (s.getAttribute('viewBox') || '0 0 0 0').split(/[\s,]+/).map(Number), k = size * 1.1 / 1000, w = vb[2] * k;
+      ['style', 'role', 'focusable', 'aria-hidden'].forEach(function (a) { s.removeAttribute(a); });
+      s.setAttribute('x', (x - (anchor === 'middle' ? w / 2 : anchor === 'end' ? w : 0)).toFixed(2));
+      s.setAttribute('y', (y + vb[1] * k).toFixed(2));
+      s.setAttribute('width', w.toFixed(2)); s.setAttribute('height', (vb[3] * k).toFixed(2));
+      s.setAttribute('overflow', 'visible'); s.setAttribute('class', 'tex ' + (cls || ''));
+      node = parent.appendChild(s);
+    }
+    if (rot) { var g = sv('g', { transform: 'rotate(' + rot + ' ' + x.toFixed(2) + ' ' + y.toFixed(2) + ')' }, parent); g.appendChild(node); node = g; }
+    return node;
+  }
+  // A TeX label outside the diagrams, upgraded in place once MathJax is ready.
+  function mathLabel(parent, x, y, tex, size, cls, anchor, fallback) {
+    var node = texLabel(parent, x, y, tex, size, cls, anchor, fallback);
+    if (!TEX.ready) TEX.waiting.push(function () { var fresh = texLabel(parent, x, y, tex, size, cls, anchor, fallback); parent.replaceChild(fresh, node); node = fresh; });
+    return node;
+  }
+  // A display formula wider than its column is scaled down to fit, so the page never scrolls sideways.
+  function fitDisplay(m) {
+    var w = m.clientWidth; if (!w || +m.dataset.fitW === w) return;
+    m.dataset.fitW = w;
+    if (m.dataset.fs0 == null) m.dataset.fs0 = m.style.fontSize || '100%';
+    m.style.fontSize = m.dataset.fs0;
+    // Two passes, since a formula does not scale exactly in proportion to its font size.
+    for (var k = 1, pass = 0; pass < 2 && m.scrollWidth > w + 1; pass++) {
+      k = Math.max(0.42, k * 0.99 * w / m.scrollWidth);
+      m.style.fontSize = 'calc(' + m.dataset.fs0 + ' * ' + k.toFixed(3) + ')';
+    }
+  }
+  function fitMath() {
+    var ro = window.ResizeObserver ? new ResizeObserver(function (es) { es.forEach(function (e) { fitDisplay(e.target); }); }) : null;
+    $$('mjx-container[display="true"]').forEach(function (m) { fitDisplay(m); if (ro) ro.observe(m); });
+  }
+  // A period or comma right after an inline formula stays on the formula's line.
+  function gluePunctuation(root) {
+    $$('mjx-container:not([display="true"])', root).forEach(function (m) {
+      var t = m.nextSibling;
+      if (!t || t.nodeType !== 3 || !/^[.,;:!?)]/.test(t.data) || m.parentNode.classList.contains('nobr')) return;
+      var w = document.createElement('span'); w.className = 'nobr';
+      m.parentNode.insertBefore(w, m); w.appendChild(m);
+      var k = t.data.match(/^[.,;:!?)]+/)[0].length;
+      w.appendChild(document.createTextNode(t.data.slice(0, k))); t.data = t.data.slice(k);
+    });
+  }
+  window.onTexReady = function () {
+    TEX.ready = true; gluePunctuation(document); fitMath();
+    ALL.forEach(function (D) { if (D.geom) { D.render(D.geom); D.drawRays(-1); if (D.onResize) D.onResize(); } });
+    TEX.waiting.forEach(function (f) { f(); }); TEX.waiting = [];
+  };
+  // A small wave drawn along the segment a-b: the perturbation of the data.
+  function squiggle(a, b, amp) {
+    var o = [], d = [b[0] - a[0], b[1] - a[1]], len = Math.hypot(d[0], d[1]), nx = -d[1] / len, ny = d[0] / len;
+    for (var i = 0; i <= 64; i++) { var s = i / 64, p = lp(a, b, s), w = amp * Math.sin(Math.PI * s) * Math.sin(5 * Math.PI * s); o.push([p[0] + w * nx, p[1] + w * ny]); }
+    return o;
+  }
+  function fmtBig(e) {
+    if (e < 6) return Math.round(Math.pow(10, e)).toLocaleString('en-US');
+    var k = Math.floor(e), m = Math.pow(10, e - k);
+    if (m >= 9.95) { m = 1; k += 1; }
+    return m.toFixed(1) + ' × 10<sup>' + k + '</sup>';
+  }
+  function ease(k) { return k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2; }
+  function svgXY(svg, e) {
+    var m = svg.getScreenCTM(); if (!m) return null;
+    var pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY;
+    var q = pt.matrixTransform(m.inverse()); return [q.x, q.y];
+  }
+  function watchVisible(el, cb) {
+    if (window.IntersectionObserver) new IntersectionObserver(function (es) { cb(es[0].isIntersecting); }).observe(el); else cb(true);
+  }
+  function pressed(buttons, active) { buttons.forEach(function (b) { b.setAttribute('aria-pressed', String(b === active)); }); }
+  function piece(g, id) { for (var i = 0; i < g.pieces.length; i++) if (g.pieces[i].id === id) return g.pieces[i]; return null; }
+  // Animates a parameter t between 0 and 1, calling drawAt(t) every frame and done() at the end.
+  function morpher(drawAt, done) {
+    var t = 0, raf = 0;
+    return {
+      go: function (to) {
+        cancelAnimationFrame(raf);
+        if (RM.matches) { t = to; drawAt(t); done(); return; }
+        var t0 = performance.now(), from = t, dur = 950 * Math.abs(to - from) || 1;
+        var step = function (now) {
+          var k = Math.min(1, (now - t0) / dur); t = lerp(from, to, ease(k)); drawAt(t);
+          if (k < 1) raf = requestAnimationFrame(step); else done();
+        };
+        raf = requestAnimationFrame(step);
+      }
+    };
+  }
+
+  /* ================= Penrose diagram engine ================= */
+  var DIAGRAMS = 0;
+  function Diagram(svg, o) {
+    var self = this;
+    this.svg = svg; this.v = o.view; this.S = o.scale; this.fs = o.fs == null ? 15 : o.fs;
+    this.W = (this.v[1] - this.v[0]) * this.S; this.H = (this.v[3] - this.v[2]) * this.S;
+    svg.setAttribute('viewBox', '0 0 ' + this.W.toFixed(1) + ' ' + this.H.toFixed(1));
+    svg.classList.add('pd'); if (o.interactive === false) svg.classList.add('static');
+    this.mid = 'pdarrow' + (++DIAGRAMS);
+    this.defs = sv('defs', null, svg);
+    var mk = sv('marker', { id: this.mid, viewBox: '0 0 10 10', refX: 8.5, refY: 5, markerWidth: 6.5, markerHeight: 6.5, orient: 'auto-start-reverse' }, this.defs);
+    sv('path', { d: 'M0,0 L10,5 L0,10 z', 'class': 'pd-arrowhead' }, mk);
+    this.gS = sv('g', null, svg); this.gL = sv('g', null, svg); this.gM = sv('g', null, svg);
+    this.gR = sv('g', null, svg); this.gX = sv('g', null, svg); this.gT = sv('g', null, svg);
+    this.rays = []; this.mode = 'out'; this.pairs = !!o.pairs; this.onRay = o.onRay || null; this.region = []; this.terms = []; this.inTerms = [];
+    this.userRays = false; this.geom = null; this.k = 1;
+    ALL.push(this);
+    if (o.interactive !== false) svg.addEventListener('click', function (e) {
+      var p = self.toWorld(e); if (!p) return;
+      self.userRays = true;
+      var r = self.pairs ? self.addPair(p) : self.addRay(p, self.mode);
+      if (self.onRay) self.onRay(r);
+    });
+    if (window.ResizeObserver) new ResizeObserver(function () {
+      if (self.geom && self.labelScale() !== self.k) { self.render(self.geom); self.drawRays(-1); if (self.onResize) self.onResize(); }
+    }).observe(svg);
+  }
+  // Labels keep roughly their screen size when the diagram is drawn small.
+  Diagram.prototype.labelScale = function () {
+    var w = this.svg.getBoundingClientRect().width;
+    return w > 0 ? Math.max(1, Math.min(1.45, Math.round(this.W / w * 20) / 20)) : 1;
+  };
+  Diagram.prototype.X = function (p) { return [(p[0] - this.v[0]) * this.S, (this.v[3] - p[1]) * this.S]; };
+  Diagram.prototype.f = function (p) { var q = this.X(p); return q[0].toFixed(2) + ',' + q[1].toFixed(2); };
+  Diagram.prototype.cp = function (c) { return 'M' + this.f(c[0]) + 'C' + this.f(c[1]) + ' ' + this.f(c[2]) + ' ' + this.f(c[3]); };
+  Diagram.prototype.pl = function (pts, close) { var s = this; return 'M' + pts.map(function (p) { return s.f(p); }).join('L') + (close ? 'Z' : ''); };
+  Diagram.prototype.render = function (g) {
+    var s = this;
+    this.geom = g; this.k = this.labelScale();
+    [this.gS, this.gL, this.gM, this.gT].forEach(function (x) { x.textContent = ''; });
+    (g.shades || []).forEach(function (h) { if (h.op === 0) return; sv('path', { d: s.pl(h.pts, true), 'class': h.cls, opacity: h.op }, s.gS); });
+    g.pieces.forEach(function (p) { if (p.op === 0) return; sv('path', { d: s.cp(p.c), 'class': p.cls, opacity: p.op }, s.gL); });
+    (g.paths || []).forEach(function (p) {
+      if (p.op === 0) return;
+      sv('path', { d: p.c ? s.cp(p.c) : s.pl(p.pts, false), 'class': p.cls, opacity: p.op, 'stroke-width': p.sw, 'marker-end': p.arrow ? 'url(#' + s.mid + ')' : null }, s.gL);
+    });
+    (g.marks || []).forEach(function (m) { if (m.op === 0) return; var q = s.X(m.at); sv('circle', { cx: q[0].toFixed(2), cy: q[1].toFixed(2), r: m.r, 'class': m.cls, opacity: m.op }, s.gM); });
+    (g.points || []).forEach(function (m) { var q = s.X(m.at); sv('circle', { cx: q[0].toFixed(2), cy: q[1].toFixed(2), r: m.r || 3.3, 'class': m.cls || 'pd-pt' }, s.gM); });
+    if (this.fs > 0) (g.labels || []).forEach(function (l) {
+      if (l.op === 0) return;
+      var q = s.X(l.at), size = (l.fs || 1) * s.fs * s.k, t;
+      if (l.tex) t = texLabel(s.gT, q[0], q[1], l.tex, size, l.cls, l.anchor, l.t, l.rot);
+      else {
+        t = rich(s.gT, q[0], q[1], l.t, size, l.cls || 'pd-label', l.anchor);
+        if (l.rot) t.setAttribute('transform', 'rotate(' + l.rot + ' ' + q[0].toFixed(2) + ' ' + q[1].toFixed(2) + ')');
+      }
+      if (l.op != null) t.setAttribute('opacity', l.op);
+    });
+    var reg = [];
+    (g.loop || []).forEach(function (e) { var pts = samp(piece(g, e[0]).c, 64); if (e[1] < 0) pts.reverse(); reg = reg.concat(pts); });
+    this.region = reg;
+    function polys(list) { return (list || []).map(function (e) { return { kind: e[1], poly: samp(piece(g, e[0]).c, 220) }; }); }
+    this.terms = polys(g.terms); this.inTerms = polys(g.inTerms);
+  };
+  // Follows a light ray from p (outgoing, or ingoing with a bounce off the center) to the boundary.
+  Diagram.prototype.trace = function (p, mode) {
+    var cur = p, dir = mode === 'in' ? [-Math.SQRT1_2, Math.SQRT1_2] : [Math.SQRT1_2, Math.SQRT1_2], segs = [], bounce = null, len = 0;
+    for (var step = 0; step < 3; step++) {
+      var list = dir[0] < 0 ? this.inTerms : this.terms, best = Infinity, kind = null;
+      list.forEach(function (tm) { var t = hit(cur, dir, tm.poly); if (t < best) { best = t; kind = tm.kind; } });
+      if (!isFinite(best)) return null;
+      var q = [cur[0] + dir[0] * best, cur[1] + dir[1] * best];
+      segs.push([cur, q]); len += best;
+      if (kind === 'center') { bounce = q; cur = q; dir = [Math.SQRT1_2, Math.SQRT1_2]; continue; }
+      return { p: p, mode: mode, segs: segs, q: q, kind: kind, bounce: bounce, len: len };
+    }
+    return null;
+  };
+  Diagram.prototype.pointAt = function (r, s) {
+    for (var i = 0; i < r.segs.length; i++) {
+      var a = r.segs[i][0], b = r.segs[i][1], l = Math.hypot(b[0] - a[0], b[1] - a[1]);
+      if (s <= l) return lp(a, b, l ? s / l : 0);
+      s -= l;
+    }
+    return r.q;
+  };
+  Diagram.prototype.addRay = function (p, mode) {
+    if (!inPoly(p, this.region)) return null;
+    var r = this.trace(p, mode || 'out'); if (!r) return null;
+    this.rays.push({ p: p, mode: mode || 'out' }); if (this.rays.length > 4) this.rays.shift();
+    this.drawRays(this.rays.length - 1);
+    return r;
+  };
+  // Light sent both ways from p: outgoing, and ingoing (bouncing off the center).
+  Diagram.prototype.addPair = function (p) {
+    if (!inPoly(p, this.region)) return null;
+    var a = this.trace(p, 'out'), b = this.trace(p, 'in'); if (!a || !b) return null;
+    this.rays.push({ p: p, mode: 'out' }, { p: p, mode: 'in' });
+    while (this.rays.length > 4) this.rays.shift();
+    this.drawRays(this.rays.length - 2);
+    return [a, b];
+  };
+  Diagram.prototype.drawRays = function (animFrom) {
+    var s = this, out = [], fresh = this.pairs ? 2 : 1;
+    this.gR.textContent = '';
+    this.rays.forEach(function (ray, i) {
+      if (!inPoly(ray.p, s.region)) return;
+      var r = s.trace(ray.p, ray.mode); if (!r) return; out.push(r);
+      var g = sv('g', { 'class': 'ray-g' + (s.userRays && i < s.rays.length - fresh ? ' old' : '') }, s.gR);
+      var pts = [r.segs[0][0]].concat(r.segs.map(function (sg) { return sg[1]; })).map(function (q) { return s.X(q); });
+      var lens = [], total = 0;
+      for (var j = 1; j < pts.length; j++) { var d = Math.hypot(pts[j][0] - pts[j - 1][0], pts[j][1] - pts[j - 1][1]); lens.push(d); total += d; }
+      var line = sv('polyline', { 'class': 'ray' + (ray.mode === 'in' ? ' in' : '') }, g);
+      sv('circle', { cx: pts[0][0], cy: pts[0][1], r: 3.3, 'class': 'ray-src' }, g);
+      function setPts(arr) { line.setAttribute('points', arr.map(function (q) { return q[0].toFixed(2) + ',' + q[1].toFixed(2); }).join(' ')); }
+      function upto(len) {
+        var acc = 0, o = [pts[0]];
+        for (var j = 1; j < pts.length; j++) {
+          if (acc + lens[j - 1] >= len) { o.push(lp(pts[j - 1], pts[j], lens[j - 1] ? (len - acc) / lens[j - 1] : 1)); return o; }
+          acc += lens[j - 1]; o.push(pts[j]);
+        }
+        return o;
+      }
+      function finish() {
+        setPts(pts);
+        if (r.bounce) { var bq = s.X(r.bounce); sv('circle', { cx: bq[0], cy: bq[1], r: 3.8, 'class': 'ray-bounce' }, g); }
+        s.endMark(g, pts[pts.length - 1], r.kind);
+      }
+      if (animFrom >= 0 && i >= animFrom && !RM.matches) {
+        var t0 = performance.now(), dur = 520 * Math.max(1, total / 260);
+        var step = function (now) { var k = Math.min(1, (now - t0) / dur); setPts(upto((1 - Math.pow(1 - k, 3)) * total)); if (k < 1) requestAnimationFrame(step); else finish(); };
+        requestAnimationFrame(step);
+      } else finish();
+    });
+    return out;
+  };
+  Diagram.prototype.endMark = function (g, b, kind) {
+    if (kind === 'inf') { sv('circle', { cx: b[0], cy: b[1], r: 5.5, 'class': 'ray-obs' }, g); sv('circle', { cx: b[0], cy: b[1], r: 2, 'class': 'ray-src' }, g); }
+    else { var z = 4.5; sv('path', { d: 'M' + (b[0] - z) + ',' + (b[1] - z) + 'L' + (b[0] + z) + ',' + (b[1] + z) + 'M' + (b[0] - z) + ',' + (b[1] + z) + 'L' + (b[0] + z) + ',' + (b[1] - z), 'class': 'ray-x' }, g); }
+  };
+  Diagram.prototype.toWorld = function (e) {
+    var q = svgXY(this.svg, e); if (!q) return null;
+    return [q[0] / this.S + this.v[0], this.v[3] - q[1] / this.S];
+  };
+
+  /* ================= Geometry: the four Penrose diagrams (paper's Figure 1) ================= */
+  var GAL = (function () {
+    var G0 = [0, -2], gam = [[0, -2], [0.2, -0.5], [0.2, 1.5], [0, 3]], bG = [0, 3], ipB = [2.1, 3.5];
+    var scriB = [[2.1, 0.1], [2.3, 1.2], [2.3, 3.3], ipB], cpB = L(G0, [2.1, 0.1]);
+    function hor(g, ip) { var k = ip[1] - ip[0], t = solveT(g, function (p) { return p[1] - p[0] - k; }); return { c: L(bez(g, t), ip), t: t }; }
+    function base() { return [{ at: [0.06, 0.5], tex: '\\Gamma', t: 'Γ', anchor: 'end' }, { at: [1.3, -1.32], tex: 'C_0^+', t: 'C_{0}^{+}' }]; }
+    var BG = { at: [-0.1, 2.93], tex: 'b_\\Gamma', t: 'b_{Γ}', anchor: 'end' };
+    function scriL(at) { return { at: at, tex: '\\mathcal I', t: 'ℐ' }; }
+    function ipL(at) { return { at: at, tex: 'i^+', t: 'i^{+}' }; }
+    function cal(at, tex, t, cls, anchor) { return { at: at, tex: tex, t: t, cls: cls, anchor: anchor }; }
+    return {
+      view: [-0.72, 2.75, -2.45, 5.35],
+      bhs: function () {
+        var B = [bG, [0.3, 2.8], [1.2, 3], ipB], H = hor(gam, ipB);
+        return {
+          pieces: [{ id: 'gamma', c: gam, cls: 'pd-center' }, { id: 'cplus', c: cpB, cls: 'pd-cone' }, { id: 'H', c: H.c, cls: 'pd-H' }, { id: 'scri', c: scriB, cls: 'pd-scri' }, { id: 'B', c: B, cls: 'pd-B' }],
+          shades: [{ pts: samp(H.c, 2).concat(samp(B, 40).reverse(), samp(gam, 30, 1, H.t)), cls: 'shade-bh' }],
+          points: [{ at: bG }, { at: ipB }],
+          loop: [['gamma', 1], ['B', 1], ['scri', -1], ['cplus', -1]],
+          terms: [['scri', 'inf'], ['B', 'sing']],
+          inTerms: [['gamma', 'center'], ['B', 'sing']],
+          labels: base().concat([BG, ipL([2.2, 3.64]), scriL([2.36, 2.0]), cal([1.12, 3.3], '\\mathcal B', 'ℬ', 'sing', 'middle'), cal([1.55, 2.5], '\\mathcal H', 'ℋ', '', 'middle')]),
+          rays: [[0.9, 1.5]]
+        };
+      },
+      bhl: function () {
+        var B0 = L(bG, [0.7, 3.7]), B = [[0.7, 3.7], [1.3, 3.4], [1.7, 3.3], ipB], H = hor(gam, ipB);
+        return {
+          pieces: [{ id: 'gamma', c: gam, cls: 'pd-center' }, { id: 'cplus', c: cpB, cls: 'pd-cone' }, { id: 'H', c: H.c, cls: 'pd-H' }, { id: 'scri', c: scriB, cls: 'pd-scri' }, { id: 'B0', c: B0, cls: 'pd-B0' }, { id: 'B', c: B, cls: 'pd-B' }],
+          shades: [{ pts: samp(H.c, 2).concat(samp(B, 40).reverse(), samp(B0, 6).reverse(), samp(gam, 30, 1, H.t)), cls: 'shade-bh' }],
+          points: [{ at: bG }, { at: ipB }],
+          loop: [['gamma', 1], ['B0', 1], ['B', 1], ['scri', -1], ['cplus', -1]],
+          terms: [['scri', 'inf'], ['B', 'sing'], ['B0', 'sing']],
+          inTerms: [['gamma', 'center'], ['B0', 'sing'], ['B', 'sing']],
+          labels: base().concat([BG, ipL([2.2, 3.64]), scriL([2.36, 2.0]), cal([0.24, 3.52], '\\mathcal B_0', 'ℬ_{0}', 'sing', 'end'), cal([1.5, 3.62], '\\mathcal B', 'ℬ', 'sing', 'middle'), cal([1.55, 2.5], '\\mathcal H', 'ℋ', '', 'middle')]),
+          rays: [[0.9, 1.5]]
+        };
+      },
+      non: function () {
+        var gamma = [[0, -2], [0.2, -0.5], [0.2, 1.5], [0.8, 4]], scri = [[2, 0], [1.8, 1.5], [1.4, 3.3], [0.8, 4]];
+        return {
+          pieces: [{ id: 'gamma', c: gamma, cls: 'pd-center' }, { id: 'cplus', c: L(G0, [2, 0]), cls: 'pd-cone' }, { id: 'scri', c: scri, cls: 'pd-scri' }],
+          points: [{ at: [0.8, 4] }],
+          loop: [['gamma', 1], ['scri', -1], ['cplus', -1]],
+          terms: [['scri', 'inf']],
+          inTerms: [['gamma', 'center']],
+          labels: base().concat([ipL([0.96, 4.14]), scriL([1.76, 2.2])]),
+          rays: [[0.9, 1.2]]
+        };
+      },
+      nak: function () {
+        var B0 = L(bG, [2, 5]), scri = [[2, 0], [2.2, 1.5], [2.2, 3.5], [2, 5]];
+        return {
+          pieces: [{ id: 'gamma', c: gam, cls: 'pd-center' }, { id: 'cplus', c: L(G0, [2, 0]), cls: 'pd-cone' }, { id: 'scri', c: scri, cls: 'pd-scri' }, { id: 'B0', c: B0, cls: 'pd-B0' }],
+          points: [{ at: bG }, { at: [2, 5] }],
+          loop: [['gamma', 1], ['B0', 1], ['scri', -1], ['cplus', -1]],
+          terms: [['scri', 'inf'], ['B0', 'sing']],
+          inTerms: [['gamma', 'center'], ['B0', 'sing']],
+          labels: base().concat([BG, ipL([2.1, 5.12]), scriL([2.3, 2.5]), cal([0.82, 4.12], '\\mathcal B_0', 'ℬ_{0}', 'sing', 'end')]),
+          rays: [[0.9, 2.2]]
+        };
+      }
+    };
+  })();
+
+  /* ================= Geometry: naked singularity, unperturbed (t = 0) and perturbed (t = 1) ================= */
+  var HERO = (function () {
+    var G0 = [0, 0], bG = [0, 3.4], I0 = [2.3, 2.3], CM = [1.7, 1.7];
+    var gamma = [G0, [0.2, 1.15], [0.2, 2.3], bG], cplus = L(G0, I0), cminus = L(bG, CM);
+    var N = { ip: [2.45, 5.85], scri: [I0, [2.56, 3.4], [2.6, 4.8], [2.45, 5.85]] }; N.sing = L(bG, N.ip);
+    var B = { ip: [2.45, 4.55], scri: [I0, [2.52, 2.95], [2.55, 3.8], [2.45, 4.55]], sing: [bG, [0.45, 3.36], [1.45, 3.75], [2.45, 4.55]], A: [bG, [0.52, 2.98], [1.5, 3.62], [2.45, 4.55]] };
+    var ang = -15 * Math.PI / 180;
+    var marks = [0.4, 0.27, 0.18, 0.12, 0.08, 0.053, 0.035, 0.023].map(function (r) { return [r * Math.cos(ang), 3.4 + r * Math.sin(ang)]; });
+    var curveC = []; for (var i = 0; i <= 24; i++) { var r = 0.47 * i / 24; curveC.push([r * Math.cos(ang), 3.4 + r * Math.sin(ang)]); }
+    var squig = squiggle(CM, [2.1, 2.1], 0.05);
+    var pastPoly = samp(gamma, 40).concat([CM]);
+    return {
+      at: function (t, minimal) {
+        var scri = lc(N.scri, B.scri, t), sing = lc(N.sing, B.sing, t), ip = lp(N.ip, B.ip, t), A = lc(N.sing, B.A, t);
+        var k = ip[1] - ip[0], th = solveT(gamma, function (p) { return p[1] - p[0] - k; }), hs = bez(gamma, th), H = L(hs, ip);
+        var Hm = bez(H, 0.5), sm = bez(scri, 0.5), sb = bez(sing, 0.45);
+        var late = Math.max(0, (t - 0.55) / 0.45), early = Math.max(0, 1 - t / 0.45);
+        var labels = [
+          { at: [-0.06, 1.5], tex: '\\Gamma', t: 'Γ', anchor: 'end' },
+          { at: [-0.09, 3.36], tex: 'b_\\Gamma', t: 'b_{Γ}', anchor: 'end' },
+          { at: [1.36, 1.02], tex: 'C_0^+', t: 'C_{0}^{+}' },
+          { at: [0.98, 2.66], tex: 'C_0^-', t: 'C_{0}^{−}', cls: 'dim' },
+          { at: [sm[0] + 0.12, sm[1]], tex: '\\mathcal I', t: 'ℐ' },
+          { at: [ip[0] + 0.08, ip[1] + 0.07], tex: 'i^+', t: 'i^{+}' },
+          t < 0.5 ? { at: [sb[0] - 0.1, sb[1] + 0.1], tex: '\\mathcal B_0', t: 'ℬ_{0}', cls: 'sing', anchor: 'end' } : { at: [sb[0] + 0.12, sb[1] + 0.18], tex: '\\mathcal B', t: 'ℬ', cls: 'sing' }
+        ];
+        var paths = [{ pts: squig, cls: 'pd-pert', op: t }, { pts: curveC, cls: 'pd-curveC', op: late }];
+        if (minimal) labels.push({ at: [Hm[0] + 0.12, Hm[1] - 0.16], tex: '\\mathcal H', t: 'ℋ', op: t });
+        else {
+          labels.push(
+            { at: [Hm[0] + 0.1, Hm[1] - 0.1], t: 'event horizon', rot: -45, anchor: 'middle', cls: 'pd-note', fs: 0.78, op: t },
+            { at: [Hm[0] + 0.48, Hm[1] + 0.27], tex: '\\mathcal H', t: 'ℋ', rot: -45, fs: 0.85, op: t },
+            { at: [0.24, 1.78], t: 'past of b_{Γ}', cls: 'pd-note', fs: 0.7 },
+            { at: [0.24, 1.56], t: '(unchanged)', cls: 'pd-note', fs: 0.7, op: t },
+            { at: [1.8, 1.4], t: 'small perturbation', cls: 'pd-label blue', op: t, fs: 0.8 },
+            { at: [-0.44, 4.02], t: 'trapped surfaces', cls: 'pd-anno sing', fs: 0.78, op: late },
+            { at: [0.82, 4.7], t: 'black hole', cls: 'pd-anno', fs: 0.85, op: late },
+            { at: [-0.44, 5.0], t: 'naked singularity', cls: 'pd-anno sing', fs: 0.9, op: early },
+            { at: [-0.44, 5.95], t: t < 0.5 ? 'Naked singularity' : 'Black hole', cls: 'pd-state', fs: 1.1 }
+          );
+          paths.push(
+            { pts: [[0.1, 3.92], [0.2, 3.44]], cls: 'pd-lead', op: late },
+            { pts: [[0.95, 4.6], [0.88, 3.42]], cls: 'pd-lead', op: late },
+            { c: [[0.03, 4.86], [0.45, 4.45], [0.26, 3.8], [0.05, 3.52]], cls: 'pd-anno-line', arrow: true, op: early }
+          );
+        }
+        return {
+          pieces: [
+            { id: 'gamma', c: gamma, cls: 'pd-center' },
+            { id: 'cplus', c: cplus, cls: 'pd-cone' },
+            { id: 'cminus', c: cminus, cls: 'pd-cminus' },
+            { id: 'H', c: H, cls: 'pd-H', op: t },
+            { id: 'scri', c: scri, cls: 'pd-scri' },
+            { id: 'sing', c: sing, cls: t < 0.5 ? 'pd-B0' : 'pd-B' }
+          ],
+          paths: paths,
+          shades: [
+            { pts: pastPoly, cls: 'shade-past' },
+            { pts: samp(H, 2).concat(samp(sing, 48).reverse(), samp(gamma, 30, 1, th)), cls: 'shade-bh', op: t },
+            { pts: samp(A, 48).concat(samp(sing, 48).reverse()), cls: 'shade-T', op: t }
+          ],
+          marks: marks.map(function (m, j) { return { at: m, r: Math.max(1.5, 3.4 - j * 0.26), cls: 'mark-T', op: late }; }),
+          points: [{ at: bG }, { at: ip }],
+          loop: [['gamma', 1], ['sing', 1], ['scri', -1], ['cplus', -1]],
+          terms: [['scri', 'inf'], ['sing', 'sing']],
+          inTerms: [['gamma', 'center'], ['sing', 'sing']],
+          labels: labels
+        };
+      }
+    };
+  })();
+
+  /* ================= Geometry: black hole with a locally naked singularity (t = 0), perturbed (t = 1) ================= */
+  var LN = (function () {
+    var G0 = [0, 0], bG = [0, 3.4], I0 = [2.3, 2.3], CM = [1.7, 1.7], ip = [2.45, 4.75], Q0 = [0.6, 4.0];
+    var gamma = [G0, [0.2, 1.15], [0.2, 2.3], bG], cplus = L(G0, I0), cminus = L(bG, CM);
+    var scri = [I0, [2.55, 3.1], [2.58, 4.0], ip];
+    var Bb = [Q0, [1.1, 3.85], [1.8, 4.2], ip], Ba = [bG, [0.45, 3.36], [1.5, 3.95], ip];
+    var Ab = [Q0, [1.0, 3.62], [1.75, 4.02], ip], Aa = [bG, [0.45, 3.05], [1.45, 3.8], ip];   // the apparent horizon
+    var k = ip[1] - ip[0], th = solveT(gamma, function (p) { return p[1] - p[0] - k; }), H = L(bez(gamma, th), ip), Hm = bez(H, 0.5), sm = bez(scri, 0.5);
+    var ang = -15 * Math.PI / 180;
+    var marks = [0.4, 0.27, 0.18, 0.12, 0.08, 0.053, 0.035].map(function (r) { return [r * Math.cos(ang), 3.4 + r * Math.sin(ang)]; });
+    var squig = squiggle(CM, [2.1, 2.1], 0.05), pastPoly = samp(gamma, 40).concat([CM]);
+    return {
+      at: function (t) {
+        var Q = lp(Q0, bG, t), B = lc(Bb, Ba, t), A = lc(Ab, Aa, t), hasB0 = t < 0.995, late = Math.max(0, (t - 0.55) / 0.45), sb = bez(B, 0.5);
+        var pieces = [{ id: 'gamma', c: gamma, cls: 'pd-center' }, { id: 'cplus', c: cplus, cls: 'pd-cone' }, { id: 'cminus', c: cminus, cls: 'pd-cminus' }, { id: 'H', c: H, cls: 'pd-H' }, { id: 'scri', c: scri, cls: 'pd-scri' }, { id: 'B', c: B, cls: 'pd-B' }];
+        var bh = samp(H, 2).concat(samp(B, 40).reverse());
+        if (hasB0) { pieces.push({ id: 'B0', c: L(bG, Q), cls: 'pd-B0' }); bh.push(bG); }
+        bh = bh.concat(samp(gamma, 30, 1, th));
+        return {
+          pieces: pieces,
+          shades: [{ pts: pastPoly, cls: 'shade-past' }, { pts: bh, cls: 'shade-bh' }, { pts: samp(A, 48).concat(samp(B, 48).reverse()), cls: 'shade-T' }],
+          paths: [{ pts: squig, cls: 'pd-pert', op: t }],
+          marks: marks.map(function (m, j) { return { at: m, r: Math.max(1.5, 3.4 - j * 0.3), cls: 'mark-T', op: late }; }),
+          points: [{ at: bG }, { at: ip }],
+          loop: hasB0 ? [['gamma', 1], ['B0', 1], ['B', 1], ['scri', -1], ['cplus', -1]] : [['gamma', 1], ['B', 1], ['scri', -1], ['cplus', -1]],
+          terms: hasB0 ? [['scri', 'inf'], ['B', 'sing'], ['B0', 'sing']] : [['scri', 'inf'], ['B', 'sing']],
+          inTerms: hasB0 ? [['gamma', 'center'], ['B0', 'sing'], ['B', 'sing']] : [['gamma', 'center'], ['B', 'sing']],
+          labels: [
+            { at: [-0.06, 1.5], tex: '\\Gamma', t: 'Γ', anchor: 'end' },
+            { at: [-0.09, 3.36], tex: 'b_\\Gamma', t: 'b_{Γ}', anchor: 'end' },
+            { at: [1.36, 1.02], tex: 'C_0^+', t: 'C_{0}^{+}' },
+            { at: [0.98, 2.66], tex: 'C_0^-', t: 'C_{0}^{−}', cls: 'dim' },
+            { at: [sm[0] + 0.12, sm[1]], tex: '\\mathcal I', t: 'ℐ' },
+            { at: [ip[0] + 0.08, ip[1] + 0.07], tex: 'i^+', t: 'i^{+}' },
+            { at: [0.2, 3.9], tex: '\\mathcal B_0', t: 'ℬ_{0}', cls: 'sing', anchor: 'end', op: 1 - t },
+            { at: [sb[0] + 0.08, sb[1] + 0.2], tex: '\\mathcal B', t: 'ℬ', cls: 'sing', anchor: 'middle' },
+            { at: [Hm[0] + 0.12, Hm[1] - 0.16], tex: '\\mathcal H', t: 'ℋ' }
+          ]
+        };
+      }
+    };
+  })();
+
+  /* ================= Fig. 1: hero ================= */
+  function initHero() {
+    var svg = $('#hero-svg'); if (!svg) return;
+    var st = $('#hero-status'), ro = $('#hero-ray-out'), bOff = $('#hero-off'), bOn = $('#hero-on');
+    var D = new Diagram(svg, { view: [-0.5, 3.0, -0.25, 6.12], scale: 100, fs: 16 });
+    var SOURCES = [[0.09, 3.37], [0.27, 3.22], [0.48, 3.02]];
+    // The perturbation sits on C0+ beyond C0-; it travels along ingoing null cones toward b_Γ.
+    var BEAMS = [0.15, 0.4, 0.65, 0.9].map(function (tau) { return lp([1.7, 1.7], [2.1, 2.1], tau); });
+    var gPh = sv('g', null, D.gX), gEye = sv('g', null, D.gX);
+    var target = 0, paths = [], beams = [], eyeAt = [0, 0], photons = [], pulses = [], flashes = [];
+    var glow = RM.matches ? 1 : 0, emitted = 0, beamed = 0, lastEmit = -1e9, lastBeam = -1e9, visible = true;
+    function stateText() {
+      return target === 0
+        ? '<b>Perturbation off.</b> A naked singularity spacetime: light from points arbitrarily close to the first singularity \\(b_\\Gamma\\) reaches null infinity, so far-away observers “see” the singularity.'
+        : '<b>Perturbation on.</b> The perturbation, supported beyond \\(C_0^-\\), is amplified by the blueshift along ingoing null cones (blue). Trapped surfaces form arbitrarily close to \\(b_\\Gamma\\), and the singularity becomes spacelike-only, hidden inside a black hole.';
+    }
+    // The status contains TeX, so MathJax typesets it each time it changes.
+    function setStatus() {
+      if (TEX.ready && window.MathJax.typesetClear) window.MathJax.typesetClear([st]);
+      st.innerHTML = stateText();
+      function run() { window.MathJax.typesetPromise([st]).then(function () { gluePunctuation(st); }).catch(function () {}); }
+      if (TEX.ready) run(); else TEX.waiting.push(run);
+    }
+    function rayText(r) {
+      if (!r) return '';
+      return r.kind === 'inf' ? 'Your light reaches null infinity: far-away observers see its source.' : 'Your light ends on the singularity: its source is inside the black hole.';
+    }
+    D.onRay = function (r) { ro.textContent = rayText(r); };
+    function retrace() {
+      paths = SOURCES.map(function (p) { return D.trace(p, 'out'); });
+      beams = BEAMS.map(function (p) { return D.trace(p, 'in'); });
+      eyeAt = bez(piece(D.geom, 'scri').c, 0.86);
+    }
+    function drawEye() {
+      gEye.textContent = '';
+      var q = D.X(eyeAt), x = q[0] + 18, y = q[1], lit = target === 0 ? Math.min(1, glow) : 0;
+      if (target === 0) sv('circle', { cx: x, cy: y, r: 15, 'class': 'eye-glow', opacity: 0.25 + 0.75 * lit }, gEye);
+      sv('path', { d: 'M' + (x - 10) + ',' + y + 'Q' + x + ',' + (y - 8) + ' ' + (x + 10) + ',' + y + 'Q' + x + ',' + (y + 8) + ' ' + (x - 10) + ',' + y + 'Z', 'class': 'eye-shape' + (lit > 0.35 ? ' lit' : '') }, gEye);
+      sv('circle', { cx: x - 2.5, cy: y, r: 3, 'class': 'eye-pupil' }, gEye);
+      rich(gEye, x, y + 24 * D.k, 'observer', 12 * D.k, 'pd-note', 'middle');
+    }
+    function line(r, cls, w) { var a = D.X(r.p), b = D.X(r.q); sv('line', { x1: a[0], y1: a[1], x2: b[0], y2: b[1], 'class': cls, 'stroke-width': w }, gPh); }
+    function staticRays() {
+      gPh.textContent = '';
+      paths.forEach(function (r) { if (r) line(r, 'photon-trail'); });
+      if (target === 1) beams.forEach(function (r) { if (r) line(r, 'beam-trail', 3); });
+    }
+    function draw(t) { D.render(HERO.at(t)); retrace(); drawEye(); }
+    D.onResize = function () { retrace(); drawEye(); if (RM.matches) staticRays(); };
+    var m = morpher(draw, function () { D.drawRays(-1); if (RM.matches) staticRays(); });
+    function go(to) {
+      if (to === target) return;
+      target = to; pressed([bOff, bOn], to ? bOn : bOff);
+      D.gR.textContent = ''; setStatus(); pulses = [];
+      m.go(to);
+    }
+    function frame(now) {
+      requestAnimationFrame(frame);
+      if (!visible) return;
+      if (now - lastEmit > (target ? 900 : 480)) { lastEmit = now; photons.push({ i: emitted++ % SOURCES.length, t0: now }); }
+      if (target === 1 && now - lastBeam > 380) { lastBeam = now; pulses.push({ i: beamed++ % BEAMS.length, t0: now }); }
+      gPh.textContent = '';
+      pulses = pulses.filter(function (pu) {
+        var r = beams[pu.i]; if (!r || target !== 1) return false;
+        var s = (now - pu.t0) / 1000 * 1.1;
+        if (s >= r.len) { flashes.push({ at: r.q, t0: now }); return false; }
+        var f = s / r.len, a = D.X(D.pointAt(r, Math.max(0, s - 0.3))), b = D.X(D.pointAt(r, s));
+        sv('line', { x1: a[0], y1: a[1], x2: b[0], y2: b[1], 'class': 'beam-trail', 'stroke-width': (1.5 + 4 * f * f).toFixed(2) }, gPh);
+        sv('circle', { cx: b[0], cy: b[1], r: (2 + 5 * f * f).toFixed(2), 'class': 'beam' }, gPh);
+        return true;
+      });
+      photons = photons.filter(function (ph) {
+        var r = paths[ph.i]; if (!r) return false;
+        var s = (now - ph.t0) / 1000 * 1.5;
+        if (s >= r.len) { if (r.kind === 'inf') glow = 1; else flashes.push({ at: r.q, t0: now }); return false; }
+        var a = D.X(D.pointAt(r, Math.max(0, s - 0.22))), b = D.X(D.pointAt(r, s));
+        sv('line', { x1: a[0], y1: a[1], x2: b[0], y2: b[1], 'class': 'photon-trail' }, gPh);
+        sv('circle', { cx: b[0], cy: b[1], r: 3.2, 'class': 'photon' }, gPh);
+        return true;
+      });
+      flashes = flashes.filter(function (f) {
+        var k = (now - f.t0) / 450; if (k >= 1) return false;
+        var q = D.X(f.at); sv('circle', { cx: q[0], cy: q[1], r: 3 + 10 * k, 'class': 'flash', opacity: 1 - k }, gPh);
+        return true;
+      });
+      glow *= 0.97; drawEye();
+    }
+    bOff.addEventListener('click', function () { go(0); });
+    bOn.addEventListener('click', function () { go(1); });
+    $('#hero-clear').addEventListener('click', function () { D.rays = []; D.userRays = false; D.drawRays(-1); ro.textContent = rayText(null); });
+    watchVisible(svg, function (v) { visible = v; });
+    draw(0); setStatus(); ro.textContent = rayText(null);
+    if (RM.matches) staticRays(); else requestAnimationFrame(frame);
+  }
+
+  /* ================= Fig. 3: the four diagrams ================= */
+  function initGallery() {
+    var cards = $$('.gcard'); if (!cards.length) return;
+    var all = [];
+    function said(r) {
+      if (!r) return '';
+      if (r.mode === 'out') return r.kind === 'inf' ? 'reaches null infinity.' : 'hits the singularity.';
+      if (r.bounce) return r.kind === 'inf' ? 'bounces off Γ, then reaches null infinity.' : 'bounces off Γ, then hits the singularity.';
+      return 'falls into the singularity.';
+    }
+    function describe(pair, bh) {
+      if (!pair) return 'Click inside the diagram.';
+      return (bh && inPoly(pair[0].p, bh) ? 'Inside the black hole. ' : '') + 'Outgoing light ' + said(pair[0]) + ' Ingoing light ' + said(pair[1]);
+    }
+    cards.forEach(function (card) {
+      var G = GAL[card.getAttribute('data-kind')](), st = $('.gstatus', card);
+      // The black hole region (shaded gray) of (a) and (b), to say when light starts inside it.
+      var bh = (G.shades || []).filter(function (h) { return h.cls === 'shade-bh'; }).map(function (h) { return h.pts; })[0];
+      var D = new Diagram($('svg', card), { view: GAL.view, scale: 72, fs: 14.5, pairs: true });
+      D.onRay = function (pair) { st.textContent = describe(pair, bh); };
+      D.render(G);
+      G.rays.forEach(function (p) { D.rays.push({ p: p, mode: 'out' }, { p: p, mode: 'in' }); });
+      D.drawRays(-1);
+      st.textContent = describe([D.trace(G.rays[0], 'out'), D.trace(G.rays[0], 'in')], bh);
+      all.push({ D: D, st: st });
+    });
+    $('#gal-clear').addEventListener('click', function () {
+      all.forEach(function (x) { x.D.rays = []; x.D.drawRays(-1); x.st.textContent = 'Click inside the diagram.'; });
+    });
+  }
+
+  /* ================= Fig. 4: the theorem in pictures ================= */
+  function initTheoremFig() {
+    var a = $('#thm-a'), b = $('#thm-b'); if (!a || !b) return;
+    var Da = new Diagram(a, { view: [-0.5, 3.0, -0.25, 6.12], scale: 60, fs: 15 });
+    var Db = new Diagram(b, { view: [-0.5, 3.0, -0.25, 5.15], scale: 60, fs: 15 });
+    var ta = $('#thm-a-title'), tb = $('#thm-b-title'), off = $('#thm-off'), on = $('#thm-on'), target = 0;
+    function draw(t) { Da.render(HERO.at(t, true)); Db.render(LN.at(t)); }
+    function titles() {
+      ta.textContent = target ? 'Black hole spacetime with a spacelike-only singularity' : 'Naked singularity spacetime';
+      tb.textContent = target ? 'Black hole spacetime with a spacelike-only singularity' : 'Black hole spacetime with a locally naked singularity';
+    }
+    var m = morpher(draw, function () { Da.drawRays(-1); Db.drawRays(-1); });
+    function go(to) {
+      if (to === target) return;
+      target = to; pressed([off, on], to ? on : off);
+      Da.gR.textContent = ''; Db.gR.textContent = ''; titles(); m.go(to);
+    }
+    off.addEventListener('click', function () { go(0); });
+    on.addEventListener('click', function () { go(1); });
+    $('#thm-clear').addEventListener('click', function () { [Da, Db].forEach(function (X) { X.rays = []; X.userRays = false; X.drawRays(-1); }); });
+    draw(0); Da.rays = [{ p: [0.27, 3.22], mode: 'out' }]; Da.drawRays(-1); titles();
+  }
+
+  /* ================= Fig. 2: BTZ slice ================= */
+  function initBTZ() {
+    var cv = $('#btz-canvas'); if (!cv || !cv.getContext) return;
+    var ctx = cv.getContext('2d'), sl = $('#btz-m'), out = $('#btz-mv'), cut = $('#btz-cut');
+    var M = +sl.value, yaw = -0.6, pitch = 0.62, auto = !RM.matches, visible = true, dirty = true, colors = {}, prof = null;
+    var RV = 1.85, ZC = 2.4;
+    function readColors() {
+      var cs = getComputedStyle(document.documentElement);
+      ['--ink', '--ink-2', '--ink-3', '--sing', '--blue', '--plate'].forEach(function (n) { colors[n] = cs.getPropertyValue(n).trim() || '#888'; });
+      dirty = true;
+    }
+    function resample(pts, n) {
+      var acc = [0];
+      for (var i = 1; i < pts.length; i++) acc.push(acc[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]));
+      var total = acc[acc.length - 1], o = [], j = 0;
+      for (var k = 0; k <= n; k++) {
+        var s = total * k / n; while (j < acc.length - 2 && acc[j + 1] < s) j++;
+        var f = acc[j + 1] > acc[j] ? (s - acc[j]) / (acc[j + 1] - acc[j]) : 0;
+        o.push([lerp(pts[j][0], pts[j + 1][0], f), lerp(pts[j][1], pts[j + 1][1], f)]);
+      }
+      return o;
+    }
+    // Surface of revolution with the same circles as the slice: dz/dr = sqrt(1/f - 1), f = 1 - M + r^2.
+    function profile(M) {
+      var P = { sheets: [], tip: null, horizon: null, zc: 0, rmax: 0 };
+      if (M < 0.0025) {
+        var flat = []; for (var i = 0; i <= 24; i++) flat.push([RV * i / 24, 0]);
+        P.sheets.push(flat); P.center = true; return P;
+      }
+      var rmax = Math.sqrt(M), rmin = M > 1 ? Math.sqrt(M - 1) : 0, N = 260, rs = [], zs = [];
+      var g = function (r) { var f = 1 - M + r * r, q = (M - r * r) / f; return q > 0 ? Math.sqrt(q) : 0; };
+      for (i = 0; i <= N; i++) { var s = i / N; rs.push(rmin + (rmax - rmin) * (M > 1 ? s * s : s * s * s)); }
+      zs[N] = 0;
+      for (i = N - 1; i >= 0; i--) { var rm = 0.5 * (rs[i] + rs[i + 1]); zs[i] = zs[i + 1] - g(rm) * (rs[i + 1] - rs[i]); }
+      P.rmax = rmax;
+      if (M <= 1) {
+        var pts = [];
+        for (i = 0; i <= N; i++) if (zs[i] >= -ZC) pts.push([rs[i], zs[i]]);
+        if (zs[0] < -ZC) {
+          for (i = 0; i < N; i++) if (zs[i] < -ZC && zs[i + 1] >= -ZC) { var f = (-ZC - zs[i]) / (zs[i + 1] - zs[i]); pts.unshift([lerp(rs[i], rs[i + 1], f), -ZC]); break; }
+        } else P.tip = [0, zs[0]];
+        for (i = 1; i <= 12; i++) pts.push([lerp(rmax, RV, i / 12), 0]);
+        var depth = Math.min(-zs[0], ZC);
+        P.zc = -depth / 2;
+        P.sheets.push(resample(pts, 70));
+        P.cut = zs[0] < -ZC;
+      } else {
+        var up = [];
+        for (i = 0; i <= N; i++) { var z = zs[i] - zs[0]; if (z <= ZC * 0.62) up.push([rs[i], z]); }
+        var h = up[up.length - 1][1];
+        for (i = 1; i <= 12; i++) up.push([lerp(up[up.length - 1][0], RV, 1 / (13 - i)), h]);
+        var upR = resample(up, 60);
+        P.sheets.push(upR, upR.map(function (q) { return [q[0], -q[1]]; }));
+        P.horizon = rmin;
+      }
+      return P;
+    }
+    function size() {
+      var r = cv.getBoundingClientRect(), dpr = Math.min(2, window.devicePixelRatio || 1);
+      cv.width = Math.max(1, Math.round(r.width * dpr)); cv.height = Math.max(1, Math.round(r.height * dpr));
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0); dirty = true;
+      if (prof) draw();
+    }
+    function draw() {
+      var w = cv.clientWidth, h = cv.clientHeight; if (!w || !h) return;
+      ctx.clearRect(0, 0, w, h);
+      var S = Math.min(w / 4.3, h / 3.6), cx = w / 2, cy = h / 2;
+      var cP = Math.cos(pitch), sP = Math.sin(pitch), cY = Math.cos(yaw), sY = Math.sin(yaw);
+      // The symmetry axis is vertical, so the slice reads as a horizontal sheet of space.
+      function P(x, y, z) {
+        var x1 = x * cY - y * sY, y1 = x * sY + y * cY, X = x1, Y = z * cP + y1 * sP, d = y1 * cP - z * sP, k = 6 / (6 + d * 0.5);
+        return [cx + X * S * k, cy - Y * S * k, d];
+      }
+      var buckets = []; for (var b = 0; b < 8; b++) buckets.push(new Path2D());
+      function seg(a, c, fade) {
+        var d = (a[2] + c[2]) / 2, t = Math.max(0, Math.min(1, (d + RV) / (2 * RV)));
+        var alpha = (0.92 - 0.72 * t) * fade, bi = Math.max(0, Math.min(7, Math.round(alpha * 7)));
+        buckets[bi].moveTo(a[0], a[1]); buckets[bi].lineTo(c[0], c[1]);
+      }
+      var NM = 30;
+      prof.sheets.forEach(function (sh) {
+        var fadeAt = function (q) {
+          var f = 1;
+          if (q[0] > prof.rmax && RV > prof.rmax) f *= 1 - 0.7 * (q[0] - prof.rmax) / (RV - prof.rmax);
+          if (Math.abs(q[1]) > ZC * 0.8) f *= Math.max(0, (ZC - Math.abs(q[1])) / (ZC * 0.2)) * 0.8 + 0.2;
+          return f;
+        };
+        for (var j = 0; j < NM; j++) {
+          var ph = 2 * Math.PI * j / NM, c = Math.cos(ph), s = Math.sin(ph), prev = null;
+          for (var i = 0; i < sh.length; i++) { var q = sh[i], pt = P(q[0] * c, q[0] * s, q[1] - prof.zc); if (prev) seg(prev, pt, fadeAt(q)); prev = pt; }
+        }
+        for (var i2 = 0; i2 < sh.length; i2 += 5) {
+          var q2 = sh[i2]; if (q2[0] < 1e-3) continue;
+          var prev2 = null;
+          for (var j2 = 0; j2 <= 72; j2++) { var ph2 = 2 * Math.PI * j2 / 72, pt2 = P(q2[0] * Math.cos(ph2), q2[0] * Math.sin(ph2), q2[1] - prof.zc); if (prev2) seg(prev2, pt2, fadeAt(q2)); prev2 = pt2; }
+        }
+      });
+      ctx.lineWidth = 1; ctx.strokeStyle = colors['--ink'];
+      buckets.forEach(function (p, i) { if (!i) return; ctx.globalAlpha = i / 7; ctx.stroke(p); });
+      ctx.globalAlpha = 1;
+      ctx.font = '600 13px Literata, Georgia, serif'; ctx.textBaseline = 'middle';
+      function label(p, txt, color, dx, dy) { ctx.fillStyle = color; ctx.fillText(txt, p[0] + dx, p[1] + dy); }
+      if (prof.center) { var c0 = P(0, 0, 0); ctx.fillStyle = colors['--ink']; ctx.beginPath(); ctx.arc(c0[0], c0[1], 3.2, 0, 7); ctx.fill(); label(c0, 'regular center', colors['--ink-2'], 9, -12); }
+      if (prof.tip) { var tp = P(0, 0, prof.tip[1] - prof.zc); ctx.fillStyle = colors['--sing']; ctx.beginPath(); ctx.arc(tp[0], tp[1], 4.2, 0, 7); ctx.fill(); label(tp, 'r = 0', colors['--sing'], 9, -12); }
+      if (prof.cut) {
+        var a0 = P(0, 0, -ZC - prof.zc), a1 = P(0, 0, -ZC - prof.zc - 0.35);
+        ctx.strokeStyle = colors['--sing']; ctx.lineWidth = 2; ctx.setLineDash([3, 3]); ctx.beginPath(); ctx.moveTo(a0[0], a0[1]); ctx.lineTo(a1[0], a1[1]); ctx.stroke(); ctx.setLineDash([]);
+        label(a1, 'r = 0 (cusp)', colors['--sing'], -40, -16);
+      }
+      if (prof.horizon != null) {
+        ctx.strokeStyle = colors['--blue']; ctx.lineWidth = 2.2; ctx.beginPath();
+        for (var j3 = 0; j3 <= 90; j3++) { var ph3 = 2 * Math.PI * j3 / 90, p3 = P(prof.horizon * Math.cos(ph3), prof.horizon * Math.sin(ph3), 0); if (j3) ctx.lineTo(p3[0], p3[1]); else ctx.moveTo(p3[0], p3[1]); }
+        ctx.stroke();
+        label([cx + prof.horizon * S * 1.1 + 12, cy], 'horizon', colors['--blue'], 0, 0);
+      }
+    }
+    function drawCut() {
+      cut.textContent = '';
+      var defs = sv('defs', null, cut), mk = sv('marker', { id: 'cutarr', viewBox: '0 0 10 10', refX: 5, refY: 5, markerWidth: 6, markerHeight: 6, orient: 'auto-start-reverse' }, defs);
+      sv('path', { d: 'M0,0 L10,5 L0,10 z', fill: 'var(--blue)' }, mk);
+      var c = 120, R = 92;
+      function P(a, r) { return [c + r * Math.cos(a), c + r * Math.sin(a)]; }
+      if (M < 0.9975) {
+        var al = 2 * Math.PI * Math.sqrt(1 - M);
+        if (al > 2 * Math.PI - 0.01) { sv('circle', { cx: c, cy: c, r: R, 'class': 'cut-keep' }, cut); sv('text', { x: c, y: c + R + 20, 'class': 'cut-txt', 'text-anchor': 'middle' }, cut).textContent = 'full disk: regular center'; }
+        else {
+          var a0 = -Math.PI / 2 - al / 2, a1 = -Math.PI / 2 + al / 2, p0 = P(a0, R), p1 = P(a1, R);
+          sv('path', { d: 'M' + c + ',' + c + 'L' + p1[0] + ',' + p1[1] + 'A' + R + ',' + R + ' 0 ' + (2 * Math.PI - al > Math.PI ? 1 : 0) + ' 1 ' + p0[0] + ',' + p0[1] + 'Z', 'class': 'cut-gone' }, cut);
+          sv('path', { d: 'M' + c + ',' + c + 'L' + p0[0] + ',' + p0[1] + 'A' + R + ',' + R + ' 0 ' + (al > Math.PI ? 1 : 0) + ' 1 ' + p1[0] + ',' + p1[1] + 'Z', 'class': 'cut-keep' }, cut);
+          sv('line', { x1: c, y1: c, x2: p0[0], y2: p0[1], 'class': 'cut-edge' }, cut);
+          sv('line', { x1: c, y1: c, x2: p1[0], y2: p1[1], 'class': 'cut-edge' }, cut);
+          var gr = R * 0.52, g0 = a1 + 0.12, g1 = a0 + 2 * Math.PI - 0.12;
+          if (g1 > g0) {
+            var q0 = P(g0, gr), q1 = P(g1, gr);
+            sv('path', { d: 'M' + q0[0] + ',' + q0[1] + 'A' + gr + ',' + gr + ' 0 ' + (g1 - g0 > Math.PI ? 1 : 0) + ' 1 ' + q1[0] + ',' + q1[1], 'class': 'cut-glue', 'marker-start': 'url(#cutarr)', 'marker-end': 'url(#cutarr)' }, cut);
+          }
+          var mid = P(Math.PI / 2, R * 0.78);
+          sv('text', { x: mid[0], y: Math.min(mid[1] + 4, c + R - 6), 'class': 'cut-txt', 'text-anchor': 'middle' }, cut).textContent = 'remove ' + (360 - al * 180 / Math.PI).toFixed(0) + '°';
+          sv('text', { x: c, y: c + R + 20, 'class': 'cut-txt', 'text-anchor': 'middle' }, cut).textContent = 'glue the blue edges: a cone';
+        }
+        if (M > 0.0025) sv('circle', { cx: c, cy: c, r: 4, 'class': 'cut-tip' }, cut);
+      } else if (M <= 1.0025) {
+        sv('circle', { cx: c, cy: c, r: R, 'class': 'cut-gone' }, cut);
+        sv('line', { x1: c, y1: c, x2: c, y2: c - R, 'class': 'cut-edge' }, cut);
+        sv('circle', { cx: c, cy: c, r: 4, 'class': 'cut-tip' }, cut);
+        sv('text', { x: c, y: c + 30, 'class': 'cut-txt', 'text-anchor': 'middle' }, cut).textContent = 'nothing left: angle 0';
+        sv('text', { x: c, y: c + R + 20, 'class': 'cut-txt', 'text-anchor': 'middle' }, cut).textContent = 'the tip becomes a cusp';
+      } else {
+        var rh = Math.sqrt(M - 1), ri = R * Math.min(0.8, rh / (rh + 0.9));
+        sv('path', { d: 'M' + (c - R) + ',' + c + 'A' + R + ',' + R + ' 0 1 0 ' + (c + R) + ',' + c + 'A' + R + ',' + R + ' 0 1 0 ' + (c - R) + ',' + c + 'Z M' + (c - ri) + ',' + c + 'A' + ri + ',' + ri + ' 0 1 1 ' + (c + ri) + ',' + c + 'A' + ri + ',' + ri + ' 0 1 1 ' + (c - ri) + ',' + c + 'Z', 'class': 'cut-keep', 'fill-rule': 'evenodd' }, cut);
+        sv('circle', { cx: c, cy: c, r: ri, 'class': 'cut-hor' }, cut);
+        sv('text', { x: c, y: c + 4, 'class': 'cut-txt', 'text-anchor': 'middle' }, cut).textContent = 'no center';
+        sv('text', { x: c, y: c + R + 20, 'class': 'cut-txt', 'text-anchor': 'middle' }, cut).textContent = 'blue: the horizon circle';
+      }
+    }
+    function update() {
+      M = +sl.value; out.textContent = M.toFixed(3);
+      prof = profile(M); dirty = true; draw(); drawCut();
+      $('#btz-angle').textContent = M < 1 ? (360 * Math.sqrt(1 - M)).toFixed(1) + '°' : (M <= 1.0025 ? '0°' : 'no center');
+      $('#btz-f0').textContent = (1 - M).toFixed(3);
+      var hz = M > 1.0025; $('#btz-hor-none').hidden = hz; $('#btz-hor-r').hidden = !hz;
+      if (hz) $('#btz-hor-v').textContent = Math.sqrt(M - 1).toFixed(3);
+      var reg = M < 0.0025 ? 'ads' : M < 0.9975 ? 'cone' : M <= 1.0025 ? 'cusp' : 'bh';
+      $$('#btz-regime [data-reg]').forEach(function (e) { e.hidden = e.getAttribute('data-reg') !== reg; });
+      $('#btz-deg').textContent = (360 * Math.sqrt(Math.max(0, 1 - M))).toFixed(0) + '°';
+    }
+    sl.addEventListener('input', update);
+    $$('#fig-btz [data-m]').forEach(function (b) { b.addEventListener('click', function () { sl.value = b.getAttribute('data-m'); update(); }); });
+    var drag = null;
+    cv.addEventListener('pointerdown', function (e) { drag = { x: e.clientX, y: e.clientY }; auto = false; try { cv.setPointerCapture(e.pointerId); } catch (err) {} });
+    cv.addEventListener('pointermove', function (e) {
+      if (!drag) return;
+      yaw += (e.clientX - drag.x) * 0.01; pitch = clamp(pitch - (e.clientY - drag.y) * 0.006, 0.12, 1.25);
+      drag = { x: e.clientX, y: e.clientY }; dirty = true;
+    });
+    var endDrag = function () { drag = null; };
+    cv.addEventListener('pointerup', endDrag); cv.addEventListener('pointercancel', endDrag);
+    if (window.ResizeObserver) new ResizeObserver(size).observe(cv); else window.addEventListener('resize', size);
+    watchVisible(cv, function (v) { visible = v; if (v && prof) draw(); });
+    readColors(); size(); update();
+    (function loop() {
+      if (visible && (auto || dirty)) { if (auto) yaw += 0.004; draw(); dirty = false; }
+      requestAnimationFrame(loop);
+    })();
+  }
+
+  /* ================= Fig. 5: conjectural moduli space ================= */
+  function initModuli() {
+    var svg = $('#mod-svg'); if (!svg) return;
+    var sl = $('#mod-p'), pv = $('#mod-pv'), title = $('#mod-title'), text = $('#mod-text');
+    var blob = 'M40,160 C38,86 120,34 250,30 C380,26 520,28 590,92 C640,138 630,214 560,250 C480,290 330,284 210,276 C110,270 42,232 40,160 Z';
+    var thrD = 'C318,60 372,100 338,150 C306,196 360,236 330,300';
+    var defs = sv('defs', null, svg), cp = sv('clipPath', { id: 'modclip' }, defs); sv('path', { d: blob }, cp);
+    var g = sv('g', { 'clip-path': 'url(#modclip)' }, svg);
+    sv('path', { d: 'M0,0 L352,0 ' + thrD + ' L0,300 Z', 'class': 'mod-non' }, g);
+    sv('path', { d: 'M640,0 L352,0 ' + thrD + ' L640,300 Z', 'class': 'mod-bh' }, g);
+    sv('path', { d: 'M352,0 ' + thrD, 'class': 'mod-thr' }, g);
+    sv('path', { d: blob, 'class': 'mod-outline' }, svg);
+    var A = [96, 214], B = [586, 112];
+    sv('line', { x1: A[0], y1: A[1], x2: B[0], y2: B[1], 'class': 'mod-fam' }, svg);
+    var thr = samp([[352, 0], [318, 60], [372, 100], [338, 150]], 200).concat(samp([[338, 150], [306, 196], [360, 236], [330, 300]], 200));
+    var pStar = hit(A, [B[0] - A[0], B[1] - A[1]], thr);
+    var S = lp(A, B, pStar);
+    sv('circle', { cx: S[0], cy: S[1], r: 5, 'class': 'mod-star' }, svg);
+    // The TeX names sit in groups, so that they scale with the rest of the figure text.
+    var names = [[150, 118, '\\mathfrak M_{\\mathrm{non}}', '𝔐_{non}'], [452, 206, '\\mathfrak M_{\\mathrm{black}}', '𝔐_{black}']].map(function (o) {
+      var gl = sv('g', null, svg); mathLabel(gl, o[0], o[1], o[2], 20, '', 'start', o[3]); return [gl, o[0], o[1]];
+    });
+    sv('text', { x: 360, y: 76, 'class': 'mod-note' }, svg).textContent = 'threshold';
+    sv('text', { x: S[0] + 10, y: S[1] + 20, 'class': 'mod-note' }, svg).textContent = 'p*';
+    sv('text', { x: 112, y: 248, 'class': 'mod-note' }, svg).textContent = 'family p·Φ';
+    // Naked singularity data off the threshold, if any exist: by Theorem 1.1 they are surrounded by black hole data.
+    var picked = -1;
+    var OFF = [{ at: [545, 88] }, { at: [598, 150] }, { d: 'M418,100 Q450,82 488,96' }, { d: 'M400,236 Q440,252 488,240' }];
+    var offs = OFF.map(function (q, i) {
+      var o = sv('g', { 'class': 'mod-off', tabindex: 0, role: 'button', 'aria-label': 'Naked singularity data off the threshold' }, svg);
+      if (q.d) { sv('path', { d: q.d, 'class': 'mod-off-hit' }, o); sv('path', { d: q.d, 'class': 'mod-off-curve' }, o); }
+      else { sv('circle', { cx: q.at[0], cy: q.at[1], r: 12, 'class': 'mod-off-ring' }, o); sv('circle', { cx: q.at[0], cy: q.at[1], r: 5, 'class': 'mod-star' }, o); }
+      function choose() { picked = i; update(true); }
+      o.addEventListener('click', choose);
+      o.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); choose(); } });
+      return o;
+    });
+    var dot = sv('circle', { r: 7, 'class': 'mod-dot' }, svg);
+    fitText(svg, 640, function (k) {
+      names.forEach(function (n) { n[0].setAttribute('transform', 'translate(' + n[1] + ' ' + n[2] + ') scale(' + k + ') translate(' + -n[1] + ' ' + -n[2] + ')'); });
+    });
+    var mini = new Diagram($('#mod-mini'), { view: GAL.view, scale: 30, fs: 0, interactive: false });
+    var last = null;
+    function update(keep) {
+      if (keep !== true) picked = -1;
+      offs.forEach(function (o, i) { o.classList.toggle('sel', i === picked); });
+      var p = +sl.value, kind;
+      pv.textContent = p.toFixed(2);
+      var q = lp(A, B, p); dot.setAttribute('cx', q[0]); dot.setAttribute('cy', q[1]);
+      kind = picked >= 0 ? 'off' : Math.abs(p - pStar) <= 0.012 ? 'nak' : (p < pStar ? 'non' : 'bhs');
+      if (kind !== last) {
+        last = kind; mini.render(GAL[kind === 'off' ? 'nak' : kind]());
+        if (kind === 'non') { title.innerHTML = 'p &lt; p*: non-collapsing'; text.textContent = 'The solution does not collapse: the center and null infinity are future complete.'; }
+        else if (kind === 'nak') { title.innerHTML = 'p = p*: threshold'; text.textContent = 'Numerics suggest a naked singularity here. Theorem 1.1 shows such data are non-generic.'; }
+        else if (kind === 'off') { title.innerHTML = 'Naked singularity off the threshold'; text.textContent = 'If such data exist, Theorem 1.1 implies that they are surrounded by black hole data.'; }
+        else { title.innerHTML = 'p &gt; p*: black hole'; text.textContent = 'A trapped surface forms. Black hole data form an open set.'; }
+      }
+    }
+    sl.addEventListener('input', update);
+    $('#mod-snap').addEventListener('click', function () { sl.value = pStar.toFixed(3); update(); });
+    update();
+  }
+
+  /* ================= Fig. 6: proof map ================= */
+  function initProofMap() {
+    var wrap = $('#pmap'), svg = $('#pmap-edges'), panel = $('#pdetail'); if (!wrap) return;
+    var nodes = $$('.pnode', wrap);
+    var edges = [['gap', 'blue', { tex: 'm\\ge1\\ \\text{on}\\ C_0^-', t: 'm ≥ 1 on C_{0}^{−}' }], ['crit', 'ctrl', 'contrapositive'], ['blue', 'inst', 'amplifies perturbation'], ['ctrl', 'inst', 'bounds background'], ['inst', 'thm', 'trapped surfaces'], ['ext', 'thm', '']];
+    function select(id) {
+      nodes.forEach(function (n) { n.setAttribute('aria-pressed', String(n.getAttribute('data-node') === id)); });
+      $$('[data-detail]', panel).forEach(function (d) { d.hidden = d.getAttribute('data-detail') !== id; });
+    }
+    nodes.forEach(function (n) { n.addEventListener('click', function () { select(n.getAttribute('data-node')); }); });
+    document.addEventListener('click', function (e) { var a = e.target.closest && e.target.closest('a[data-pnode]'); if (a) select(a.getAttribute('data-pnode')); });
+    function layout() {
+      svg.textContent = '';
+      if (getComputedStyle(svg).display === 'none') return;
+      var wr = wrap.getBoundingClientRect();
+      svg.setAttribute('width', wr.width); svg.setAttribute('height', wr.height); svg.setAttribute('viewBox', '0 0 ' + wr.width + ' ' + wr.height);
+      var defs = sv('defs', null, svg), mk = sv('marker', { id: 'parr', viewBox: '0 0 10 10', refX: 9, refY: 5, markerWidth: 7, markerHeight: 7, orient: 'auto' }, defs);
+      sv('path', { d: 'M0,0 L10,5 L0,10 z', 'class': 'arrowhead' }, mk);
+      edges.forEach(function (e) {
+        var a = $('.pnode[data-node="' + e[0] + '"]', wrap).getBoundingClientRect(), b = $('.pnode[data-node="' + e[1] + '"]', wrap).getBoundingClientRect();
+        var x1, y1, x2, y2, d, lx, ly;
+        if (Math.abs(a.top - b.top) < 6) {
+          x1 = a.right - wr.left; y1 = a.top + a.height / 2 - wr.top; x2 = b.left - wr.left - 2; y2 = b.top + b.height / 2 - wr.top;
+          d = 'M' + x1 + ',' + y1 + ' L' + x2 + ',' + y2; lx = (x1 + x2) / 2; ly = y1 - 6;
+        } else {
+          x1 = a.left + a.width / 2 - wr.left; y1 = a.bottom - wr.top; x2 = b.left + b.width / 2 - wr.left; y2 = b.top - wr.top - 2;
+          var dy = (y2 - y1) * 0.55;
+          d = 'M' + x1 + ',' + y1 + ' C' + x1 + ',' + (y1 + dy) + ' ' + x2 + ',' + (y2 - dy) + ' ' + x2 + ',' + y2;
+          lx = (x1 + x2) / 2; ly = (y1 + y2) / 2 + 4;
+        }
+        sv('path', { d: d, 'class': 'edge', 'marker-end': 'url(#parr)' }, svg);
+        if (e[2] && e[2].tex) {
+          // A TeX label, on a patch of the plate color so the edge does not run through it.
+          var n = texLabel(svg, lx, ly + 4, e[2].tex, 14, 'edge', 'middle', e[2].t);
+          if (n && n.getAttribute('width')) svg.insertBefore(sv('rect', { x: +n.getAttribute('x') - 4, y: +n.getAttribute('y') - 2, width: +n.getAttribute('width') + 8, height: +n.getAttribute('height') + 4, rx: 3, fill: 'var(--plate)' }), n);
+        } else if (e[2]) sv('text', { x: lx, y: ly, 'class': 'edge-lab', 'text-anchor': 'middle' }, svg).textContent = e[2];
+      });
+    }
+    if (window.ResizeObserver) new ResizeObserver(layout).observe(wrap); else window.addEventListener('resize', layout);
+    layout(); select('gap');
+    if (!TEX.ready) TEX.waiting.push(layout);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
+  }
+
+  /* ================= Fig. 7: mass gap ================= */
+  function initMassGap() {
+    var svg = $('#gap-svg'), plot = $('#gap-plot'); if (!svg || !plot) return;
+    var sS = $('#gap-s'), sM = $('#gap-M'), vS = $('#gap-sv'), vM = $('#gap-Mv'), out = $('#gap-out');
+    var G0 = [0, -2], I0 = [2, 0];
+    var gamma = [G0, [0.2, -0.5], [0.2, 1.5], [0.8, 4]], scri = [I0, [1.8, 1.5], [1.4, 3.3], [0.8, 4]], cplus = L(G0, I0);
+    var D = new Diagram(svg, { view: [-0.72, 2.55, -2.45, 4.5], scale: 70, fs: 15, interactive: false });
+    var grad = sv('linearGradient', { id: 'gapfade', x1: 0, y1: 1, x2: 0, y2: 0 }, D.defs);
+    sv('stop', { offset: '0', style: 'stop-color:var(--plate);stop-opacity:0' }, grad);
+    sv('stop', { offset: '0.4', style: 'stop-color:var(--plate);stop-opacity:0.93' }, grad);
+    sv('stop', { offset: '1', style: 'stop-color:var(--plate);stop-opacity:1' }, grad);
+    var fade = sv('rect', { x: 0, y: 0, width: D.W, height: 0, fill: 'url(#gapfade)' }, D.gX);
+    var fadeTxt = sv('text', { 'class': 'gap-q', 'text-anchor': 'middle' }, D.gX);
+    var region = samp(gamma, 60).concat(samp(scri, 60).reverse());
+    function rOf(s) { return Math.tan(Math.PI * s / 2); }
+    function sOfR(r) { return 2 / Math.PI * Math.atan(r); }
+    function mOf(s, M) { var q = Math.sin(Math.PI * s / 2); return M * q * q; }   // = M r^2 / (1 + r^2)
+    function dom(s) {
+      var P = [2 * s, 2 * s - 2], c = P[0] + P[1], th = solveT(gamma, function (p) { return p[0] + p[1] - c; });
+      return { P: P, top: bez(gamma, th), poly: samp(gamma, 40, 0, th).concat([P]) };
+    }
+    var PW = 360, PH = 250, pm = { l: 50, r: 18, t: 16, b: 50 };
+    fitText(plot, PW);
+    function px(s) { return pm.l + s * (PW - pm.l - pm.r); }
+    function py(m) { return PH - pm.b - m / 2.2 * (PH - pm.t - pm.b); }
+    function drawPlot(s, M, m, sStar) {
+      plot.textContent = '';
+      [0, 0.5, 1, 1.5, 2].forEach(function (v) { sv('line', { x1: px(0), y1: py(v), x2: px(1), y2: py(v), 'class': 'grid' }, plot); sv('text', { x: px(0) - 7, y: py(v) + 4, 'class': 'tick', 'text-anchor': 'end' }, plot).textContent = String(v); });
+      [[0, '0'], [0.5, '0.5'], [1, '1'], [2, '2'], [5, '5']].forEach(function (r) { sv('text', { x: px(sOfR(r[0])), y: py(0) + 19, 'class': 'tick', 'text-anchor': 'middle' }, plot).textContent = r[1]; });
+      sv('text', { x: px(1), y: py(0) + 19, 'class': 'tick', 'text-anchor': 'middle' }, plot).textContent = '∞';
+      sv('line', { x1: px(0), y1: py(0), x2: px(1), y2: py(0), 'class': 'axis' }, plot);
+      sv('line', { x1: px(0), y1: py(0), x2: px(0), y2: py(2.2), 'class': 'axis' }, plot);
+      rich(plot, px(0.5), PH - 8, 'radius *r* of the circle *S* on *C*_{0}^{+}', 12, 'axlab', 'middle');
+      var yl = sv('text', { x: 14, y: py(1.1), 'class': 'axlab', 'text-anchor': 'middle', transform: 'rotate(-90 14 ' + py(1.1) + ')' }, plot); yl.textContent = 'Hawking mass m';
+      sv('line', { x1: px(0), y1: py(1), x2: px(1), y2: py(1), 'class': 'mline' }, plot);
+      rich(plot, px(0.02), py(1) - 7, 'm = 1', 12, 'plot-lab sing');
+      sv('line', { x1: px(0), y1: py(M), x2: px(1), y2: py(M), 'class': 'Mline' }, plot);
+      rich(plot, px(1) - 4, py(M) + (M > 2 ? 16 : -7), 'M', 12, 'plot-lab', 'end');
+      var lo = [], hi = [];
+      for (var i = 0; i <= 200; i++) { var ss = i / 200 * 0.999, mm = mOf(ss, M), q = px(ss).toFixed(1) + ',' + py(mm).toFixed(1); if (mm < 1) lo.push(q); else hi.push(q); }
+      if (lo.length > 1) sv('path', { d: 'M' + lo.join(' L'), 'class': 'mcurve-lo' }, plot);
+      if (hi.length > 1) sv('path', { d: 'M' + hi.join(' L'), 'class': 'mcurve-hi' }, plot);
+      if (sStar !== null) sv('line', { x1: px(sStar), y1: py(0), x2: px(sStar), y2: py(1), 'class': 'sline' }, plot);
+      sv('circle', { cx: px(s), cy: py(m), r: 6, 'class': 'pdot' }, plot);
+    }
+    function update() {
+      var s = +sS.value, M = +sM.value, m = mOf(s, M), glob = M < 1, d = dom(s);
+      var sStar = M > 1 ? sOfR(1 / Math.sqrt(M - 1)) : null;
+      vS.textContent = s >= 0.98 ? 'r ≈ ∞' : 'r = ' + rOf(s).toFixed(2);
+      vM.textContent = M.toFixed(2);
+      var shades = glob ? [{ pts: region, cls: 'shade-reg' }] : [];
+      shades.push({ pts: d.poly, cls: m < 1 ? 'shade-reg-strong' : 'shade-unk' });
+      var paths = [{ pts: [d.P, d.top], cls: m < 1 ? 'gap-dline' : 'gap-dline unk' }];
+      if (sStar !== null && s > sStar) { var ds = dom(sStar); paths.push({ pts: ds.poly.concat([ds.poly[0]]), cls: 'gap-star' }); }
+      var labels = [
+        { at: [0.06, -0.7], tex: '\\Gamma', t: 'Γ', anchor: 'end' },
+        { at: [1.05, -1.32], tex: 'C_0^+', t: 'C_{0}^{+}' },
+        { at: [1.97, 1.2], tex: '\\mathcal I', t: 'ℐ' },
+        { at: [d.P[0] - 0.3, d.P[1] + 0.1], tex: 'S', t: 'S', cls: 'blue' }
+      ];
+      if (glob) labels.push({ at: [0.96, 4.14], tex: 'i^+', t: 'i^{+}' });
+      D.render({
+        pieces: [{ id: 'gamma', c: gamma, cls: 'pd-center' }, { id: 'cplus', c: cplus, cls: 'pd-cone' }, { id: 'scri', c: scri, cls: 'pd-scri' }],
+        shades: shades, paths: paths,
+        points: [{ at: d.P, r: 5.5, cls: 'gap-S' }].concat(glob ? [{ at: [0.8, 4] }] : []),
+        labels: labels
+      });
+      var yTop = D.X([0, 1.75])[1], tq = D.X([0.9, 3.0]);
+      fade.setAttribute('height', glob ? 0 : yTop);
+      fadeTxt.setAttribute('x', tq[0]); fadeTxt.setAttribute('y', tq[1]); fadeTxt.setAttribute('font-size', (13 * D.k).toFixed(1));
+      fadeTxt.textContent = glob ? '' : 'the future depends on the data';
+      drawPlot(s, M, m, sStar);
+      var mm = m.toFixed(2);
+      var gk = glob ? 'glob' : m < 1 ? 'lo' : 'hi';
+      $$('[data-gap]', out).forEach(function (e) { e.hidden = e.getAttribute('data-gap') !== gk; });
+      $$('.gap-M', out).forEach(function (e) { e.textContent = M.toFixed(2); });
+      $$('.gap-m', out).forEach(function (e) { e.textContent = mm; });
+    }
+    [sS, sM].forEach(function (el) { el.addEventListener('input', update); });
+    $$('#fig-gap [data-gm]').forEach(function (b) { b.addEventListener('click', function () { sM.value = b.getAttribute('data-gm'); update(); }); });
+    var dragging = false;
+    function moveTo(e) { var w = D.toWorld(e); if (!w) return; sS.value = clamp((w[0] + w[1] + 2) / 4, 0.04, 0.985); update(); }
+    svg.addEventListener('pointerdown', function (e) {
+      var w = D.toWorld(e); if (!w) return;
+      if (Math.abs(w[1] - (w[0] - 2)) / Math.SQRT2 > 0.35) return;
+      dragging = true; try { svg.setPointerCapture(e.pointerId); } catch (err) {} moveTo(e);
+    });
+    svg.addEventListener('pointermove', function (e) { if (dragging) moveTo(e); });
+    svg.addEventListener('pointerup', function () { dragging = false; });
+    svg.addEventListener('pointercancel', function () { dragging = false; });
+    update();
+  }
+
+  /* ================= Fig. 8: formation of trapped surfaces ================= */
+  function initTrap() {
+    var pd = $('#trap-pd'), ring = $('#trap-ring'); if (!pd || !ring) return;
+    var sd = $('#trap-d'), se = $('#trap-e'), vd = $('#trap-dv'), ve = $('#trap-ev'), out = $('#trap-out');
+    var D = new Diagram(pd, { view: [-0.62, 2.75, -0.3, 3.55], scale: 88, fs: 15, interactive: false });
+    fitText(ring, 240);
+    function ringPath(c, r1, r2) {
+      function circ(r, sweep) { return 'M' + (c - r) + ',' + c + 'A' + r + ',' + r + ' 0 1 ' + sweep + ' ' + (c + r) + ',' + c + 'A' + r + ',' + r + ' 0 1 ' + sweep + ' ' + (c - r) + ',' + c + 'Z'; }
+      return circ(r2, 1) + circ(r1, 0);
+    }
+    function drawRing(d0, e0) {
+      ring.textContent = '';
+      var c = 112, R1 = 58, R2 = R1 * (1 + d0);
+      sv('path', { d: ringPath(c, R1, R2), 'class': 'ring-fill', 'fill-rule': 'evenodd', opacity: (0.12 + 0.88 * Math.min(1, e0 / 0.5)).toFixed(2) }, ring);
+      sv('circle', { cx: c, cy: c, r: R1, 'class': 'ring-line' }, ring);
+      sv('circle', { cx: c, cy: c, r: R2, 'class': 'ring-line' }, ring);
+      sv('line', { x1: c, y1: c, x2: c + R1, y2: c, 'class': 'ring-rad' }, ring);
+      rich(ring, c + R1 / 2, c - 7, 'r_{1}', 15, 'ring-txt', 'middle');
+      sv('line', { x1: c, y1: c, x2: c - R2 * Math.SQRT1_2, y2: c + R2 * Math.SQRT1_2, 'class': 'ring-rad' }, ring);
+      rich(ring, c - R2 * 0.36 - 12, c + R2 * 0.36, 'r_{2}', 15, 'ring-txt', 'middle');
+      sv('circle', { cx: c, cy: c, r: 3, 'class': 'ring-c' }, ring);
+    }
+    function update() {
+      var d0 = +sd.value, e0 = +se.value, x1 = 1.12, x2 = x1 * (1 + d0), trapped = e0 > d0;
+      vd.textContent = d0.toFixed(2); ve.textContent = e0.toFixed(2);
+      var P1 = [x1, x1], P2 = [x2, x2], Z1 = [0, 2 * x1], Z2 = [0, 2 * x2];
+      var rA = 1.25 * d0 / (1 + d0), A = lp(P2, Z2, 0.9 - rA);   // radius above the bound rA r2
+      var c1 = lp(P1, Z1, 0.55), c2 = lp(P2, Z2, 0.3);
+      D.render({
+        pieces: [
+          { id: 'gamma', c: L([0, 0], Z1), cls: 'pd-center' },
+          { id: 'cplus', c: L([0, 0], [2.55, 2.55]), cls: 'pd-cone' },
+          { id: 'c1', c: L(P1, Z1), cls: 'trap-c' },
+          { id: 'c2', c: L(P2, A), cls: 'trap-c2' + (trapped ? ' on' : '') }
+        ],
+        paths: [{ pts: [P1, P2], cls: 'trap-ann', op: (0.35 + 0.65 * Math.min(1, e0 / 0.5)).toFixed(2) }],
+        marks: trapped ? [{ at: A, r: 5.5, cls: 'mark-T' }] : [],
+        points: [{ at: Z1, r: 3.6 }],
+        labels: [
+          { at: [-0.06, 0.9], tex: '\\Gamma', t: 'Γ', anchor: 'end' },
+          { at: [1.98, 1.72], tex: 'C_0^+', t: 'C_{0}^{+}' },
+          { at: [P1[0] - 0.02, P1[1] - 0.34], tex: 'r_1', t: 'r_{1}', anchor: 'end' },
+          { at: [P2[0] + 0.1, P2[1] - 0.22], tex: 'r_2', t: 'r_{2}' },
+          { at: [c1[0] - 0.12, c1[1] - 0.22], tex: 'C_1', t: 'C_{1}', anchor: 'middle' },
+          { at: [c2[0] + 0.1, c2[1] + 0.03], tex: 'C_2', t: 'C_{2}' },
+          { at: [-0.08, Z1[1]], t: 'r → 0', cls: 'pd-note', anchor: 'end', fs: 0.8 },
+          trapped ? { at: [A[0] + 0.12, A[1] + 0.06], t: 'trapped', cls: 'pd-anno sing', fs: 0.85 } : { at: [0.95, 3.2], t: 'no conclusion', cls: 'pd-note', fs: 0.85 }
+        ]
+      });
+      drawRing(d0, e0);
+      $$('[data-trap]', out).forEach(function (e) { e.hidden = e.getAttribute('data-trap') !== (trapped ? 'yes' : 'no'); });
+      $$('.trap-e', out).forEach(function (e) { e.textContent = e0.toFixed(2); });
+      $$('.trap-d', out).forEach(function (e) { e.textContent = d0.toFixed(2); });
+      $$('.trap-r', out).forEach(function (e) { e.textContent = rA.toFixed(2); });
+    }
+    [sd, se].forEach(function (el) { el.addEventListener('input', update); });
+    update();
+  }
+
+  /* ================= Fig. 9: infinite blueshift from the mass gap ================= */
+  function initBlueshift() {
+    var svg = $('#win-svg'), bsvg = $('#b-svg'); if (!svg || !bsvg) return;
+    var W = 560, H = 330, m = { l: 76, r: 16, t: 14, b: 56 };
+    var R = [0.25, 0.5, 0.75, 1], w = [0.15, 0.3, 0.45, 0.6], WMAX = 0.92, LMAX = 7;
+    fitText(svg, W); fitText(bsvg, 420);
+    function x(r) { return m.l + r * (W - m.l - m.r); }
+    function y(v) { return H - m.b - (v - 0.7) / 1.4 * (H - m.t - m.b); }
+    function yinv(p) { return 0.7 + (H - m.b - p) / (H - m.t - m.b) * 1.4; }
+    var ceil = []; for (var i = 0; i <= 60; i++) { var r = i / 60; ceil.push(x(r).toFixed(1) + ',' + y(1 + r * r).toFixed(1)); }
+    sv('path', { d: 'M' + x(0) + ',' + y(2.1) + ' L' + ceil.join(' L') + ' L' + x(1) + ',' + y(2.1) + 'Z', 'class': 'reg-trap' }, svg);
+    sv('rect', { x: x(0), y: y(1), width: x(1) - x(0), height: y(0.7) - y(1), 'class': 'reg-gap' }, svg);
+    [0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0].forEach(function (v) { sv('line', { x1: x(0), y1: y(v), x2: x(1), y2: y(v), 'class': 'grid' }, svg); sv('text', { x: x(0) - 8, y: y(v) + 4, 'class': 'tick', 'text-anchor': 'end' }, svg).textContent = v.toFixed(1); });
+    [0, 0.25, 0.5, 0.75, 1].forEach(function (r) { sv('text', { x: x(r), y: y(0.7) + 20, 'class': 'tick', 'text-anchor': 'middle' }, svg).textContent = String(r); });
+    sv('line', { x1: x(0), y1: y(0.7), x2: x(1), y2: y(0.7), 'class': 'axis' }, svg);
+    sv('line', { x1: x(0), y1: y(0.7), x2: x(0), y2: y(2.1), 'class': 'axis' }, svg);
+    sv('line', { x1: x(0), y1: y(1), x2: x(1), y2: y(1), 'class': 'floor' }, svg);
+    sv('path', { d: 'M' + ceil.join(' L'), 'class': 'ceiling' }, svg);
+    rich(svg, x(0.5), H - 6, '*r* on the past light cone *C*_{0}^{−}   (|Λ| = 1)', 12, 'axlab', 'middle');
+    sv('text', { x: 14, y: y(1.4), 'class': 'axlab', 'text-anchor': 'middle', transform: 'rotate(-90 14 ' + y(1.4) + ')' }, svg).textContent = 'Hawking mass m';
+    rich(svg, x(0.03), y(1.95), 'trapped: m > 1 + |Λ|r^{2}', 12, 'reg-txt-trap');
+    sv('text', { x: x(0.14), y: y(0.8), 'class': 'reg-txt-gap' }, svg).textContent = 'm < 1: excluded by the mass gap';
+    var prof = sv('path', { 'class': 'prof' }, svg);
+    sv('circle', { cx: x(0), cy: y(1), r: 5, 'class': 'bG' }, svg);
+    rich(svg, x(0) + 9, y(1) + 17, 'b_{Γ}', 13, 'reg-txt-trap');
+    var handles = R.map(function (r, i) { return sv('circle', { r: 8, 'class': 'handle', tabindex: 0, role: 'slider', 'aria-label': 'Mass at r = ' + r }, svg); });
+    function wAt(r) {
+      if (r <= R[0]) return w[0];
+      for (var i = 0; i < 3; i++) if (r <= R[i + 1]) return lerp(w[i], w[i + 1], (r - R[i]) / 0.25);
+      return w[3];
+    }
+    // b(L) with L = log(u0/u) = log(1/r): db/dL = 2 / (1 - w(r)), since |Λ| r / (1 + |Λ| r^2 - m) = 1 / ((1 - w) r).
+    function bCurve() {
+      var pts = [[0, 0]], b = 0, d = 0.02, prev = 2 / (1 - wAt(1));
+      for (var l = d; l <= LMAX + 1e-9; l += d) { var f = 2 / (1 - wAt(Math.exp(-l))); b += d * (prev + f) / 2; prev = f; pts.push([l, b]); }
+      return pts;
+    }
+    function drawB(pts) {
+      bsvg.textContent = '';
+      var BW = 420, BH = 300, bm = { l: 58, r: 22, t: 34, b: 50 }, bmax = Math.max(pts[pts.length - 1][1], 2 * LMAX) * 1.06;
+      function X(l) { return bm.l + l / LMAX * (BW - bm.l - bm.r); }
+      function Y(b) { return BH - bm.b - b / bmax * (BH - bm.t - bm.b); }
+      var step = bmax > 120 ? 50 : bmax > 60 ? 20 : bmax > 30 ? 10 : 5;
+      for (var v = 0; v <= bmax; v += step) { sv('line', { x1: X(0), y1: Y(v), x2: X(LMAX), y2: Y(v), 'class': 'grid' }, bsvg); sv('text', { x: X(0) - 7, y: Y(v) + 4, 'class': 'tick', 'text-anchor': 'end' }, bsvg).textContent = String(v); }
+      for (var l = 0; l <= LMAX; l++) sv('text', { x: X(l), y: Y(0) + 19, 'class': 'tick', 'text-anchor': 'middle' }, bsvg).textContent = String(l);
+      [1, 2, 3].forEach(function (k) { var lx = X(k * Math.LN10); sv('line', { x1: lx, y1: bm.t - 4, x2: lx, y2: Y(0), 'class': 'grid' }, bsvg); rich(bsvg, lx, bm.t - 9, '10^{−' + k + '}', 12, 'tick', 'middle'); });
+      rich(bsvg, X(0), bm.t - 9, '|u| / |u_{0}|:', 12, 'tick', 'start');
+      sv('rect', { x: X(0), y: Y(bmax), width: X(LMAX) - X(0), height: Y(0) - Y(bmax), 'class': 'axis' }, bsvg);
+      rich(bsvg, X(LMAX / 2), BH - 8, 'log(u_{0}/u)', 12, 'axlab', 'middle');
+      sv('text', { x: 15, y: Y(bmax / 2), 'class': 'axlab', 'text-anchor': 'middle', transform: 'rotate(-90 15 ' + Y(bmax / 2) + ')' }, bsvg).textContent = 'blueshift b(u)';
+      sv('line', { x1: X(0), y1: Y(0), x2: X(LMAX), y2: Y(2 * LMAX), 'class': 'bbound' }, bsvg);
+      rich(bsvg, X(4.4), Y(8.8) + 24, '2 log(u_{0}/u)', 12, 'plot-lab', 'start');
+      sv('path', { d: 'M' + pts.map(function (p) { return X(p[0]).toFixed(1) + ',' + Y(p[1]).toFixed(1); }).join(' L'), 'class': 'bcurve' }, bsvg);
+      var end = pts[pts.length - 1], ly = Math.max(bm.t + 14, Y(end[1]) - 8);
+      rich(bsvg, X(LMAX) - 4, ly, 'b(u)', 12, 'plot-lab blue', 'end');
+    }
+    function update() {
+      var pts = [];
+      for (var i = 0; i <= 100; i++) { var r = i / 100; pts.push(x(r).toFixed(1) + ',' + y(1 + wAt(r) * r * r).toFixed(1)); }
+      prof.setAttribute('d', 'M' + pts.join(' L'));
+      handles.forEach(function (hd, i) { hd.setAttribute('cx', x(R[i])); hd.setAttribute('cy', y(1 + w[i] * R[i] * R[i])); hd.setAttribute('aria-valuetext', 'm = ' + (1 + w[i] * R[i] * R[i]).toFixed(3)); });
+      var bp = bCurve(); drawB(bp);
+    }
+    // Profiles m = 1 + w(r) r^2 with w piecewise linear; these bounds keep m non-decreasing in r.
+    function setW(i, v) {
+      var lo = i > 0 ? w[i - 1] / (1 + 0.5 / R[i]) : 0, hi = i < 3 ? w[i + 1] * (1 + 0.5 / R[i + 1]) : WMAX;
+      w[i] = clamp(v, lo, Math.min(hi, WMAX));
+    }
+    var active = -1;
+    handles.forEach(function (hd, i) {
+      hd.addEventListener('pointerdown', function (e) { active = i; hd.classList.add('drag'); try { hd.setPointerCapture(e.pointerId); } catch (err) {} e.preventDefault(); });
+      hd.addEventListener('pointermove', function (e) {
+        if (active !== i) return;
+        var q = svgXY(svg, e); if (!q) return;
+        setW(i, (yinv(q[1]) - 1) / (R[i] * R[i])); update();
+      });
+      var stop = function () { active = -1; hd.classList.remove('drag'); };
+      hd.addEventListener('pointerup', stop); hd.addEventListener('pointercancel', stop);
+      hd.addEventListener('keydown', function (e) {
+        var dm = e.key === 'ArrowUp' ? 0.02 : e.key === 'ArrowDown' ? -0.02 : 0; if (!dm) return;
+        e.preventDefault(); setW(i, w[i] + dm / (R[i] * R[i])); update();
+      });
+    });
+    $$('#fig-window [data-w]').forEach(function (b) {
+      b.addEventListener('click', function () { var v = b.getAttribute('data-w').split(',').map(Number); for (var i = 0; i < 4; i++) w[i] = v[i]; update(); });
+    });
+    update();
+  }
+
+  /* ================= Fig. 10: the blueshift instability ================= */
+  function initInstab() {
+    var svg = $('#inst-svg'); if (!svg) return;
+    var tabs = $$('#fig-inst [data-step]'), panes = $$('#fig-inst [data-pane]'), sl = $('#inst-l'), lv = $('#inst-lv');
+    var D = new Diagram(svg, { view: [-0.55, 3.3, -1.2, 4.2], scale: 95, fs: 15, interactive: false });
+    var K = 2, bG = [0, 3];
+    // Double null coordinates near b_Γ = (0, 0) with u0 = -1: outgoing cones are u = const, ingoing cones v = const.
+    function W(u, v) { return [(v - u) * K, 3 + (v + u) * K]; }
+    var gamma = [[0, -1], [0.15, 0.3], [0.15, 1.7], bG];
+    var step = 1, cones = [], gPulse = sv('g', null, D.gX);
+    // Schematic shapes after Figure 3 of the paper, for |λ| = 10^-x, as functions of a = |u|.
+    function shapes(x) {
+      var h = 0.24 * Math.pow(0.8, x - 1);                                  // P_λ lies in {v ≤ λ^4}, so it is thinner for smaller |λ|
+      function vP(a) { return h * (1 - Math.exp(-0.42 * a / h)); }         // the upper boundary of P_λ
+      var e = 0.7 * Math.pow(10, -0.12 * (x - 1)), d = vP(e) - 0.18 * e;   // C_λ leaves P_λ at a = e
+      function vS(a) { return 0.18 * a + d * Math.exp(12 * (a / e - 1)); }  // C_λ = {v = v♯(u)}: in P_λ near b_Γ, then it turns up
+      // S_λ: from here to b_Γ the criterion applies; it moves toward b_Γ as |λ| decreases. The singularity is B = {u = -sig v}.
+      return { h: h, vP: vP, vS: vS, aS: 0.6 * e * Math.pow(10, -0.25 * (x - 1)), sig: 0.5 * Math.pow(10, -0.25 * (x - 1)) };
+    }
+    function curve(f, a0, a1, vmax) {
+      var o = [];
+      for (var i = 0; i <= 90; i++) { var a = a0 + (a1 - a0) * i / 90, v = f(a); if (v > vmax) break; o.push(W(-a, v)); }
+      return o;
+    }
+    // λ v^n on C0+: it vanishes to high order at v = 0.
+    function wave(a, b, amp) {
+      var o = [], dx = b[0] - a[0], dy = b[1] - a[1], len = Math.hypot(dx, dy), nx = -dy / len, ny = dx / len;
+      for (var i = 0; i <= 80; i++) { var t = i / 80, p = lp(a, b, t), w = amp * 6.75 * t * t * (1 - t) * Math.sin(6 * Math.PI * t); o.push([p[0] + w * nx, p[1] + w * ny]); }
+      return o;
+    }
+    function draw() {
+      var x = -sl.value, g = shapes(x), aS = g.aS, vs = g.vS(aS), S = W(-aS, vs), A1 = W(-aS, 0);
+      function uB(v) { return -g.sig * v * (1 - 0.4 * v / 0.62); }
+      // The marginally trapped surface on the ingoing cone {v = v♯(u)} through the point of C_λ at |u| = a.
+      function trapAt(a) { var v = g.vS(a); return W(-a + 0.72 * (uB(v) + a), v); }
+      var Cl = curve(g.vS, 0, 1, 0.5), Cend = Cl[Cl.length - 1], C2end = W(uB(vs), vs), T = trapAt(aS), dim = step === 4;
+      var shades = [{ pts: [bG, W(-1, 0)].concat(curve(g.vP, 1, 0, 9)), cls: 'shade-P', op: dim ? 0.55 : null }];
+      var paths = [{ pts: Cl, cls: 'pd-curveC2', op: dim ? 0.45 : null }, { pts: wave(W(-1, 0), W(-1, 0.42), 0.075 * Math.pow(10, -0.22 * (x - 1))), cls: 'pd-pert' }];
+      var marks = [], labels = [
+        { at: [-0.06, 0.5], tex: '\\Gamma', t: 'Γ', anchor: 'end' },
+        { at: [-0.09, 3.04], tex: 'b_\\Gamma', t: 'b_{Γ}', anchor: 'end' },
+        { at: [1.0, 1.55], tex: 'C_0^-', t: 'C_{0}^{−}', cls: 'dim', anchor: 'end' },
+        { at: [1.75, 0.38], tex: 'C_0^+', t: 'C_{0}^{+}' },
+        { at: W(-0.82, g.vP(0.82) + 0.05), tex: '\\mathcal P_\\lambda', t: '𝒫_{λ}', anchor: 'middle', op: dim ? 0.55 : null },
+        { at: [Cend[0] + 0.1, Cend[1] - 0.04], tex: '\\mathcal C_\\lambda', t: '𝒞_{λ}', cls: 'sing', op: dim ? 0.55 : null }
+      ];
+      cones = [];
+      if (step === 1) {
+        var vEdge = g.vP(1);
+        [0.14, 0.34, 0.56, 0.78].forEach(function (f) {
+          var v = vEdge * f, a = W(-1, v), b = W((g.h / 0.42) * Math.log(1 - v / g.h), v);
+          cones.push([a, b]);
+          for (var q = 0; q < 6; q++) paths.push({ pts: [lp(a, b, q / 6), lp(a, b, (q + 1) / 6)], cls: 'ingoing', sw: (1 + q * 0.5).toFixed(2), op: (0.35 + q * 0.1).toFixed(2) });
+        });
+        labels.push({ at: [2.62, 1.12], tex: '\\lambda v^n', t: 'λv^{n}', cls: 'blue' });
+      } else {
+        marks.push({ at: S, r: 4.2, cls: 'mark-T', op: dim ? 0.6 : null });
+        labels.push({ at: [S[0] + 0.1, S[1] + 0.06], tex: 'S_\\lambda', t: 'S_{λ}', cls: 'sing', op: dim ? 0.6 : null });
+      }
+      if (step === 2) {
+        var c2 = lp(S, C2end, 0.5);
+        paths.push({ pts: curve(g.vS, 0, aS, 9), cls: 'trap-curve' }, { pts: [A1, bG], cls: 'trap-c' }, { pts: [S, C2end], cls: 'trap-c2' }, { pts: [A1, S], cls: 'trap-ann' });
+        labels[2] = { at: [1.15, 1.45], tex: 'C_1=C_0^-', t: 'C_{1} = C_{0}^{−}', anchor: 'end' };
+        if (aS > 0.2) labels.push({ at: [c2[0] + 0.03, c2[1] + 0.09], tex: 'C_2', t: 'C_{2}' });
+      } else if (step === 3) {
+        var c3 = lp(S, T, 0.5);
+        paths.push({ pts: [S, T], cls: 'trap-c2 on' }, { pts: [T, C2end], cls: 'trap-c2', op: 0.5 });
+        for (var k = 1; k < 9; k++) marks.push({ at: trapAt(aS * Math.pow(0.55, k)), r: 2.5, cls: 'mark-T', op: 0.6 });
+        marks.push({ at: T, r: 5, cls: 'mark-T' });
+        if (aS > 0.2) labels.push({ at: [c3[0] + 0.03, c3[1] + 0.09], tex: 'C_2', t: 'C_{2}' });
+        labels.push({ at: [T[0] - 0.06, T[1] + 0.2], t: 'trapped surface', cls: 'pd-anno sing', fs: 0.8 });
+      } else if (step === 4) {
+        var vTop = 0.62, Btop = W(uB(vTop), vTop), B0top = W(0, 0.5), Ap = [], Bpts = [];
+        for (var bi = 0; bi <= 40; bi++) Bpts.push(W(uB(vTop * bi / 40), vTop * bi / 40));
+        for (var j = 14; j >= 0; j--) Ap.push(trapAt(aS * Math.pow(0.6, j)));
+        shades.push({ pts: [bG].concat(Ap, [C2end]), cls: 'shade-T' });
+        paths.push({ pts: [bG, B0top], cls: 'pd-B0', op: 0.4 }, { pts: Bpts, cls: 'pd-B' }, { pts: [T, C2end], cls: 'trap-c2', op: 0.5 });
+        for (var i = 1; i < 9; i++) marks.push({ at: trapAt(aS * Math.pow(0.55, i)), r: 2.5, cls: 'mark-T', op: 0.6 });
+        marks.push({ at: T, r: 4, cls: 'mark-T' });
+        labels.push(
+          { at: [Btop[0] + 0.08, Btop[1] - 0.04], tex: '\\mathcal B', t: 'ℬ', cls: 'sing' },
+          { at: [B0top[0] - 0.1, B0top[1] - 0.02], tex: '\\mathcal B_0\\ (\\lambda=0)', t: 'ℬ_{0} (λ = 0)', cls: 'dim', anchor: 'end' },
+          { at: [T[0] + 0.04, T[1] + 0.11], t: 'trapped surfaces', cls: 'pd-anno sing', fs: 0.8 }
+        );
+      }
+      D.render({
+        pieces: [
+          { id: 'gamma', c: gamma, cls: 'pd-center' },
+          { id: 'cplus', c: L(W(-1, -1), W(-1, 0.55)), cls: 'pd-cone' },
+          { id: 'cminus', c: L(bG, W(-1, 0)), cls: 'pd-cminus' }
+        ],
+        shades: shades, paths: paths, marks: marks, points: [{ at: bG }], labels: labels
+      });
+      lv.innerHTML = '|λ| = 10<sup>' + (-x).toFixed(1).replace('-', '−') + '</sup>';
+    }
+    function setStep(n) {
+      step = n; pressed(tabs, tabs[n - 1]);
+      panes.forEach(function (p) { p.hidden = +p.getAttribute('data-pane') !== n; });
+      gPulse.textContent = ''; draw();
+    }
+    tabs.forEach(function (b) { b.addEventListener('click', function () { setStep(+b.getAttribute('data-step')); }); });
+    sl.addEventListener('input', draw);
+    draw();
+    if (RM.matches) return;
+    var visible = true;
+    watchVisible(svg, function (v) { visible = v; });
+    (function frame(now) {
+      requestAnimationFrame(frame);
+      if (!visible) return;
+      gPulse.textContent = '';
+      if (step !== 1) return;
+      cones.forEach(function (cn, j) {
+        var f = ((now / 1000) * 0.35 + j * 0.25) % 1, q = D.X(lp(cn[0], cn[1], f));
+        sv('circle', { cx: q[0], cy: q[1], r: (1.8 + 5 * f * f).toFixed(2), 'class': 'pulse', opacity: (0.4 + 0.55 * f).toFixed(2) }, gPulse);
+      });
+    })(performance.now());
+  }
+
+  /* ================= Fig. 11: the examples of Cicortas–Rodnianski ================= */
+  var LOCAL = function (kind) {
+    var G0 = [0, 0], E = [2, 2], T = [0, 4];
+    var g = { pieces: [{ id: 'cplus', c: L(G0, E), cls: 'pd-cone' }], shades: [], paths: [], marks: [], points: [], labels: [{ at: [1.15, 0.62], tex: 'C_0^+', t: 'C_{0}^{+}' }] };
+    if (kind === 'reg') {
+      g.pieces.push({ id: 'gamma', c: L(G0, T), cls: 'pd-center' }, { id: 'edge', c: L(E, T), cls: 'pd-edge' });
+      g.shades.push({ pts: [G0, E, T], cls: 'shade-reg' });
+      g.labels.push({ at: [-0.06, 1.6], tex: '\\Gamma', t: 'Γ', anchor: 'end' });
+    } else if (kind === 'naked') {
+      var bG = [0, 2.6], Q = [0.7, 3.3];
+      g.pieces.push({ id: 'gamma', c: L(G0, bG), cls: 'pd-center' }, { id: 'edge', c: L(E, Q), cls: 'pd-edge' }, { id: 'B0', c: L(bG, Q), cls: 'pd-B0' });
+      g.shades.push({ pts: [G0, E, Q, bG], cls: 'shade-reg' });
+      g.points.push({ at: bG });
+      g.labels.push({ at: [-0.06, 1.3], tex: '\\Gamma', t: 'Γ', anchor: 'end' }, { at: [-0.08, 2.6], tex: 'b_\\Gamma', t: 'b_{Γ}', anchor: 'end' }, { at: [0.2, 3.25], tex: '\\mathcal B_0', t: 'ℬ_{0}', cls: 'sing', anchor: 'end' });
+    } else {
+      var top = [0, 2.75], Bc = [top, [0.3, 2.68], [0.6, 2.72], [0.95, 3.05]], Ac = [top, [0.35, 2.45], [0.75, 2.5], [1.25, 2.75]];
+      g.pieces.push({ id: 'gamma', c: L(G0, top), cls: 'pd-center' }, { id: 'edge', c: L(E, [0.95, 3.05]), cls: 'pd-edge' }, { id: 'B', c: Bc, cls: 'pd-B' });
+      g.shades.push({ pts: [G0, E, [1.25, 2.75], [0.95, 3.05]].concat(samp(Bc, 20).reverse()), cls: 'shade-reg' }, { pts: samp(Ac, 20).concat([[0.95, 3.05]], samp(Bc, 20).reverse()), cls: 'shade-T' });
+      g.marks.push({ at: [0.18, 2.66], r: 2.6, cls: 'mark-T' }, { at: [0.45, 2.63], r: 2.6, cls: 'mark-T' }, { at: [0.75, 2.7], r: 2.6, cls: 'mark-T' });
+      g.labels.push({ at: [-0.06, 1.4], tex: '\\Gamma', t: 'Γ', anchor: 'end' }, { at: [0.5, 3.0], tex: '\\mathcal B', t: 'ℬ', cls: 'sing', anchor: 'middle' });
+    }
+    return g;
+  };
+  function initExamples() {
+    var svg = $('#ex-svg'); if (!svg) return;
+    var sl = $('#ex-l'), lv = $('#ex-lv'), title = $('#ex-title'), text = $('#ex-text'), rate = $('#ex-rate'), qb = $$('#fig-ex [data-q]'), q = 4;
+    var blob = 'M40,150 C40,70 140,30 320,28 C500,26 600,70 604,150 C608,230 500,272 320,272 C140,272 40,230 40,150 Z';
+    var defs = sv('defs', null, svg), cp = sv('clipPath', { id: 'exclip' }, defs); sv('path', { d: blob }, cp);
+    var g = sv('g', { 'clip-path': 'url(#exclip)' }, svg);
+    function xThr(y) { return 322 + 16 * Math.sin(y / 38); }
+    var thr = []; for (var yy = 0; yy <= 300; yy += 5) thr.push(xThr(yy).toFixed(1) + ',' + yy);
+    sv('path', { d: 'M0,0 L' + thr.join(' L') + ' L0,300 Z', 'class': 'mod-non' }, g);
+    sv('path', { d: 'M640,0 L' + thr.join(' L') + ' L640,300 Z', 'class': 'mod-bh' }, g);
+    sv('path', { d: 'M' + thr.join(' L'), 'class': 'mod-thr' }, g);
+    sv('path', { d: blob, 'class': 'mod-outline' }, svg);
+    // λ is small (a local construction), so each family is a short curve through the threshold.
+    var Y = { 4: 96, 5: 136, 6: 176, 7: 216 }, fams = {}, HALF = 80;
+    function famY(qq, x) { return Y[qq] + 7 * Math.sin((x - xThr(Y[qq])) / 55); }
+    [4, 5, 6, 7].forEach(function (qq) {
+      var x0 = xThr(Y[qq]), pts = []; for (var x = x0 - HALF; x <= x0 + HALF + 0.1; x += 4) pts.push(x.toFixed(1) + ',' + famY(qq, x).toFixed(1));
+      fams[qq] = sv('path', { d: 'M' + pts.join(' L'), 'class': 'mod-fam' }, g);
+      sv('circle', { cx: x0, cy: Y[qq], r: 4.5, 'class': 'mod-star' }, svg);
+      sv('text', { x: x0 - HALF - 10, y: famY(qq, x0 - HALF) + 4, 'class': 'mod-note', 'text-anchor': 'end' }, svg).textContent = 'q = ' + qq;
+    });
+    sv('text', { x: xThr(Y[4]) + 10, y: Y[4] - 10, 'class': 'mod-note sing' }, svg).textContent = 'numerics';
+    // Region names; on narrow screens the text is scaled up, so only the values of λ fit.
+    var regs = [
+      [sv('text', { 'class': 'mod-note' }, svg), [xThr(48) + 10, 58, 'start', 'λ = 0: locally naked'], [xThr(48) + 10, 58, 'start', 'λ = 0']],
+      [sv('text', { 'class': 'mod-note' }, svg), [150, 244, 'start', 'λ < 0: no singularities'], [200, 252, 'middle', 'λ < 0']],
+      [sv('text', { 'class': 'mod-note' }, svg), [350, 244, 'start', 'λ > 0: trapped surfaces'], [450, 252, 'middle', 'λ > 0']]
+    ];
+    function placeRegs(k) {
+      regs.forEach(function (r) {
+        var o = k > 1.4 ? r[2] : r[1];
+        r[0].setAttribute('x', o[0]); r[0].setAttribute('y', o[1]); r[0].setAttribute('text-anchor', o[2]); r[0].textContent = o[3];
+      });
+    }
+    placeRegs(1);
+    var dot = sv('circle', { r: 7, 'class': 'mod-dot' }, svg);
+    fitText(svg, 640, placeRegs);
+    var mini = new Diagram($('#ex-mini'), { view: [-0.5, 2.3, -0.2, 4.25], scale: 40, fs: 13, interactive: false });
+    function update() {
+      var lam = +sl.value; if (Math.abs(lam) < 0.04) lam = 0;
+      var kind = lam < 0 ? 'reg' : lam > 0 ? 'trap' : 'naked';
+      [lv, title].forEach(function (box) { $$('[data-sign]', box).forEach(function (e) { e.hidden = e.getAttribute('data-sign') !== kind; }); });
+      sl.setAttribute('aria-valuetext', kind === 'reg' ? 'λ < 0' : kind === 'trap' ? 'λ > 0' : 'λ = 0');
+      var x0 = xThr(Y[q]), xx = x0 + lam * HALF;
+      dot.setAttribute('cx', xx); dot.setAttribute('cy', famY(q, xx));
+      [4, 5, 6, 7].forEach(function (qq) { fams[qq].setAttribute('class', 'mod-fam' + (qq === q ? ' sel' : '')); });
+      mini.render(LOCAL(kind));
+      if (kind === 'reg') text.textContent = 'The development does not form singularities.';
+      else if (kind === 'trap') text.textContent = 'The development contains trapped surfaces.';
+      else { text.textContent = 'A locally naked singularity spacetime with no trapped surfaces.' + (q === 4 ? ' This case corresponds to the numerical examples.' : ''); }
+      $$('[data-rate]', rate).forEach(function (e) { e.hidden = e.getAttribute('data-rate') !== (kind === 'naked' ? String(q) : 'move'); });
+      $$('.ex-q', rate).forEach(function (e) { e.textContent = q; });
+    }
+    sl.addEventListener('input', update);
+    $('#ex-zero').addEventListener('click', function () { sl.value = 0; update(); });
+    qb.forEach(function (b) { b.addEventListener('click', function () { q = +b.getAttribute('data-q'); pressed(qb, b); update(); }); });
+    update();
+  }
+
+  function boot(fn) { try { fn(); } catch (err) { if (window.console) console.error(err); } }
+  [initHero, initGallery, initTheoremFig, initBTZ, initModuli, initProofMap, initMassGap, initTrap, initBlueshift, initInstab, initExamples].forEach(boot);
+})();
+</script>
+</body>
+</html>
