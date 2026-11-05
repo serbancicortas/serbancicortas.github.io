@@ -24,12 +24,13 @@ redirect_from:
 
 I am a Courant Instructor at the [Courant Institute of Mathematical Sciences, New York University](https://cims.nyu.edu/dynamic/), hosted by [Vlad Vicol](https://cims.nyu.edu/~vicol/). Previously, I completed my PhD at [Princeton University](https://www.math.princeton.edu/) under the supervision of [Igor Rodnianski](https://www.math.princeton.edu/people/igor-rodnianski).
 
-My research interests are partial differential equations, general relativity, and nonlinear wave equations. My research focuses on problems motivated by the weak cosmic censorship conjecture and the existence of naked singularities. I am also interested in the dynamics of cosmological spacetimes, addressing questions such as scattering and singularity formation.
+My research interests are partial differential equations, general relativity, and nonlinear wave equations. My research focuses on problems motivated by the weak cosmic censorship conjecture and the existence of naked singularities. Recently, I am working on problems regarding the formation of singularities in compressible fluids as well. I am also interested in the dynamics of cosmological spacetimes, addressing questions such as scattering and singularity formation.
 
 Lean verified proof (10/27/2026) of the following AI written [extension principle](https://serbancicortas.github.io/files/general_extension_principle.pdf), in collaboration with Christoph Kehle, Yakov Shlapentokh-Rothman, and Maxime Van de Moortel: spherically symmetric solutions of the Einstein–Maxwell-charged-scalar-field equations with absolutely continuous initial data and bounded blue-shift along the terminal ingoing cone do not form singularities. Older AI written version, Lean verified (10/07/2026) for the uncharged case, under the uniform bounded blueshift assumption available [here](https://serbancicortas.github.io/files/extension_principle.pdf).
 
 ## Publications
 
+7. Instability of self-similar implosions for the compressible Euler equations, with [Igor Rodnianski](https://www.math.princeton.edu/people/igor-rodnianski) and [Ely Sandine](https://math.berkeley.edu/~esandine/).
 6. Weak cosmic censorship for the circularly symmetric Einstein-scalar field system in 2+1 dimensions, [arXiv:2605.19143](https://arxiv.org/abs/2605.19143). Interactive version [available here](https://serbancicortas.github.io/files/cosmic-censorship-2plus1.html).
 5. Discretely self-similar exterior-naked singularities for the Einstein-scalar field system, with [Christoph Kehle](https://math.mit.edu/~kehle/index.html), [Arch Rational Mech Anal 250, 37 (2026)](https://doi.org/10.1007/s00205-026-02194-4), [arXiv:2412.09540](https://arxiv.org/abs/2412.09540).
 4. Systems of wave equations on asymptotically de Sitter vacuum spacetimes in all even spatial dimensions, [Journal of Functional Analysis 290, no. 11 (2026)](https://doi.org/10.1016/j.jfa.2026.111414), [arXiv:2411.16655](https://arxiv.org/abs/2411.16655).
