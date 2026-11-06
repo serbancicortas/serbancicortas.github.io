@@ -83,6 +83,12 @@ ul.props li{margin:.35rem 0}
 .version-note a{display:inline-block;margin-top:.3rem;font-weight:650}
 .hero-fig{grid-area:fig;margin:0;background:var(--plate);border:1px solid var(--rule);border-radius:6px;padding:.75rem .75rem .85rem;min-width:0}
 #hero-svg{display:block;width:100%;height:auto;max-height:min(74vh,600px);margin-inline:auto}
+.mini-fig{margin:0 auto 2rem;max-width:21rem}
+.thm .mini-fig{margin:.2rem auto 0}
+.thm-wrap{display:flex;flex-direction:column}
+.thm-wrap .thm-side-fig{order:2;width:100%;max-width:22.5rem;margin:0 auto 2rem}
+@media (min-width:1040px){.thm-wrap{display:block}.thm-wrap .thm-side-fig{float:right;clear:right;width:calc(var(--gutter) + 1.5rem);max-width:none;margin:0 calc(-1 * (var(--gutter) + var(--gap))) 1rem 0}}
+#thm-hero-svg{display:block;width:100%;height:auto;max-height:min(74vh,600px);margin-inline:auto;overflow:visible}
 .hero-controls{display:flex;flex-wrap:wrap;gap:.5rem .7rem;align-items:center;margin-top:.7rem}
 .status{font-size:.98rem;line-height:1.5;color:var(--ink);margin:.7rem 0 0;min-height:4.5em}
 .status b{font-weight:700}
@@ -261,6 +267,7 @@ svg.pd.static{cursor:default}
 .mod-lab{fill:var(--ink);font-family:var(--font);font-style:italic;font-size:calc(19px * var(--k, 1))}
 .mod-note{fill:var(--ink-2);font-family:var(--font);font-size:calc(13.5px * var(--k, 1))}
 .mod-note.sing{fill:var(--sing);font-weight:650}
+.mod-note.ink{fill:var(--ink);font-weight:650}
 .qbtns{display:inline-flex;gap:.3rem;flex-wrap:wrap}
 .qbtns button{min-width:2.6rem}
 .qbtns button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
@@ -385,8 +392,10 @@ svg.lg{width:22px;height:10px;vertical-align:middle;overflow:visible}
 .cmp thead th{font-size:.93rem;font-weight:700;color:var(--ink);border-bottom:1.5px solid var(--ink)}
 .cmp tbody th{font-weight:650;color:var(--ink-2);font-size:.95rem}
 
-.cite{color:var(--blue);text-decoration:none;white-space:nowrap}
-.cite:hover{text-decoration:underline}
+.cite,.xref{color:var(--blue);text-decoration:none;white-space:nowrap}
+.cite:hover,.xref:hover{text-decoration:underline}
+.thm{scroll-margin-top:1.2rem}
+.thm:target{box-shadow:0 0 0 3px var(--blue-wash),0 2px 10px rgba(20,26,43,.06)}
 .xref{color:var(--blue);text-decoration:none}
 .xref:hover{text-decoration:underline}
 #fig-proof{scroll-margin-top:1rem}
@@ -424,6 +433,7 @@ footer p{margin:.4rem 0}
 .sk-ring{fill:var(--sing)}
 .sk-trap{fill:none;stroke:var(--sing);stroke-width:2.4}
 .sk-bump{fill:rgba(35,80,214,.16);stroke:var(--blue);stroke-width:1.8;stroke-linejoin:round}
+.sk-bump-under{fill:var(--plate);stroke:none}
 .sk-note{fill:var(--ink-2);font-family:var(--font);font-size:calc(13px * var(--k, 1))}
 .sk-note.sing{fill:var(--sing);font-weight:650}
 .sk-note.blue{fill:var(--blue);font-weight:650}
@@ -431,6 +441,8 @@ footer p{margin:.4rem 0}
 .sk-note.gold{fill:#8A5A06;font-weight:650}
 .sk-note.state{fill:var(--ink);font-weight:700;font-size:calc(17px * var(--k, 1))}
 .sk-lead{fill:none;stroke:var(--blue);stroke-width:1}
+.sk-wedge{fill:rgba(35,80,214,.13);stroke:none}
+.sk-mark{fill:var(--sing)}
 .lg-cone{stroke:var(--ink);stroke-width:1.5}
 .lg-wavy{stroke:var(--sing);stroke-width:2.2}
 .trio{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
@@ -442,7 +454,7 @@ footer p{margin:.4rem 0}
 .ctrl output#cc-pv{min-width:3rem}
 ul.known li{margin:.45rem 0}
 /* A margin note that starts level with the list it explains; on narrow screens it stays after the list. */
-@media (min-width:1040px){.sn.lift{margin-top:-6.2rem}}
+@media (min-width:1040px){.sn.lift{margin-top:-6.2rem}.sn.at-thm{margin-top:.9rem}}
 .cc-under{fill:var(--plate)}
 .cc-outline{fill:none;stroke:var(--ink-3);stroke-width:1.2;stroke-dasharray:6 5}
 </style>
@@ -489,10 +501,9 @@ window.MathJax = {
         <ol>
           <li><a href="#gravity"><span>1.</span>Gravity in 2+1 dimensions</a></li>
           <li><a href="#regimes"><span>2.</span>Global dynamics</a></li>
-          <li><a href="#wcc"><span>3.</span>Weak Cosmic Censorship</a></li>
-          <li><a href="#result"><span>4.</span>The main result</a></li>
-          <li><a href="#proof"><span>5.</span>Idea of the proof</a></li>
-          <li><a href="#examples"><span>6.</span>Upcoming work</a></li>
+          <li><a href="#wcc"><span>3.</span>The Weak Cosmic Censorship conjecture</a></li>
+          <li><a href="#proof"><span>4.</span>Idea of the proof</a></li>
+          <li><a href="#examples"><span>5.</span>Upcoming work</a></li>
         </ol>
       </nav>
     </div>
@@ -521,7 +532,7 @@ window.MathJax = {
         <li><svg aria-hidden="true"><line x1="1" y1="5" x2="21" y2="5" class="lg-ray"/></svg>light</li>
         <li><svg aria-hidden="true"><circle cx="11" cy="5" r="3.5" class="lg-beam"/></svg>perturbation</li>
       </ul>
-      <p class="caption" id="hero-cap"><b>Fig. 1.</b> A naked singularity spacetime. An arbitrarily small perturbation of the initial data leads to the formation of a black hole.</p>
+      <p class="caption" id="hero-cap"><b>Fig.&nbsp;1.</b> A naked singularity spacetime. An arbitrarily small perturbation of the initial data leads to the formation of a black hole.</p>
     </figure>
   </div>
 </header>
@@ -552,12 +563,12 @@ window.MathJax = {
   <p>The Einstein-scalar field system is hyperbolic, so we study the global behavior of solutions arising from data at an initial time. Note that gravity is an attractive force, while waves want to disperse. There are three possible outcomes in global dynamics:</p>
   <ol class="steps">
     <li><b>Non-collapse.</b> No singularities form and the solution exists for all time.</li>
-    <li><b>Black hole.</b> A black hole region develops in evolution, defined by the fact that gravity is so strong in this region that nothing can escape it (this is represented using light cones in Fig. 2). Moreover, a singular hypersurface forms inside the black hole, and anything that enters the black hole region encounters this singularity in finite time.</li>
-    <li><b>Naked singularity.</b> A singularity \(b\) forms, but there is no black hole region. The singularity is visible to far-away observers.</li>
+    <li><b>Black hole.</b> A black hole region develops in evolution, defined by the fact that gravity is so strong in this region that nothing can escape it (this is represented using light cones in Fig.&nbsp;2). Moreover, a singular hypersurface forms inside the black hole, and anything that enters the black hole region encounters this singularity in finite time.</li>
+    <li><b>Naked singularity.</b> A singularity \(b\) forms, but there is no black hole region. The singularity is visible to far-away observers. Note that by finite speed of propagation, the equations cannot be solved beyond the future characteristic cone arising from \(b\) (see the dashed cone in Fig.&nbsp;2).</li>
   </ol>
 
   <figure class="plate wide" id="fig-reg" aria-labelledby="reg-title">
-    <div class="plate-head"><span class="fig-no">Fig. 2</span><h3 class="plate-title" id="reg-title">The regimes in global dynamics</h3></div>
+    <div class="plate-head"><span class="fig-no">Fig.&nbsp;2</span><h3 class="plate-title" id="reg-title">The regimes in global dynamics</h3></div>
     <div class="trio">
       <figure class="trio-item"><svg id="reg-non" role="img" aria-label="Non-collapse: the light from two points escapes in both directions"></svg><figcaption><b>(a)</b> Non-collapse</figcaption></figure>
       <figure class="trio-item"><svg id="reg-bh" role="img" aria-label="Black hole: light from outside it can escape or fall in, and light from inside it ends on the singular hypersurface"></svg><figcaption><b>(b)</b> Black hole</figcaption></figure>
@@ -565,97 +576,118 @@ window.MathJax = {
     </div>
     <p class="caption">In (b), light from inside the black hole cannot escape and it ends at the singular hypersurface. In (c), light from near the singular point escapes to far-away observers. For the purpose of our discussion, the reader can think of naked singularities as isolated “point singularities”, and of black holes as necessarily having a singular hypersurface.</p>
   </figure>
-  <p>In a black hole spacetime, observers who never enter the black hole region exist for all time, so general relativity only breaks down as a physical theory inside the black hole region. For naked singularities, on the other hand, all observers eventually see the singularity and stop existing. This is pathological.</p>
+  <p>Perhaps surprisingly, naked singularities are more pathological than black holes. In a black hole spacetime, observers who never enter the black hole region exist for all time, so general relativity only breaks down as a physical theory inside the black hole region. For naked singularities, on the other hand, all observers stop existing within finite time: they reach the future cone of \(b\) and see the singularity.</p>
 </section>
 
 <section class="col" id="wcc">
-  <h2><span class="secno">3.</span>Weak Cosmic Censorship</h2>
-  <p>One of the main open problems in general relativity is the Weak Cosmic Censorship conjecture, proposed by Penrose in 1969 [<a class="cite" href="#ref-P69">Pen69</a>]. It states that, for generic initial data, naked singularities do not form. That is to say, singularities are generically hidden inside black holes and invisible to far-away observers. The conjecture is motivated by the fact that naked singularities would threaten the predictability of general relativity as a physical theory.</p>
-  <p>Christodoulou proved a suitable formulation of the conjecture for the model problem of the spherically symmetric Einstein-scalar field system in 3+1 dimensions [<a class="cite" href="#ref-ChrWCC">Chr99a</a>]. Explicit naked singularity spacetimes can be constructed: Christodoulou's examples [<a class="cite" href="#ref-C94">Chr94</a>] are self-similar, and their initial data are \(C^{1,\alpha}\). However, all naked singularities are in fact unstable to black hole formation, and the set of naked singularity spacetimes is non-generic in a suitable sense. The instability mechanism required working in a low-regularity topology, like \(C^1\). Thus, the question of Weak Cosmic Censorship in a smoother topology remains open even in this setting.</p>
-  <p class="lede-claim">This paper initiates the mathematical study of gravitational collapse for the circularly symmetric Einstein-scalar field system in 2+1 dimensions with \(\Lambda&lt;0\), and proves Weak Cosmic Censorship in a topology of arbitrary smoothness: in \(C^k\), for any \(k\ge2\).</p>
-</section>
-
-<section class="col" id="result">
-  <h2><span class="secno">4.</span>The main result</h2>
-  <div class="thm">
-    <p class="thm-label">Theorem 1.1 · Weak Cosmic Censorship</p>
-    <p>Consider the circularly symmetric Einstein-scalar field system in 2+1 dimensions with \(\Lambda&lt;0\). For any \(k\ge2\), naked singularities do not occur for generic \(C^k\) initial data.</p>
-    <p>In particular, naked singularity spacetimes are non-generic and are unstable to black hole formation.</p>
+  <h2><span class="secno">3.</span>The Weak Cosmic Censorship conjecture</h2>
+  <p>One of the main open problems in general relativity is the Weak Cosmic Censorship conjecture, proposed by Penrose in 1969 [<a class="cite" href="#ref-P69">Pen69</a>]:</p>
+  <div class="thm" id="conj-wcc">
+    <p class="thm-label">Conjecture (Penrose ’69) · Weak Cosmic Censorship</p>
+    <p>For generic initial data, naked singularities do not form. That is to say, singularities are generically hidden inside black holes and invisible to far-away observers.</p>
   </div>
-  <p>The paper chooses a more elementary notion of genericity than Christodoulou [<a class="cite" href="#ref-ChrWCC">Chr99a</a>]: naked singularity data lie in the complement of an open and dense set, rather than having positive codimension. The proof shows that naked singularities are unstable to black hole formation: after an arbitrarily small perturbation of the initial data, a black hole forms instead (Fig. 1).</p>
+  <p>As explained in the previous section, the conjecture is motivated by the fact that naked singularities would threaten the predictability of general relativity as a physical theory. In its full generality, the conjecture is <b>completely open</b>. We will discuss the resolution of the conjecture for the model problems in symmetry introduced above.</p>
+  <p>We first consider the model problem of the spherically symmetric Einstein-scalar field system in 3+1 dimensions, introduced by Christodoulou [<a class="cite" href="#ref-Chr71">Chr71</a>]. In [<a class="cite" href="#ref-C94">Chr94</a>], Christodoulou constructed examples of naked singularity spacetimes, which show that the genericity condition in the formulation of the conjecture is necessary. The examples in [<a class="cite" href="#ref-C94">Chr94</a>] are self-similar, and they arise from \(C^{1,\alpha}\) initial data. In the monumental work [<a class="cite" href="#ref-ChrWCC">Chr99a</a>], Christodoulou proved that all naked singularities are in fact unstable to black hole formation. Thus, naked singularity spacetimes are non-generic in a suitable sense, which proves a version of the conjecture for this model. The instability mechanism required working in a low-regularity topology, so the question of Weak Cosmic Censorship in a smoother topology remains open even in this setting.</p>
+  <p>We now consider the model problem of the circularly symmetric Einstein-scalar field system in 2+1 dimensions with \(\Lambda&lt;0\). We provide a resolution of the Weak Cosmic Censorship conjecture in this setting, for initial data of arbitrary smoothness:</p>
+  <div class="thm-wrap" id="result">
+      <figure class="hero-fig thm-side-fig" aria-labelledby="thm-hero-cap">
+        <svg id="thm-hero-svg" role="img" aria-label="Picture of a naked singularity spacetime. Turn the perturbation on to see a black hole form."></svg>
+        <div class="hero-controls">
+          <div class="seg-wrap">
+            <span class="seg-label" id="thm-pert-label">Perturbation</span>
+            <div class="seg" role="group" aria-labelledby="thm-pert-label">
+              <button type="button" id="thm-hero-off" aria-pressed="true">OFF</button>
+              <button type="button" id="thm-hero-on" data-on aria-pressed="false">ON</button>
+            </div>
+          </div>
+        </div>
+        <p class="status" id="thm-hero-status" aria-live="polite">
+          <span data-st="off"><b>Perturbation off.</b> A <em>naked</em> singularity spacetime: light from arbitrarily close to the point singularity \(b\) escapes, so far-away observers “see” the singularity.</span>
+          <span data-st="on" hidden><b>Perturbation on.</b> The small perturbation, supported outside \(\mathcal C\), is amplified by a blueshift effect as it travels toward \(b\). A black hole forms, and the singularity now occurs across a hypersurface, hidden inside the black hole region.</span>
+        </p>
+        <ul class="legend" aria-label="Legend">
+          <li><svg aria-hidden="true"><line x1="1" y1="5" x2="21" y2="5" class="lg-cone"/></svg>light cone</li>
+          <li><svg aria-hidden="true"><line x1="1" y1="5" x2="21" y2="5" class="lg-wavy"/></svg>singularity</li>
+          <li><svg aria-hidden="true"><line x1="1" y1="5" x2="21" y2="5" class="lg-ray"/></svg>light</li>
+          <li><svg aria-hidden="true"><circle cx="11" cy="5" r="3.5" class="lg-beam"/></svg>perturbation</li>
+        </ul>
+        <p class="caption" id="thm-hero-cap"><b>Fig.&nbsp;1.</b> A naked singularity spacetime. An arbitrarily small perturbation of the initial data leads to the formation of a black hole.</p>
+      </figure>
+    <div class="thm" id="thm-1-1">
+      <p class="thm-label">Theorem&nbsp;1.1 · Weak Cosmic Censorship</p>
+      <p>Consider the circularly symmetric Einstein-scalar field system in 2+1 dimensions with \(\Lambda&lt;0\). For any \(k\ge2\), naked singularities do not occur for generic \(C^k\) initial data.</p>
+      <p>In particular, naked singularity spacetimes are non-generic and are unstable to black hole formation (Fig.&nbsp;1).</p>
+    </div>
+  </div>
 </section>
 
 <section class="col" id="proof">
-  <h2><span class="secno">5.</span>Idea of the proof</h2>
-  <p>The proof has three steps: a description of singularities, a criterion for black hole formation, and an instability.</p>
+  <h2><span class="secno">4.</span>Idea of the proof</h2>
+  <p>The proof has three main steps: a description of singularities, a criterion for black hole formation, and an instability argument.</p>
 
-  <h3 id="mass"><span class="secno">5.1.</span>Description of singularities</h3>
-  <p>The Hawking mass \(m\) is a quasi-local quantity, defined on each circle of symmetry by</p>
+  <h3 id="mass"><span class="secno">4.1.</span>Description of singularities</h3>
+  <p>An essential quantity for the description of singularities is the Hawking mass \(m\). This is a quasi-local quantity, defined on each circle of symmetry by</p>
   \[m=-g(\nabla r,\nabla r)-\Lambda r^2+1.\]
   <p>It measures the energy of the scalar field in the disk bounded by the circle,</p>
-  \[m\approx\int_0^r r'\,(\partial\phi)^2\,dr',\]
-  <p>so \(m=0\) at the center \(r=0\). More precisely, \(m\) is non-negative, and it vanishes on a circle exactly when there is no matter in the domain of dependence of the disk bounded by that circle: the region of spacetime determined by the initial data on the disk (Fig. 3). Outside of black holes, the Hawking mass has monotonicity properties.</p>
-  <div class="thm">
-    <p class="thm-label">Theorem 1.2 · Mass gap</p>
+  \[m\approx\int_0^r r'\,(\partial\phi)^2\,dr',\qquad\text{and}\qquad m=0\ \text{ when }r=0.\]
+  <p>The system of equations implies that \(m\) satisfies an evolution equation as well. Moreover, the Hawking mass has monotonicity properties, outside of black hole regions.</p>
+  <p>A key part of our proof is establishing the presence of a mass gap:</p>
+  <aside class="sn at-thm">Similar statements hold for scaling-critical problems: no singularities form if the energy is below the energy of the ground state. The Einstein-scalar field system with \(\Lambda&lt;0\) has no scaling symmetry, but morally, near \(r=0\), the cosmological constant is lower order.</aside>
+  <div class="thm" id="thm-1-2">
+    <p class="thm-label">Theorem&nbsp;1.2 · Mass gap</p>
     <p>No singularities form in the domain of dependence of a disk bounded by a circle with Hawking mass strictly less than 1.</p>
     <details class="precise">
       <summary>Proof idea</summary>
-      <p>For the proof of Theorem 1.2, the bound on \(m\) first gives quantitative control of the geometry. A non-concentration estimate then shows that the scalar field cannot blow up at a faster than self-similar rate, so \(r\partial_r\phi\) is bounded. This improves by a small power of \(r\): \(r^{1-\rho}\partial_r\phi\) is bounded for some small \(\rho&gt;0\). These bounds propagate the local well-posedness norm from the initial data, so no singularities form.</p>
+      <p>For the proof of Theorem&nbsp;1.2, the bound on \(m\) first gives quantitative control of the geometry. A non-concentration estimate then shows that the scalar field cannot blow up at a faster than self-similar rate, so \(r\partial_r\phi\) is bounded. This improves by a small power of \(r\): \(r^{1-\rho}\partial_r\phi\) is bounded for some small \(\rho&gt;0\). These bounds propagate the local well-posedness norm from the initial data, so no singularities form.</p>
     </details>
   </div>
-  <aside class="sn">Similar statements hold for scaling-critical problems: no singularities form if the energy is below the energy of the ground state. The Einstein-scalar field system with \(\Lambda&lt;0\) has no scaling symmetry, but morally, near \(r=0\), the cosmological constant is lower order.</aside>
 
   <figure class="plate wide" id="fig-gap" aria-labelledby="gap-title">
-    <div class="plate-head"><span class="fig-no">Fig. 3</span><h3 class="plate-title" id="gap-title">The mass gap</h3></div>
+    <div class="plate-head"><span class="fig-no">Fig.&nbsp;3</span><h3 class="plate-title" id="gap-title">The mass gap</h3></div>
     <div class="two">
       <svg id="gap-sk" role="img" aria-label="A disk in the initial data and its domain of dependence"></svg>
       <div>
         <svg id="gap-plot" class="plot" viewBox="0 0 360 250" role="img" aria-label="Hawking mass of the circles in the initial data, compared with 1"></svg>
         <div class="ctrl">
           <label for="gap-s">Circle \(S\)</label>
-          <input type="range" id="gap-s" min="0.04" max="0.985" step="0.005" value="0.4">
+          <input type="range" id="gap-s" min="0.04" max="1" step="0.005" value="0.4">
           <output id="gap-sv" for="gap-s"></output>
+        </div>
+        <div class="ctrl">
+          <label for="gap-M">Bondi mass \(M\)</label>
+          <input type="range" id="gap-M" min="0.4" max="2.1" step="0.05" value="1.6">
+          <output id="gap-Mv" for="gap-M"></output>
         </div>
       </div>
     </div>
     <p class="out" id="gap-out" aria-live="polite">
-      <span data-gap="lo" hidden><b>\(m(S)\) = <span class="gap-m"></span> &lt; 1.</b> By the mass gap, no singularities form in the domain of dependence of the disk bounded by \(S\) (shaded).</span>
-      <span data-gap="hi" hidden><b>\(m(S)\) = <span class="gap-m"></span> ≥ 1.</b> The mass gap says nothing about this disk. It applies to every smaller disk with \(m&lt;1\), up to the dashed outline.</span>
+      <span data-gap="lo" hidden><b>\(m(S)\) = <span class="gap-m"></span> &lt; 1.</b> By the mass gap, no singularities form in the domain of dependence of the disk bounded by \(S\).</span>
+      <span data-gap="all" hidden><b>\(M\) = <span class="gap-M"></span> &lt; 1.</b> Every circle has \(m&lt;1\), so no singularities form at all.</span>
+      <span data-gap="hi" hidden><b>\(m(S)\) = <span class="gap-m"></span> ≥ 1.</b> The mass gap says nothing about this disk. It only applies to disks with \(m&lt;1\).</span>
     </p>
-    <p class="caption">Example initial data, with Hawking mass \(m=Mr^2/(1+r^2)\) increasing from 0 at the center to the Bondi mass \(M=1.6\) far away (units \(\lvert\Lambda\rvert=1\)). Move the circle \(S\): while \(m(S)&lt;1\), the region of spacetime determined by the disk bounded by \(S\) is regular.</p>
+    <p class="caption">Example initial data, with Hawking mass \(m=Mr^2/(1+r^2)\) increasing from 0 at the center to the Bondi mass \(M\) far away. Move the circle \(S\), or change \(M\): while \(m(S)&lt;1\), the region of spacetime determined by the disk bounded by \(S\) is regular.</p>
   </figure>
 
-  <p>The main use of the mass gap is the following description of first singularities at the center:</p>
-  <div class="thm">
-    <p class="thm-label">Corollary 1.1</p>
-    <p>Let \(b\) be a first singularity at the center, and let \(\mathcal C\) be its past light cone. Then, approaching \(b\) along \(\mathcal C\), \(r\searrow0\) and \(m\searrow1\).</p>
+  <p>The main use of the mass gap is the following description of singularities on the axis \(\{r=0\}\):</p>
+  <div class="thm" id="cor-1-1">
+    <p class="thm-label">Corollary&nbsp;1.1</p>
+    <p>Let \(b\) be a singularity on the axis of symmetry, and let \(\mathcal C\) be its past light cone. Then, approaching \(b\) along \(\mathcal C\), \(r\searrow0\) and \(m\searrow1\).</p>
+    <figure class="mini-fig"><svg id="cor-sk" role="img" aria-label="The past light cone C of a singularity b on the axis, starting from the initial data."></svg></figure>
   </div>
-  <p>So the energy is 1, but \(r=0\).</p>
-  <p>Globally, the Hawking mass is non-decreasing away from the center, and it tends to the Bondi mass \(M\) far away. As a corollary, we obtain the mass gap in terms of the Bondi mass:</p>
-  <div class="thm">
-    <p class="thm-label">Corollary 1.2</p>
-    <p>Solutions with Bondi mass less than 1 do not form singularities. In particular, solutions with small initial data are non-collapsing.</p>
-  </div>
-  <p>This proves a conjecture of Bizoń and Jałmużna [<a class="cite" href="#ref-ADS3">BJ13</a>], who gave numerical evidence for very small Bondi mass. It marks a sharp contrast with 3+1 dimensions and \(\Lambda&lt;0\), where arbitrarily small initial data can form black holes, see [<a class="cite" href="#ref-dafhol">DH06</a>, <a class="cite" href="#ref-BzRo">BR11</a>, <a class="cite" href="#ref-nulldust">Mos20</a>, <a class="cite" href="#ref-vlasov">Mos23</a>].</p>
 
-  <h3 id="criterion"><span class="secno">5.2.</span>A criterion for black hole formation</h3>
-  <p>If there is too much energy in an annular region, relative to the size of the region, then a black hole forms. This is inspired by Christodoulou's work in 3+1 dimensions [<a class="cite" href="#ref-ChrBH">Chr91</a>].</p>
-  <div class="thm">
-    <p class="thm-label">Theorem 1.3 · Formation of trapped surfaces</p>
-    <p>Consider two circles of radii \(r_1&lt;r_2\) in the initial data, with Hawking masses \(m_1\) and \(m_2\). Let \(C_1\) and \(C_2\) be their ingoing light cones, and assume that \(r\to0\) and \(m\ge1\) along \(C_1\). Set</p>
+  <h3 id="criterion"><span class="secno">4.2.</span>A criterion for black hole formation</h3>
+  <p>In order to prove instability to black hole formation, we first need to establish an effective criterion for black hole formation. The main idea is that if an annular region contains too much energy, relative to the size of the region, then a black hole forms in evolution. This is inspired by Christodoulou's work in 3+1 dimensions [<a class="cite" href="#ref-ChrBH">Chr91</a>].</p>
+  <div class="thm" id="thm-1-3">
+    <p class="thm-label">Theorem&nbsp;1.3 · Black hole formation</p>
+    <p>On an initial data hypersurface, consider two circles of radii \(r_1&lt;r_2\) and Hawking masses \(m_1,m_2\), and let \(C_1\) and \(C_2\) be their ingoing light cones. Assume that \(C_1\) ends at a singularity \(b\) on the axis of symmetry. The annulus between the two circles has relative width \(\delta_0\) and energy content \(\eta_0\):</p>
     \[\delta_0=\frac{r_2}{r_1}-1,\qquad \eta_0=\frac{m_2-m_1}{\lvert\Lambda\rvert\,r_2^2}.\]
-    <p>If \(\delta_0&gt;0\) is small enough and \(\eta_0&gt;\delta_0\), then a marginally trapped surface forms on \(C_2\).</p>
-    <details class="precise">
-      <summary>Proof idea</summary>
-      <p>The proof adapts Christodoulou's argument [<a class="cite" href="#ref-ChrBH">Chr91</a>] to 2+1 dimensions: the monotonicity properties of the system give a differential inequality for the energy content of the annulus between \(C_1\) and \(C_2\), as it evolves along \(C_2\).</p>
-    </details>
+    <p>If the annulus is thin enough and its energy content is larger than its width, \(\eta_0&gt;\delta_0\), then a black hole forms in evolution.</p>
   </div>
-  <p>Here \(\delta_0\) is the relative width of the annulus and \(\eta_0\) is its energy content. A circle is trapped exactly when \(m&gt;1+\lvert\Lambda\rvert r^2\): its energy is too large for its size. It is marginally trapped when equality holds. Trapped surfaces lie inside black holes.</p>
 
   <figure class="plate wide" id="fig-trap" aria-labelledby="trap-title">
-    <div class="plate-head"><span class="fig-no">Fig. 4</span><h3 class="plate-title" id="trap-title">Formation of trapped surfaces</h3></div>
+    <div class="plate-head"><span class="fig-no">Fig.&nbsp;4</span><h3 class="plate-title" id="trap-title">Black hole formation</h3></div>
     <div class="two">
-      <svg id="trap-sk" role="img" aria-label="An annulus in the initial data, the light cones of its two circles, and the trapped surface"></svg>
+      <svg id="trap-sk" role="img" aria-label="An annulus in the initial data and the light cones of its two circles. The inner cone ends at the singularity b. When the energy content is larger than the width, a black hole forms."></svg>
       <div>
         <div class="ctrl">
           <label for="trap-d">Width \(\delta_0\)</label>
@@ -668,65 +700,79 @@ window.MathJax = {
           <output id="trap-ev" for="trap-e"></output>
         </div>
         <p class="out" id="trap-out" aria-live="polite">
-          <span data-trap="yes" hidden><b>\(\eta_0\) = <span class="trap-e"></span> &gt; \(\delta_0\) = <span class="trap-d"></span>.</b> A marginally trapped surface forms on \(C_2\), so a black hole forms.</span>
+          <span data-trap="yes" hidden><b>\(\eta_0\) = <span class="trap-e"></span> &gt; \(\delta_0\) = <span class="trap-d"></span>.</b> A black hole forms.</span>
           <span data-trap="no" hidden><b>\(\eta_0\) = <span class="trap-e"></span> ≤ \(\delta_0\) = <span class="trap-d"></span>.</b> The energy is not large compared to the width, and the criterion gives no conclusion.</span>
         </p>
       </div>
     </div>
-    <p class="caption">The annulus between the circles of radii \(r_1&lt;r_2\) has relative width \(\delta_0\) and energy content \(\eta_0\), shown by its color. The light cones \(C_1\) and \(C_2\) of the two circles converge to the center.</p>
+    <p class="caption">The annulus between the circles of radii \(r_1&lt;r_2\) has relative width \(\delta_0\) and energy content \(\eta_0\).</p>
   </figure>
 
-  <p>Following Christodoulou [<a class="cite" href="#ref-ChrWCC">Chr99a</a>], the criterion is used in two ways. Directly: after a perturbation, it shows that a black hole forms. And through its contrapositive: a naked singularity has no trapped surfaces near it, so the criterion gives bounds for the energy on small scales.</p>
+  <p>Following Christodoulou [<a class="cite" href="#ref-ChrWCC">Chr99a</a>], the criterion is used in two ways:</p>
+  <ul class="props">
+    <li>After a suitable perturbation of a naked singularity spacetime, it shows that a black hole forms.</li>
+    <li>Since naked singularity spacetimes do not form black holes, the contrapositive of the criterion gives bounds for the energy on small scales.</li>
+  </ul>
 
-  <h3 id="instability"><span class="secno">5.3.</span>The instability</h3>
-  <p>Along the past light cone \(\mathcal C\) of a first singularity, \(m\searrow1\) and \(r\searrow0\). This creates a linear instability for the wave equation. Let \(L\) and \(\underline L\) be the outgoing and ingoing light-like directions. The renormalized outgoing derivative of the scalar field</p>
-  \[\theta=\sqrt r\,\frac{L\phi}{Lr}\]
-  <p>satisfies, in the ingoing direction,</p>
-  \[\underline L\theta=\frac{2\lvert\Lambda\rvert r}{\lvert\Lambda\rvert r^2+1-m}\,\theta+\dots\]
-  <p>Near \(\mathcal C\), the mass gap gives \(m\ge1\), and the absence of trapped surfaces gives \(m\le1+\lvert\Lambda\rvert r^2\). So the coefficient is at least \(2/r\), which blows up at \(b\). A perturbation traveling toward \(b\) along \(\mathcal C\) is amplified by the factor \(e^{\mathbf b}\), where the blueshift satisfies</p>
+  <h3 id="instability"><span class="secno">4.3.</span>The instability argument</h3>
+  <p>We finally use the two ingredients outlined above to prove the instability of naked singularity spacetimes to black hole formation. Consider any naked singularity spacetime. Along the past light cone \(\mathcal C\) of the singularity \(b\), <a class="xref" href="#cor-1-1">Corollary&nbsp;1.1</a> implies that \(m\searrow1\) and \(r\searrow0\). We explain how this creates a linear instability for the wave equation.</p>
+  <p>Let \(L\) and \(\underline L\) be the outgoing and ingoing characteristic directions. We note that, at top order, \(\square_g\sim\underline L L\). We consider the following renormalized outgoing derivative of the scalar field:</p>
+  \[\theta=\sqrt r\,\frac{L\phi}{Lr}.\]
+  <p>We note that \(\theta\) is invariant to rescaling \(L\), and that \(\sqrt r\) is a natural scale for the wave equation in 2+1 dimensions. The wave equation implies that \(\theta\) satisfies the following equation in the ingoing direction:</p>
+  \[\underline L\theta=\frac{2\lvert\Lambda\rvert r}{\lvert\Lambda\rvert r^2+1-m}\,\theta+\dots,\]
+  <p>where we prove that the contribution of the remaining terms is of lower order.</p>
+  <p>The blueshift \(\mathbf b\) is the integrating factor of this equation: along the ingoing direction, \(\theta\) is multiplied by \(e^{\mathbf b}\), so a perturbation traveling toward \(b\) along \(\mathcal C\) is amplified by the factor \(e^{\mathbf b}\). Since \(m\searrow1\), we get that:</p>
   \[\mathbf b\ \ge\ 2\log\frac{r_0}{r},\]
-  <p>and \(r_0\) is the radius of \(\mathcal C\) at the initial time. So all first singularities at the center have infinite blueshift, whether or not they are naked (Fig. 5).</p>
-
-  <figure class="plate wide" id="fig-window" aria-labelledby="win-title">
-    <div class="plate-head"><span class="fig-no">Fig. 5</span><h3 class="plate-title" id="win-title">Infinite blueshift from the mass gap</h3></div>
+  <p>so the singularity has infinite blueshift.</p>
+  <figure class="plate wide" id="fig-inst" aria-labelledby="inst-title">
+    <div class="plate-head"><span class="fig-no">Fig.&nbsp;5</span><h3 class="plate-title" id="inst-title">The instability, step by step</h3></div>
     <div class="two">
-      <svg id="win-svg" class="plot" viewBox="0 0 560 330" role="img" aria-label="Hawking mass on the past light cone of the singularity, between m = 1 and m = 1 + r squared, with four draggable points"></svg>
-      <svg id="b-svg" class="plot" viewBox="0 0 420 300" role="img" aria-label="The blueshift for the chosen mass profile, compared with 2 log(r0/r)"></svg>
+      <svg id="inst-sk" role="img" aria-label="The past light cone C of a naked singularity b, the characteristic directions L and underline L, a small perturbation outside C that grows as it travels toward b, and the black hole that forms"></svg>
+      <div>
+        <div class="steptabs" role="group" aria-label="Steps of the argument">
+          <button type="button" class="btn" data-step="1" aria-pressed="true">1 · The naked singularity</button>
+          <button type="button" class="btn" data-step="2" aria-pressed="false">2 · Growth</button>
+          <button type="button" class="btn" data-step="3" aria-pressed="false">3 · The criterion applies</button>
+          <button type="button" class="btn" data-step="4" aria-pressed="false">4 · A black hole forms</button>
+        </div>
+        <div class="pane" data-pane="1"><p><b>The naked singularity.</b> Along \(\mathcal C\), \(m\searrow1\) and \(r\searrow0\). The arrows show the outgoing and ingoing characteristic directions \(L\) and \(\underline L\). For the naked singularity itself, everything is finely tuned, and the instability is not activated.</p></div>
+        <div class="pane" data-pane="2" hidden><p><b>Growth.</b> Perturb the initial data by a bump of size \(\varepsilon\), just outside \(\mathcal C\), so the past of \(b\) is unchanged. The perturbation travels toward \(b\) in the ingoing direction \(\underline L\), within the shaded region, and the blueshift amplifies it by \(e^{\mathbf b}\).</p></div>
+        <div class="pane" data-pane="3" hidden><p><b>The criterion applies.</b> Stop at a circle \(S\), sufficiently close to \(b\). Apply <a class="xref" href="#thm-1-3">Theorem&nbsp;1.3</a> there, with \(C_1=\mathcal C\) and \(C_2\) the ingoing light cone of \(S\). The amplified perturbation gives the thin annulus between them (red) an energy content larger than its width.</p></div>
+        <div class="pane" data-pane="4" hidden><p><b>A black hole forms.</b> By <a class="xref" href="#thm-1-3">Theorem&nbsp;1.3</a>, a black hole forms in evolution. The smaller \(\varepsilon\), the closer to \(b\) this happens.</p></div>
+        <div class="ctrl">
+          <label for="inst-e">Size \(\varepsilon\)</label>
+          <input type="range" id="inst-e" min="-3" max="-1" step="0.05" value="-2">
+          <output id="inst-ev" for="inst-e"></output>
+        </div>
+      </div>
     </div>
-    <div class="presets">
-      <button type="button" class="btn" data-w="0,0,0,0">m ≡ 1</button>
-      <button type="button" class="btn" data-w="0.15,0.3,0.45,0.6">Example</button>
-      <button type="button" class="btn" data-w="0.05,0.2,0.5,0.85">Steeper outward</button>
-      <button type="button" class="btn" data-w="0.88,0.88,0.88,0.88">Near the ceiling</button>
-    </div>
-    <p class="caption">On the past light cone \(\mathcal C\), the Hawking mass stays between the floor \(m=1\) (mass gap) and the ceiling \(m=1+\lvert\Lambda\rvert r^2\) (no trapped surfaces), and it increases with \(r\). Drag the four points to choose such a profile. The right panel shows the blueshift \(\mathbf b\), which always stays above \(2\log(r_0/r)\).</p>
+    <p class="caption">The instability argument near a naked singularity \(b\), in four steps. The slider sets the size \(\varepsilon\) of the perturbation.</p>
   </figure>
-
-  <p>For the naked singularity itself, everything is arranged just right, and the instability is not activated. Now perturb the initial data by an \(\varepsilon\)-small amount, outside \(\mathcal C\), so that the causal past of \(b\) is unchanged. The main role of the blueshift is to amplify this perturbation as it travels toward \(b\). Since the contrapositive of the criterion gives bounds for the background spacetime, we can control the perturbed solution and apply the black hole formation criterion. So the perturbed spacetime contains a sequence of trapped surfaces converging to \(b\), and its singularity is spacelike-only (Fig. 1).</p>
-  <div class="callout"><b>A comment on regularity.</b> The higher the regularity of the perturbation at \(\mathcal C\), the smaller the perturbation is near \(\mathcal C\). In our case, the different scaling of the problem and the quantitative lower bound \(\mathbf b\ge2\log(r_0/r)\) give quantitative control of the strength of the linear instability, which allows us to use perturbations in any \(C^k\). In Christodoulou's case only a soft statement is available, so he needs very rough perturbations.</div>
+  <p>For the naked singularity spacetime itself, everything is finely tuned, and the instability is not activated. Now perturb the initial data by an \(\varepsilon\)-small amount, outside \(\mathcal C\), so the past of \(b\) is unchanged. The main role of the blueshift is to amplify this perturbation as it travels toward \(b\). Recall that the contrapositive of <a class="xref" href="#thm-1-3">Theorem&nbsp;1.3</a> gives bounds for the energy of the background naked singularity spacetime. This is used in an essential way to show that the blueshift instability survives in the nonlinear argument, so the energy of the perturbed spacetime grows.</p>
+  <p>At this point, it would be naive to expect that this linear instability can be traced all the way to the formation of a black hole, which is a nonlinear process. However, thanks to our black hole formation criterion, it suffices to show that we can control the perturbed solution up to a time where <a class="xref" href="#thm-1-3">Theorem&nbsp;1.3</a> applies, see Fig.&nbsp;5. Here, we have too much energy in a small enough annulus, so a black hole later forms in evolution.</p>
+  <div class="callout"><b>A comment on regularity.</b> The higher the regularity of the perturbation at \(\mathcal C\), the smaller the perturbation is near \(\mathcal C\). In our case, the different scaling of the problem and the quantitative lower bound \(\mathbf b\ge2\log(r_0/r)\) give quantitative control of the strength of the linear instability, which allows us to use perturbations in any \(C^k\). In Christodoulou's case, there is no quantitative lower bound for the blueshift, so he needs very rough perturbations.</div>
 </section>
 
 <section class="col" id="examples">
-  <h2><span class="secno">6.</span>Upcoming work</h2>
-  <p>Constructing examples of naked singularities plays a fundamental role in understanding their general properties and their instability. Moreover, the existence of such examples justifies the need to include genericity conditions in any formulation of the Weak Cosmic Censorship conjecture.</p>
-  <p>Numerical relativity works on critical collapse suggest the following picture. Take an initial data profile \(\Phi\) and an amplitude \(p&gt;0\), and evolve the data \(p\cdot\Phi\):</p>
+  <h2><span class="secno">5.</span>Upcoming work</h2>
+  <p>We briefly outline a future direction considered in an upcoming work with Igor Rodnianski, motivated by the physics literature. Numerical relativity works on critical collapse suggest the following picture. Schematically, take an initial data profile \(\Phi\) and an amplitude \(p&gt;0\), and evolve the data \(p\cdot\Phi\):</p>
   <ol class="steps">
-    <li>for \(p\ll1\), the solution does not collapse;</li>
-    <li>for \(p=p^*\), the solution is expected to form a naked singularity;</li>
-    <li>for \(p\gg1\), a black hole forms.</li>
+    <li>For \(p\ll1\), the initial data is small, so the solution does not collapse.</li>
+    <li>For \(p\gg1\), the initial data is very concentrated, so a black hole forms in evolution.</li>
+    <li>By an intermediate value property, one expects to have a phase transition between the two behaviors. Numerically, it is expected that there exists some \(p^*\) for which the solution forms a naked singularity.</li>
   </ol>
-  <p>This behavior is universal: it holds for every profile \(\Phi\). It was discovered by Choptuik in 3+1 dimensions [<a class="cite" href="#ref-Cho93">Cho93</a>], see also the review [<a class="cite" href="#ref-Gundlach2007">GMG07</a>], and it is also seen in 2+1 dimensions by Pretorius–Choptuik [<a class="cite" href="#ref-Pretorius">PC00</a>] and Jałmużna–Gundlach–Chmaj [<a class="cite" href="#ref-jalmuzna">JGC15</a>].</p>
-  <p>This suggests the conjectural picture of the moduli space in Fig. 6. In this infinite-dimensional space, the threshold between non-collapsing spacetimes and black hole spacetimes is a codimension-1 set of naked singularity spacetimes, consistent with Theorem 1.1. The theorem also covers naked singularities off the threshold, if they exist, showing they are surrounded by black hole spacetimes.</p>
+  <p>Remarkably, this behavior is universal: it holds for every profile \(\Phi\). It was discovered by Choptuik in 3+1 dimensions [<a class="cite" href="#ref-Cho93">Cho93</a>], see also the review [<a class="cite" href="#ref-Gundlach2007">GMG07</a>], and it was also seen in 2+1 dimensions by Pretorius–Choptuik [<a class="cite" href="#ref-Pretorius">PC00</a>] and Jałmużna–Gundlach–Chmaj [<a class="cite" href="#ref-jalmuzna">JGC15</a>].</p>
+  <p>This suggests the conjectural picture of the infinite-dimensional moduli space of spacetimes in Fig.&nbsp;6, where each point represents a solution of the Einstein-scalar field system. The threshold between non-collapsing spacetimes and black hole spacetimes is a codimension-1 set consisting entirely of naked singularity spacetimes. There could also exist naked singularities off the threshold, surrounded by black hole spacetimes.</p>
 
   <figure class="plate wide" id="fig-cc" aria-labelledby="cc-title-h">
-    <div class="plate-head"><span class="fig-no">Fig. 6</span><h3 class="plate-title" id="cc-title-h">A conjectural picture of the moduli space</h3><span class="badge">Conjecture, based on numerics</span></div>
+    <div class="plate-head"><span class="fig-no">Fig.&nbsp;6</span><h3 class="plate-title" id="cc-title-h">A conjectural picture of the moduli space of spacetimes</h3><span class="badge">Conjecture, based on numerics</span></div>
     <div class="mod-grid">
       <svg id="cc-svg" class="plot" role="img" aria-label="Cartoon of the moduli space: non-collapsing spacetimes inside, black hole spacetimes around them, and the threshold between them. The family p times Phi crosses the threshold."></svg>
       <div class="mod-side">
         <svg id="cc-mini" role="img" aria-label="Picture of the spacetime for the current amplitude"></svg>
         <div aria-live="polite">
-          <p class="mod-title" id="cc-title"><span data-kind="non" hidden>\(p&lt;p^*\): non-collapsing</span><span data-kind="naked" hidden>\(p=p^*\): threshold</span><span data-kind="bh" hidden>\(p&gt;p^*\): black hole</span></p>
-          <p class="mod-text" id="cc-text"><span data-kind="non" hidden>No singularities form, and the solution exists for all time.</span><span data-kind="naked" hidden>Numerics suggest a naked singularity here. Theorem 1.1 shows such data are non-generic.</span><span data-kind="bh" hidden>A trapped surface forms. Black hole data form an open set.</span></p>
+          <p class="mod-title" id="cc-title"><span data-kind="non" hidden>\(p&lt;p^*\): non-collapsing</span><span data-kind="naked" hidden>\(p=p^*\): threshold</span><span data-kind="bh" hidden>\(p&gt;p^*\): black hole</span><span data-kind="off" hidden>Naked singularity off the threshold</span></p>
+          <p class="mod-text" id="cc-text"><span data-kind="non" hidden>No singularities form, and the solution exists for all time.</span><span data-kind="naked" hidden>Numerics suggest a naked singularity here. <a class="xref" href="#thm-1-1">Theorem&nbsp;1.1</a> shows such data are non-generic.</span><span data-kind="bh" hidden>A black hole forms. Black hole spacetimes form an open set.</span><span data-kind="off" hidden>If such data exist, <a class="xref" href="#thm-1-1">Theorem&nbsp;1.1</a> implies that they are surrounded by black hole spacetimes.</span></p>
         </div>
       </div>
     </div>
@@ -736,18 +782,18 @@ window.MathJax = {
       <output id="cc-pv" for="cc-p"><span data-kind="non" hidden>\(p&lt;p^*\)</span><span data-kind="naked" hidden>\(p=p^*\)</span><span data-kind="bh" hidden>\(p&gt;p^*\)</span></output>
     </div>
     <div class="presets"><button type="button" class="btn" id="cc-snap">Go to \(p=p^*\)</button></div>
-    <p class="caption">This conjectural picture comes from numerical work on critical collapse. Theorem 1.1 implies that naked singularities are on the threshold, or they are surrounded by black hole spacetimes.</p>
+    <p class="caption">This conjectural picture comes from numerical works on critical collapse. <a class="xref" href="#thm-1-1">Theorem&nbsp;1.1</a> implies that naked singularities are non-generic and either occur on the threshold, or they are surrounded by black hole spacetimes.</p>
   </figure>
 
-  <div class="callout"><b>A more general question.</b> Two behaviors, non-collapse and black hole formation, with a threshold between them made of naked singularities: this question is not specific to general relativity. For semilinear equations such as the nonlinear wave and Klein–Gordon equations, solitons, or collapsing solitons, can sit on the threshold between dispersion and blow-up. The differences with our problem: there are no solitons and no conserved energy, so one cannot look at the energy level of the ground state.</div>
+  <div class="callout"><b>A more general question.</b> Two behaviors, non-collapse and black hole formation, with a threshold between them made of naked singularities: this question is not specific to general relativity. For semilinear equations such as the nonlinear wave and Klein–Gordon equations, solitons, or collapsing solitons, can sit on the threshold between dispersion and blow-up. The differences with our problem: there are no solitons and no conserved energy.</div>
   <p>What is known about naked singularities:</p>
   <ul class="props known">
-    <li>They are non-generic, since they are unstable to black hole formation ✓. Are they also unstable to non-collapse? This is harder.</li>
-    <li>There are examples, by Christodoulou [<a class="cite" href="#ref-C94">Chr94</a>] for the spherically symmetric Einstein-scalar field system and by Rodnianski and Shlapentokh-Rothman [<a class="cite" href="#ref-RSR23">RSR23</a>, <a class="cite" href="#ref-SR22">SR22</a>] for the Einstein vacuum equations ✓. They arise from low-regularity initial data, and they are not proved to be on the threshold. Are there examples on the threshold, arising from smooth data?</li>
+    <li>By <a class="xref" href="#thm-1-1">Theorem&nbsp;1.1</a>, naked singularity spacetimes are non-generic and are unstable to black hole formation.</li>
+    <li>There are examples, by Christodoulou [<a class="cite" href="#ref-C94">Chr94</a>] for the spherically symmetric Einstein-scalar field system and by Rodnianski and Shlapentokh-Rothman [<a class="cite" href="#ref-RSR23">RSR23</a>, <a class="cite" href="#ref-SR22">SR22</a>] for the Einstein vacuum equations. They arise from low-regularity initial data, and they are not proved to be on the threshold.</li>
   </ul>
   <aside class="sn">For the Einstein-dust system (Christodoulou [<a class="cite" href="#ref-dust">Chr84</a>]) and the Einstein–Euler system (Guo, Hadžić and Jang [<a class="cite" href="#ref-euler">GHJ23</a>]), there are naked singularities arising from smooth data, but these matter models are prone to singularity formation even in the absence of gravity.</aside>
   <p>In 3+1 dimensions, threshold examples are difficult to construct, because the numerical critical solution is discretely self-similar. In upcoming work with Igor Rodnianski [<a class="cite" href="#ref-preparation">CR26</a>], we give the first rigorous construction of naked singularities on the threshold of gravitational collapse: locally naked singularities arising in (local) critical collapse.</p>
-  <div class="thm">
+  <div class="thm" id="thm-examples">
     <p class="thm-label">Theorem (Cicortas–Rodnianski) · Threshold examples</p>
     <p>There exists a 2-parameter family of \(C^3\) initial data \(\Phi^q_\lambda\), for integers \(q\ge4\) and \(\lambda\in(-\epsilon,\epsilon)\), such that:</p>
     <ul class="props">
@@ -759,7 +805,7 @@ window.MathJax = {
   <p>The data are on a finite light cone, so this is a local version of critical collapse. The examples form a tower indexed by \(q\), and in the numerics the \(q=4\) solution is the attractor on the threshold. Unlike all previous naked singularity examples for scalar field models, our examples arise from high-regularity data, as the numerics predict.</p>
 
   <figure class="plate wide" id="fig-ex" aria-labelledby="ex-title-h">
-    <div class="plate-head"><span class="fig-no">Fig. 7</span><h3 class="plate-title" id="ex-title-h">Threshold examples</h3><span class="badge blue">Upcoming work with Igor Rodnianski</span></div>
+    <div class="plate-head"><span class="fig-no">Fig.&nbsp;7</span><h3 class="plate-title" id="ex-title-h">Threshold examples</h3><span class="badge blue">Upcoming work with Igor Rodnianski</span></div>
     <div class="mod-grid">
       <svg id="ex-svg" viewBox="0 0 640 300" role="img" aria-label="Cartoon of the space of data on a finite cone: a threshold, and one-parameter families crossing it, one for each q"></svg>
       <div class="mod-side">
@@ -790,26 +836,22 @@ window.MathJax = {
 
   <p>For \(\lambda=0\) the blueshift has the exact rate</p>
   \[\mathbf b=\Big(3-\frac1{2q}\Big)\log\frac{r_0}{r}+O(1),\]
-  <p>which should be compared with the general lower bound \(2\log(r_0/r)\) of Section 5.3.</p>
+  <p>which should be compared with the general lower bound \(2\log(r_0/r)\) of Section 4.3.</p>
 </section>
 
 <section class="col" id="references">
   <h2>References</h2>
   <ol class="refs">
-    <li id="ref-ADS3"><span class="ref-label">[BJ13]</span><span>P. Bizoń and J. Jałmużna, <em>Globally regular instability of 3-dimensional Anti–de Sitter spacetime</em>, Phys. Rev. Lett. <b>111</b> (2013). <a class="ref-link" href="https://doi.org/10.1103/PhysRevLett.111.041102">DOI</a></span></li>
-    <li id="ref-BzRo"><span class="ref-label">[BR11]</span><span>P. Bizoń and A. Rostworowski, <em>Weakly turbulent instability of Anti–de Sitter spacetime</em>, Phys. Rev. Lett. <b>107</b> (2011). <a class="ref-link" href="https://doi.org/10.1103/PhysRevLett.107.031102">DOI</a></span></li>
     <li id="ref-Cho93"><span class="ref-label">[Cho93]</span><span>M. Choptuik, <em>Universality and scaling in gravitational collapse of a massless scalar field</em>, Phys. Rev. Lett. <b>70</b> (1993), 9–12. <a class="ref-link" href="https://doi.org/10.1103/PhysRevLett.70.9">DOI</a></span></li>
+    <li id="ref-Chr71"><span class="ref-label">[Chr71]</span><span>D. Christodoulou, <em>Investigations in gravitational collapse and the physics of black holes</em>, Ph.D. thesis, Princeton University, 1971.</span></li>
     <li id="ref-dust"><span class="ref-label">[Chr84]</span><span>D. Christodoulou, <em>Violation of cosmic censorship in the gravitational collapse of a dust cloud</em>, Comm. Math. Phys. <b>93</b> (1984), no. 2, 171–195. <a class="ref-link" href="http://projecteuclid.org/euclid.cmp/1103941053">Link</a></span></li>
     <li id="ref-ChrBH"><span class="ref-label">[Chr91]</span><span>D. Christodoulou, <em>The formation of black holes and singularities in spherically symmetric gravitational collapse</em>, Comm. Pure Appl. Math. <b>44</b> (1991), no. 3, 339–373. <a class="ref-link" href="https://doi.org/10.1002/cpa.3160440305">DOI</a></span></li>
     <li id="ref-C94"><span class="ref-label">[Chr94]</span><span>D. Christodoulou, <em>Examples of naked singularity formation in the gravitational collapse of a scalar field</em>, Ann. of Math. (2) <b>140</b> (1994), no. 3, 607–653. <a class="ref-link" href="https://doi.org/10.2307/2118619">DOI</a></span></li>
     <li id="ref-ChrWCC"><span class="ref-label">[Chr99a]</span><span>D. Christodoulou, <em>The instability of naked singularities in the gravitational collapse of a scalar field</em>, Ann. of Math. (2) <b>149</b> (1999), no. 1, 183–217. <a class="ref-link" href="https://doi.org/10.2307/121023">DOI</a></span></li>
     <li id="ref-preparation"><span class="ref-label">[CR26]</span><span>S. Cicortas and I. Rodnianski, <em>Critical collapse in 2+1 gravity</em>, in preparation (2026).</span></li>
-    <li id="ref-dafhol"><span class="ref-label">[DH06]</span><span>M. Dafermos and G. Holzegel, <em>Dynamic instability of solitons in 4+1-dimensional gravity with negative cosmological constant</em>, 2006, available online at <a href="https://www.dpmms.cam.ac.uk/~md384/ADSinstability.pdf">https://www.dpmms.cam.ac.uk/~md384/ADSinstability.pdf</a>.</span></li>
     <li id="ref-euler"><span class="ref-label">[GHJ23]</span><span>Y. Guo, M. Hadžić, and J. Jang, <em>Naked singularities in the Einstein-Euler system</em>, Ann. PDE <b>9</b> (2023), no. 1, Paper No. 4, 182. <a class="ref-link" href="https://doi.org/10.1007/s40818-022-00144-3">DOI</a></span></li>
     <li id="ref-Gundlach2007"><span class="ref-label">[GMG07]</span><span>C. Gundlach and J. Martín-García, <em>Critical phenomena in gravitational collapse</em>, Living Rev. Relativ. <b>10</b> (2007), no. 1. <a class="ref-link" href="https://doi.org/10.12942/lrr-2007-5">DOI</a></span></li>
     <li id="ref-jalmuzna"><span class="ref-label">[JGC15]</span><span>J. Jałmużna, C. Gundlach, and T. Chmaj, <em>Scalar field critical collapse in 2+1 dimensions</em>, Phys. Rev. D <b>92</b> (2015). <a class="ref-link" href="https://doi.org/10.1103/PhysRevD.92.124044">DOI</a></span></li>
-    <li id="ref-nulldust"><span class="ref-label">[Mos20]</span><span>G. Moschidis, <em>A proof of the instability of AdS for the Einstein-null dust system with an inner mirror</em>, Anal. PDE <b>13</b> (2020), no. 6, 1671–1754. <a class="ref-link" href="https://doi.org/10.2140/apde.2020.13.1671">DOI</a></span></li>
-    <li id="ref-vlasov"><span class="ref-label">[Mos23]</span><span>G. Moschidis, <em>A proof of the instability of AdS for the Einstein-massless Vlasov system</em>, Invent. Math. <b>231</b> (2023), no. 2, 467–672. <a class="ref-link" href="https://doi.org/10.1007/s00222-022-01152-7">DOI</a></span></li>
     <li id="ref-Pretorius"><span class="ref-label">[PC00]</span><span>F. Pretorius and M. Choptuik, <em>Gravitational collapse in 2+1 dimensional AdS spacetime</em>, Phys. Rev. D <b>62</b> (2000). <a class="ref-link" href="https://doi.org/10.1103/PhysRevD.62.124012">DOI</a></span></li>
     <li id="ref-P69"><span class="ref-label">[Pen69]</span><span>R. Penrose, <em>Gravitational collapse: The role of general relativity</em>, Riv. Nuovo Cim. <b>1</b> (1969), 252–276. <a class="ref-link" href="https://doi.org/10.1023/A:1016578408204">DOI</a></span></li>
     <li id="ref-RSR23"><span class="ref-label">[RSR23]</span><span>I. Rodnianski and Y. Shlapentokh-Rothman, <em>Naked singularities for the Einstein vacuum equations: the exterior solution</em>, Ann. of Math. (2) <b>198</b> (2023), no. 1, 231–391. <a class="ref-link" href="https://doi.org/10.4007/annals.2023.198.1.3">DOI</a></span></li>
@@ -1081,6 +1123,20 @@ window.MathJax = {
     e.textContent = txt;
     return e;
   };
+  // The right edge, as drawn, of the ingoing light cone of the circle of radius R in the initial data, at time t:
+  // on its rim near the bottom, then on its outline (the two meet at height K^2 R).
+  Sketch.prototype.edge = function (R, t) {
+    return t <= K * K * R ? R * Math.sqrt(Math.max(0, 1 - Math.pow(t / (K * R), 2))) : (R - t) / Math.cos(ASK);
+  };
+  // A horizontal bump of height h (pixels) on the time slice {t}, between the edges of the ingoing light cones
+  // of the circles of radii R1 < R2: a perturbation just outside the first cone, travelling inward.
+  Sketch.prototype.bump = function (R1, R2, t, h) {
+    var A = this.P(this.edge(R1, t), t), B = this.P(this.edge(R2, t), t), c = (A[0] + B[0]) / 2, wd = (B[0] - A[0]) / 2, pts = [];
+    for (var i = -12; i <= 12; i++) { var u = i / 12 * wd; pts.push([c + u, A[1] - h * Math.exp(-Math.pow(u / (wd * 0.42), 2))]); }
+    return pts.concat([pts[0]]);
+  };
+  // A bump drawn over a patch of the background color, which hides the outlines behind it.
+  function drawBump(g, pts, extra) { pline(g, pts, 'sk-bump-under', extra); pline(g, pts, 'sk-bump', extra); }
   // A singular hypersurface seen edge-on: a wavy line between two points of the picture.
   function wavyPts(a, b) {
     var d = [b[0] - a[0], b[1] - a[1]], len = Math.hypot(d[0], d[1]), nx = -d[1] / len, ny = d[0] / len;
@@ -1148,13 +1204,15 @@ window.MathJax = {
   };
 
   /* ================= Fig. 1: a naked singularity and its instability ================= */
-  function initHero() {
-    var svg = $('#hero-svg'); if (!svg) return;
-    var bOff = $('#hero-off'), bOn = $('#hero-on'), st = $('#hero-status');
-    var sk = new Sketch(svg, { w: 400, h: 505, s: 92, ox: 196, oy: 424 }), gA = sv('g', null, svg);
+  function initHero(pre) {
+    pre = typeof pre === 'string' ? pre : 'hero';
+    var svg = $('#' + pre + '-svg'); if (!svg) return;
+    var bOff = $('#' + pre + '-off'), bOn = $('#' + pre + '-on'), st = $('#' + pre + '-status');
+    var sk = new Sketch(svg, { w: 400, h: 505, s: 92, ox: 196, oy: 424, kMax: pre === 'hero' ? 0 : 1.3 }), gA = sv('g', null, svg);
     // b = (0, TB). After the perturbation, the event horizon is the light cone of (0, TH), and the singularity
-    // is a spacelike hypersurface from b out to the horizon, at time TE. The bumps form at radius X0.
-    var TB = 1.75, TH = 0.35, TE = 2.35, X0 = 1.89, target = 0, tm = 0, visible = true;
+    // is a spacelike hypersurface from b out to the horizon, at time TE. The perturbation is a bump on the
+    // initial data for TB < r < R2, just outside C; copies of it travel inward along C and grow.
+    var TB = 1.75, TH = 0.35, TE = 2.35, R2 = 1.94, XM = (TB + R2) / 2, target = 0, tm = 0, visible = true;
     var B, H, E;
     function geom() { B = sk.P(0, TB); H = sk.P(0, TH); E = sk.ends(0, TH, TE); }
     // How far the point q lies below the singular hypersurface, in pixels (negative above it).
@@ -1162,26 +1220,20 @@ window.MathJax = {
       var e = q[0] >= B[0] ? E[1] : E[0], ex = e[0] - B[0], ey = e[1] - B[1], cr = (ex * (q[1] - B[1]) - ey * (q[0] - B[0])) / Math.hypot(ex, ey);
       return e[0] > B[0] ? cr : -cr;
     }
-    // A bump on the ingoing light ray x + t = X0, pointing away from C.
-    function bumpPts(x, t, amp) {
-      var p = sk.P(x, t), d = [-Math.SQRT1_2, -Math.SQRT1_2], n = [Math.SQRT1_2, -Math.SQRT1_2], w = 15, pts = [];
-      for (var i = -12; i <= 12; i++) { var u = i / 12 * w, h = amp * Math.exp(-Math.pow(u / (w * 0.42), 2)); pts.push([p[0] + u * d[0] + h * n[0], p[1] + u * d[1] + h * n[1]]); }
-      return pts.concat([pts[0]]);
-    }
     function drawAt(t) {
       tm = t; geom();
       var g = sk.clear(), c = sk.P(0, 0), bottom = c[1] + sk.s * K * 2.0;
       sk.slice(g, 2.0);
-      noteXY(g, [c[0] - 40, bottom + 22], 'initial data', '', 'middle');
+      noteXY(g, [c[0] - (pre === 'hero' ? 40 : 100), bottom + 22], 'initial data', '', 'middle');
       if (t > 0.01) {
         var bh = sv('g', { opacity: t.toFixed(2) }, g);
         // the black hole region: inside the event horizon, below the singular hypersurface
         pline(bh, [H, E[0]].concat(wavyPts(E[0], B), wavyPts(B, E[1]), [H]), 'shade-bh');
         pline(bh, [E[0], H, E[1]], 'sk-hor');
         // the perturbation on the initial data, where the bumps form
-        var q = sk.P(X0, 0), lab = [c[0] + sk.s * 1.95, bottom + 22];
-        pline(bh, bumpPts(X0, 0, 5), 'sk-bump');
-        pline(bh, [[q[0] - 2, q[1] + 7], [lab[0] - 10, lab[1] - 15]], 'sk-lead');
+        var q = sk.P(XM, 0), lab = [c[0] + sk.s * 1.95, bottom + 22];
+        pline(bh, sk.bump(TB, R2, 0, 6), 'sk-bump');
+        pline(bh, [[q[0] - 2, q[1] + 7], [lab[0] - 10, lab[1] - 13 * sk.k - 5]], 'sk-lead');
         noteXY(bh, lab, 'small perturbation', 'blue', 'end');
       }
       sk.cone(g, 0, TB, 0, 'sk-line');
@@ -1190,7 +1242,8 @@ window.MathJax = {
         var fut = sv('g', { opacity: (1 - t).toFixed(2) }, g);
         // The future light cone of b, dashed. Nothing is drawn inside it.
         sk.cone(fut, 0, TB, TB + 1.75, 'sk-hor');
-        sk.note(fut, 0.8, TB + 0.75, 'light escapes', 'gold', 'start', 24, 0);
+        if (pre === 'hero') sk.note(fut, 0.8, TB + 0.75, 'light escapes', 'gold', 'start', 24, 0);
+        else sk.note(fut, 0.75, TB + 0.4, 'light escapes', 'gold', 'start', 8, 0);
       }
       if (t > 0.01) {
         var top = sv('g', { opacity: t.toFixed(2) }, g);
@@ -1202,12 +1255,12 @@ window.MathJax = {
       sk.point(g, 0, TB);
       sk.tex(g, 0, TB, 'b', 'b', 18, '', 'middle', 0, 10 + 13 * sk.k);
       sk.tex(g, -0.86, 0.86, '\\mathcal C', '𝒞', 18, '', 'end', -10, 4);
-      noteXY(g, [8, 24], t < 0.5 ? 'Naked singularity spacetime' : 'Black hole spacetime', 'state', 'start');
+      noteXY(g, [8, 27], t < 0.5 ? 'Naked singularity spacetime' : 'Black hole spacetime', 'state', 'start');
       if (RM.matches) {
         if (t < 0.5) {
           arrow(g, sk.P(0.17, TB + 0.04), sk.P(0.85, TB + 0.72), 'sk-ray', 'sk-rayhead');
           arrow(g, sk.P(-0.17, TB + 0.04), sk.P(-0.85, TB + 0.72), 'sk-ray', 'sk-rayhead');
-        } else pline(g, bumpPts(X0 - 0.9, 0.9, 14), 'sk-bump');
+        } else pline(g, sk.bump(TB, R2, 0.9, 14), 'sk-bump');
       }
     }
     var photons = [], bumps = [], flashes = [], lastP = -1e9, lastB = -1e9, nP = 0;
@@ -1232,8 +1285,8 @@ window.MathJax = {
       // and it fades out before it reaches the singular hypersurface.
       bumps = bumps.filter(function (bp) {
         if (target !== 1) return false;
-        var s = (now - bp.t0) / 1000 * 0.62, x = X0 - s;
-        var pts = bumpPts(x, s, 5 + 3.2 * Math.min(9, Math.pow(X0 / Math.max(x, 0.3), 2) - 1));
+        var s = (now - bp.t0) / 1000 * 0.62, x = XM - s;
+        var pts = sk.bump(TB, R2, s, 6 + 3.2 * Math.min(9, Math.pow(XM / Math.max(x, 0.3), 2) - 1));
         var gap = Math.min.apply(null, pts.map(below)), op = Math.min(1, (gap - 6) / 16);
         if (op <= 0) return false;
         pline(gA, pts, 'sk-bump', { opacity: op.toFixed(2) });
@@ -1302,12 +1355,13 @@ window.MathJax = {
   /* ================= Fig. 3: the mass gap ================= */
   function initMassGap() {
     var svg = $('#gap-sk'), plot = $('#gap-plot'); if (!svg || !plot) return;
-    var sS = $('#gap-s'), vS = $('#gap-sv'), out = $('#gap-out'), M = 1.6;
+    var sS = $('#gap-s'), vS = $('#gap-sv'), sM = $('#gap-M'), vM = $('#gap-Mv'), out = $('#gap-out'), M = 1.6, sStar = 1;
     var sk = new Sketch(svg, { w: 360, h: 250, s: 72, ox: 180, oy: 194 });
     function rOf(s) { return Math.tan(Math.PI * s / 2); }
     function sOfR(r) { return 2 / Math.PI * Math.atan(r); }
     function mOf(s) { var q = Math.sin(Math.PI * s / 2); return M * q * q; }   // = M r^2 / (1 + r^2)
-    var sStar = sOfR(1 / Math.sqrt(M - 1));                                    // where m = 1
+    // The Bondi mass M sets the profile. When M > 1, sStar is the circle where m = 1.
+    function setM(v) { M = v; sStar = M > 1 ? sOfR(1 / Math.sqrt(M - 1)) : 1; }
     var PW = 360, PH = 250, pm = { l: 50, r: 18, t: 16, b: 50 };
     fitText(plot, PW);
     function px(s) { return pm.l + s * (PW - pm.l - pm.r); }
@@ -1329,34 +1383,57 @@ window.MathJax = {
       for (var i = 0; i <= 200; i++) { var ss = i / 200 * 0.999, mm = mOf(ss), q = px(ss).toFixed(1) + ',' + py(mm).toFixed(1); if (mm < 1) lo.push(q); else hi.push(q); }
       if (lo.length > 1) sv('path', { d: 'M' + lo.join(' L'), 'class': 'mcurve-lo' }, plot);
       if (hi.length > 1) sv('path', { d: 'M' + hi.join(' L'), 'class': 'mcurve-hi' }, plot);
-      sv('line', { x1: px(sStar), y1: py(0), x2: px(sStar), y2: py(1), 'class': 'sline' }, plot);
+      if (M > 1) sv('line', { x1: px(sStar), y1: py(0), x2: px(sStar), y2: py(1), 'class': 'sline' }, plot);
       sv('circle', { cx: px(s), cy: py(m), r: 6, 'class': 'pdot' }, plot);
     }
     // The domain of dependence of the disk bounded by S is the cone over the disk.
     function drawSketch(s, m) {
-      var g = sk.clear(), R = 2.1 * s, ok = m < 1;
-      sk.slice(g, 2.3);
+      // The initial data have radius RS in the picture, and its edge is r = infinity.
+      var g = sk.clear(), RS = 2.3, R = RS * s, ok = m < 1;
+      sk.slice(g, RS);
       if (ok) pline(g, [sk.P(0, R)].concat(sk.arc(0, 0, R, -ASK, Math.PI + ASK), [sk.P(0, R)]), 'sk-dom');
       sk.disk(g, R, 'sk-disk');
-      if (!ok) sk.cone(g, 0, 2.1 * sStar, 0, 'sk-star-line', true);
+      if (!ok) sk.cone(g, 0, RS * sStar, 0, 'sk-star-line', true);
       sk.cone(g, 0, R, 0, ok ? 'sk-dom-line' : 'sk-unk-line', true);
-      sk.tex(g, R, 0, 'S', 'S', 17, 'blue', 'start', 7, 5);
+      if (R > 1.95) sk.tex(g, R, 0, 'S', 'S', 17, 'blue', 'end', -7, 5);
+      else sk.tex(g, R, 0, 'S', 'S', 17, 'blue', 'start', 7, 5);
       if (ok) sk.note(g, 0, R, 'no singularities', 'blue', 'middle', 0, -12);
       else sk.note(g, 0, R, 'no conclusion', '', 'middle', 0, -12);
     }
     function update() {
-      var s = +sS.value, m = mOf(s);
+      if (sM) setM(+sM.value);
+      var s = +sS.value, m = mOf(s), state = M < 1 ? 'all' : m < 1 ? 'lo' : 'hi';
       vS.textContent = s >= 0.98 ? 'r ≈ ∞' : 'r = ' + rOf(s).toFixed(2);
+      if (vM) vM.textContent = 'M = ' + M.toFixed(2);
       drawSketch(s, m); drawPlot(s, m);
-      $$('[data-gap]', out).forEach(function (e) { e.hidden = e.getAttribute('data-gap') !== (m < 1 ? 'lo' : 'hi'); });
+      $$('[data-gap]', out).forEach(function (e) { e.hidden = e.getAttribute('data-gap') !== state; });
       $$('.gap-m', out).forEach(function (e) { e.textContent = m.toFixed(2); });
+      $$('.gap-M', out).forEach(function (e) { e.textContent = M.toFixed(2); });
     }
     sk.redraw = update;
     sS.addEventListener('input', update);
+    if (sM) sM.addEventListener('input', update);
     update();
   }
 
-  /* ================= Fig. 4: formation of trapped surfaces ================= */
+  /* ================= After Corollary 1.1: the past light cone of a first singularity ================= */
+  function initCorollary() {
+    var svg = $('#cor-sk'); if (!svg) return;
+    var sk = new Sketch(svg, { w: 320, h: 160, s: 62, ox: 160, oy: 120, kMax: 1.3 }), tb = 1.5;
+    sk.redraw = function () {
+      var g = sk.clear();
+      sk.slice(g, 1.9);
+      sk.cone(g, 0, tb, 0, 'sk-line');
+      sk.ring(g, 0, tb / 2, tb / 2, 'sk-line', -ASK);
+      // Nothing is drawn in the future of b.
+      sk.point(g, 0, tb);
+      sk.tex(g, 0, tb, 'b', 'b', 17, '', 'start', 10, 5);
+      sk.tex(g, -tb / 2, tb / 2, '\\mathcal C', '𝒞', 17, '', 'end', -10, 4);
+    };
+    sk.redraw();
+  }
+
+  /* ================= Fig. 4: black hole formation ================= */
   function initTrap() {
     var svg = $('#trap-sk'); if (!svg) return;
     var sd = $('#trap-d'), se = $('#trap-e'), vd = $('#trap-dv'), ve = $('#trap-ev'), out = $('#trap-out');
@@ -1366,29 +1443,44 @@ window.MathJax = {
       return 'M' + a + ' A' + r + ' 0 1 0 ' + b + ' A' + r + ' 0 1 0 ' + a + 'Z';
     }
     function update() {
-      var d0 = +sd.value, e0 = +se.value, trapped = e0 > d0, r1 = 1.32, r2 = r1 * (1 + d0);
+      var d0 = +sd.value, e0 = +se.value, bh = e0 > d0, r1 = 1.32, r2 = r1 * (1 + d0), tH = 0.3, w = r1 - tH;
       vd.textContent = d0.toFixed(2); ve.textContent = e0.toFixed(2);
-      var g = sk.clear(), c = sk.P(0, 0);
+      var g = sk.clear(), c = sk.P(0, 0), H = sk.P(0, tH), SL = sk.P(-w, r1), SR = sk.P(w, r1);
+      var e2 = sk.ends(0, r2, 0), A2 = sk.P(0, r2);
       sk.slice(g, 2.1);
+      // A black hole: inside the horizon (dashed), up to the singularity through b, as in the talk.
+      if (bh) {
+        pline(g, [H, SL].concat(wavyPts(SL, SR), [H]), 'shade-bh');
+        pline(g, [SL, H, SR], 'sk-hor');
+      }
       sv('path', { d: ell(c, sk.s * r2, sk.s * K * r2) + ell(c, sk.s * r1, sk.s * K * r1), 'fill-rule': 'evenodd', 'class': 'sk-ring', opacity: (0.15 + 0.85 * Math.min(1, e0 / 0.5)).toFixed(2) }, g);
       sk.ring(g, 0, 0, r1, 'sk-line');
       sk.ring(g, 0, 0, r2, 'sk-line');
       sk.cone(g, 0, r1, 0, 'sk-thin', true);
-      var tT = 0.42 * r2;
-      if (trapped) {
-        var A = sk.P(0, r2), dx = sk.s * r2 * Math.cos(ASK), dy = -sk.s * K * r2 * Math.sin(ASK), L2 = [c[0] - dx, c[1] + dy], R2 = [c[0] + dx, c[1] + dy];
-        pline(g, [L2, lp(L2, A, tT / r2)], 'sk-line');
-        pline(g, [R2, lp(R2, A, tT / r2)], 'sk-line');
-      } else sk.cone(g, 0, r2, 0, 'sk-thin', true);
-      sk.tex(g, -r1 * 0.5, r1 * 0.5, 'C_1', 'C_{1}', 16, '', 'start', 8, 0);
-      sk.tex(g, r2 * 0.8, r2 * 0.2, 'C_2', 'C_{2}', 16, '', 'start', 9, 0);
+      if (bh) {
+        // C2 ends at the singularity.
+        var f = (e2[0][1] - sk.P(0, r1)[1]) / (e2[0][1] - A2[1]);
+        pline(g, [e2[0], lp(e2[0], A2, f)], 'sk-thin');
+        pline(g, [e2[1], lp(e2[1], A2, f)], 'sk-thin');
+        wavy(g, SL, SR);
+      } else {
+        // No conclusion: C2 is drawn up to the time of b, without assuming what happens after.
+        var top = sk.ends(0, r2, r1);
+        pline(g, [e2[0], top[0]], 'sk-thin');
+        pline(g, [e2[1], top[1]], 'sk-thin');
+      }
+      sk.point(g, 0, r1);
+      sk.tex(g, 0, r1, 'b', 'b', 16, '', 'middle', 0, 9 + 12 * sk.k);
+      sk.tex(g, -(r1 - 0.75), 0.75, 'C_1', 'C_{1}', 16, '', 'start', 18, 0);
+      sk.tex(g, r2 * 0.5, r2 * 0.5, 'C_2', 'C_{2}', 16, '', 'start', 10, 0);
       sk.tex(g, r1, 0, 'r_1', 'r_{1}', 15, '', 'end', -6, 5);
       sk.tex(g, r2, 0, 'r_2', 'r_{2}', 15, '', 'start', 6, 5);
-      if (trapped) {
-        sk.ring(g, 0, tT, r2 - tT, 'sk-trap', -ASK);
-        sk.note(g, r2 - tT, tT, 'trapped', 'sing', 'start', 10, -4);
-      } else sk.note(g, 0, r2, 'no conclusion', '', 'middle', 0, -14);
-      $$('[data-trap]', out).forEach(function (e) { e.hidden = e.getAttribute('data-trap') !== (trapped ? 'yes' : 'no'); });
+      if (bh) {
+        var lab = sk.P(-w - 0.15, 0.75);
+        pline(g, [[lab[0] + 4, lab[1] - 6], sk.P(-0.72, 1.2)], 'sk-arrow');
+        noteXY(g, lab, 'black hole', '', 'end');
+      } else sk.note(g, r2 * 0.55, r1 + 0.02, 'no conclusion', '', 'start', 8, 0);
+      $$('[data-trap]', out).forEach(function (e) { e.hidden = e.getAttribute('data-trap') !== (bh ? 'yes' : 'no'); });
       $$('.trap-e', out).forEach(function (e) { e.textContent = e0.toFixed(2); });
       $$('.trap-d', out).forEach(function (e) { e.textContent = d0.toFixed(2); });
     }
@@ -1397,93 +1489,127 @@ window.MathJax = {
     update();
   }
 
-  /* ================= Fig. 5: infinite blueshift from the mass gap ================= */
-  function initBlueshift() {
-    var svg = $('#win-svg'), bsvg = $('#b-svg'); if (!svg || !bsvg) return;
-    var W = 560, H = 330, m = { l: 76, r: 16, t: 14, b: 56 };
-    var R = [0.25, 0.5, 0.75, 1], w = [0.15, 0.3, 0.45, 0.6], WMAX = 0.92, LMAX = 7;
-    fitText(svg, W); fitText(bsvg, 420);
-    function x(r) { return m.l + r * (W - m.l - m.r); }
-    function y(v) { return H - m.b - (v - 0.7) / 1.4 * (H - m.t - m.b); }
-    function yinv(p) { return 0.7 + (H - m.b - p) / (H - m.t - m.b) * 1.4; }
-    var ceil = []; for (var i = 0; i <= 60; i++) { var r = i / 60; ceil.push(x(r).toFixed(1) + ',' + y(1 + r * r).toFixed(1)); }
-    sv('path', { d: 'M' + x(0) + ',' + y(2.1) + ' L' + ceil.join(' L') + ' L' + x(1) + ',' + y(2.1) + 'Z', 'class': 'reg-trap' }, svg);
-    sv('rect', { x: x(0), y: y(1), width: x(1) - x(0), height: y(0.7) - y(1), 'class': 'reg-gap' }, svg);
-    [0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0].forEach(function (v) { sv('line', { x1: x(0), y1: y(v), x2: x(1), y2: y(v), 'class': 'grid' }, svg); sv('text', { x: x(0) - 8, y: y(v) + 4, 'class': 'tick', 'text-anchor': 'end' }, svg).textContent = v.toFixed(1); });
-    [0, 0.25, 0.5, 0.75, 1].forEach(function (r) { sv('text', { x: x(r), y: y(0.7) + 20, 'class': 'tick', 'text-anchor': 'middle' }, svg).textContent = String(r); });
-    sv('line', { x1: x(0), y1: y(0.7), x2: x(1), y2: y(0.7), 'class': 'axis' }, svg);
-    sv('line', { x1: x(0), y1: y(0.7), x2: x(0), y2: y(2.1), 'class': 'axis' }, svg);
-    sv('line', { x1: x(0), y1: y(1), x2: x(1), y2: y(1), 'class': 'floor' }, svg);
-    sv('path', { d: 'M' + ceil.join(' L'), 'class': 'ceiling' }, svg);
-    rich(svg, x(0.5), H - 6, 'radius *r* on the past light cone   (|Λ| = 1, r_{0} = 1)', 12, 'axlab', 'middle');
-    sv('text', { x: 14, y: y(1.4), 'class': 'axlab', 'text-anchor': 'middle', transform: 'rotate(-90 14 ' + y(1.4) + ')' }, svg).textContent = 'Hawking mass m';
-    rich(svg, x(0.03), y(1.95), 'trapped: m > 1 + |Λ|r^{2}', 12, 'reg-txt-trap');
-    sv('text', { x: x(0.14), y: y(0.8), 'class': 'reg-txt-gap' }, svg).textContent = 'm < 1: excluded by the mass gap';
-    var prof = sv('path', { 'class': 'prof' }, svg);
-    sv('circle', { cx: x(0), cy: y(1), r: 5, 'class': 'bG' }, svg);
-    rich(svg, x(0) + 9, y(1) + 17, '*b*', 13, 'reg-txt-trap');
-    var handles = R.map(function (r, i) { return sv('circle', { r: 8, 'class': 'handle', tabindex: 0, role: 'slider', 'aria-label': 'Mass at r = ' + r }, svg); });
-    function wAt(r) {
-      if (r <= R[0]) return w[0];
-      for (var i = 0; i < 3; i++) if (r <= R[i + 1]) return lerp(w[i], w[i + 1], (r - R[i]) / 0.25);
-      return w[3];
+  /* ================= Fig. 5: the instability, step by step (after the talk and the GR version) ================= */
+  function initInstab() {
+    var fig = $('#fig-inst'), svg = $('#inst-sk'); if (!fig || !svg) return;
+    var se = $('#inst-e'), ve = $('#inst-ev'), ctrl = se.closest('.ctrl'), btns = $$('.steptabs button', fig), panes = $$('[data-pane]', fig);
+    var sk = new Sketch(svg, { w: 400, h: 330, s: 86, ox: 200, oy: 290, kMax: 1.3 }), gA = sv('g', null, svg);
+    // C is the past light cone of b = (0, TB). The perturbation is a bump on the initial data for TB < r < R2,
+    // just outside C. It travels inward in the band between C and the ingoing light cone of the circle r = R2.
+    var TB = 1.6, R2 = 1.8, step = 1, visible = true, pulses = [], last = -1e9;
+    function ell(c, rx, ry) {
+      var a = (c[0] - rx).toFixed(1) + ',' + c[1].toFixed(1), b = (c[0] + rx).toFixed(1) + ',' + c[1].toFixed(1), r = rx.toFixed(1) + ',' + ry.toFixed(1);
+      return 'M' + a + ' A' + r + ' 0 1 0 ' + b + ' A' + r + ' 0 1 0 ' + a + 'Z';
     }
-    // b(L) with L = log(r0/r) = log(1/r): db/dL = 2 / (1 - w(r)), since |Λ| r / (1 + |Λ| r^2 - m) = 1 / ((1 - w) r).
-    function bCurve() {
-      var pts = [[0, 0]], b = 0, d = 0.02, prev = 2 / (1 - wAt(1));
-      for (var l = d; l <= LMAX + 1e-9; l += d) { var f = 2 / (1 - wAt(Math.exp(-l))); b += d * (prev + f) / 2; prev = f; pts.push([l, b]); }
-      return pts;
+    function lg() { return +se.value; }
+    // The band between C and that cone, up to the time of b. Its inner edge is exactly the drawn rim and outline of C.
+    function band() {
+      var T = [K * K * TB, TB], i;
+      for (i = 0; i <= 12; i++) T.push(K * K * R2 * i / 12);
+      T.sort(function (x, y) { return x - y; });
+      var outer = T.map(function (t) { return sk.P(sk.edge(R2, t), t); });
+      var inner = T.map(function (t) { return sk.P(sk.edge(TB, t), t); }).reverse();
+      return outer.concat(inner, [outer[0]]);
     }
-    function drawB(pts) {
-      bsvg.textContent = '';
-      var BW = 420, BH = 300, bm = { l: 58, r: 22, t: 34, b: 50 }, bmax = Math.max(pts[pts.length - 1][1], 2 * LMAX) * 1.06;
-      function X(l) { return bm.l + l / LMAX * (BW - bm.l - bm.r); }
-      function Y(b) { return BH - bm.b - b / bmax * (BH - bm.t - bm.b); }
-      var step = bmax > 120 ? 50 : bmax > 60 ? 20 : bmax > 30 ? 10 : 5;
-      for (var v = 0; v <= bmax; v += step) { sv('line', { x1: X(0), y1: Y(v), x2: X(LMAX), y2: Y(v), 'class': 'grid' }, bsvg); sv('text', { x: X(0) - 7, y: Y(v) + 4, 'class': 'tick', 'text-anchor': 'end' }, bsvg).textContent = String(v); }
-      for (var l = 0; l <= LMAX; l++) sv('text', { x: X(l), y: Y(0) + 19, 'class': 'tick', 'text-anchor': 'middle' }, bsvg).textContent = String(l);
-      [1, 2, 3].forEach(function (k) { var lx = X(k * Math.LN10); sv('line', { x1: lx, y1: bm.t - 4, x2: lx, y2: Y(0), 'class': 'grid' }, bsvg); rich(bsvg, lx, bm.t - 9, '10^{−' + k + '}', 12, 'tick', 'middle'); });
-      rich(bsvg, X(0), bm.t - 9, '*r* / *r*_{0}:', 12, 'tick', 'start');
-      sv('rect', { x: X(0), y: Y(bmax), width: X(LMAX) - X(0), height: Y(0) - Y(bmax), 'class': 'axis' }, bsvg);
-      rich(bsvg, X(LMAX / 2), BH - 8, 'log(*r*_{0}/*r*)', 12, 'axlab', 'middle');
-      sv('text', { x: 15, y: Y(bmax / 2), 'class': 'axlab', 'text-anchor': 'middle', transform: 'rotate(-90 15 ' + Y(bmax / 2) + ')' }, bsvg).textContent = 'blueshift b';
-      sv('line', { x1: X(0), y1: Y(0), x2: X(LMAX), y2: Y(2 * LMAX), 'class': 'bbound' }, bsvg);
-      rich(bsvg, X(4.4), Y(8.8) + 24, '2 log(r_{0}/r)', 12, 'plot-lab', 'start');
-      sv('path', { d: 'M' + pts.map(function (p) { return X(p[0]).toFixed(1) + ',' + Y(p[1]).toFixed(1); }).join(' L'), 'class': 'bcurve' }, bsvg);
-      var end = pts[pts.length - 1], ly = Math.max(bm.t + 14, Y(end[1]) - 8);
-      rich(bsvg, X(LMAX) - 4, ly, 'b', 12, 'plot-lab blue', 'end');
+    // A horizontal bump of height h (pixels) on the time slice {t}, across the band.
+    function bump(t, h) { return sk.bump(TB, R2, t, h); }
+    // The size of the bump on the initial data, and its amplification toward b: about (r0/r)^2, capped for the picture.
+    function h0() { return 5 + 2.5 * (lg() + 3); }
+    function amp(q) { return Math.min(38, h0() * Math.pow(1 / Math.max(0.1, 1 - 0.92 * q), 1.5)); }
+    function draw() {
+      var L = lg(), eps = Math.pow(10, L), g = sk.clear(), B = sk.P(0, TB);
+      ve.textContent = 'ε = ' + (eps < 0.0099 ? '10' + (L <= -2.95 ? '⁻³' : '⁻²·⁵') : eps.toFixed(eps < 0.1 ? 3 : 2));
+      sk.slice(g, 2.1);
+      var tH = TB - (0.55 + 0.3 * (L + 3)), w = TB - tH, H = sk.P(0, tH), SL = sk.P(-w, TB), SR = sk.P(w, TB);
+      if (step === 4) {
+        pline(g, [H, SL].concat(wavyPts(SL, SR), [H]), 'shade-bh');
+        pline(g, [SL, H, SR], 'sk-hor');
+      }
+      if (step === 2 || step === 3) pline(g, band(), 'sk-wedge');
+      sk.cone(g, 0, TB, 0, 'sk-line');
+      sk.ring(g, 0, 1.0, TB - 1.0, 'sk-line', -ASK);
+      // Only for the naked singularity itself: the future light cone of b, dashed, with nothing drawn inside it.
+      if (step === 1) sk.cone(g, 0, TB, TB + 1.25, 'sk-hor');
+      // The characteristic directions at a point low on C: underline L lies on C and points toward b; L is outgoing.
+      if (step <= 2) {
+        var e = sk.ends(0, TB, 0)[0], d = [B[0] - e[0], B[1] - e[1]], l = Math.hypot(d[0], d[1]), len = 36;
+        d = [d[0] / l, d[1] / l];
+        var P = lp(e, B, 0.3), Li = [P[0] + len * d[0], P[1] + len * d[1]], Lo = [P[0] - len * d[0], P[1] + len * d[1]];
+        arrow(g, P, Li, 'sk-arrow', 'sk-arrowhead');
+        arrow(g, P, Lo, 'sk-arrow', 'sk-arrowhead');
+        // the label of underline L sits just inside C, beside the tip of its arrow
+        texLabel(g, Li[0] + 14 * -d[1] - 1, Li[1] + 14 * d[0] + 5, '\\underline L', 16 * sk.k, '', 'start', 'L̲');
+        texLabel(g, Lo[0] - 5, Lo[1] + 2, 'L', 16 * sk.k, '', 'end', 'L');
+      }
+      if (step >= 2) {
+        // the perturbation on the initial data, just outside C
+        drawBump(g, bump(0, h0()));
+        sk.tex(g, (TB + R2) / 2, 0, '\\varepsilon', 'ε', 16, 'blue', 'middle', 0, 15);
+      }
+      if (step === 2 && RM.matches) [0.35, 0.65].forEach(function (q) { drawBump(g, bump(q * TB, amp(q))); });
+      if (step === 3) {
+        // Stop at the circle S, close to b, and apply the criterion on the annulus between C1 = C and C2,
+        // the ingoing light cone of S, which is the outer edge of the band.
+        var rs = 0.25 + 0.1 * (L + 3), ts = TB - rs, ro = rs + (R2 - TB), c = sk.P(0, ts);
+        sv('path', { d: ell(c, sk.s * ro, sk.s * K * ro) + ell(c, sk.s * rs, sk.s * K * rs), 'fill-rule': 'evenodd', 'class': 'sk-ring', opacity: '0.6' }, g);
+        sk.ring(g, 0, ts, ro, 'sk-thin', -ASK);
+        var e2 = sk.ends(0, ts + ro, ts), top = sk.ends(0, ts + ro, TB);
+        pline(g, [e2[0], top[0]], 'sk-thin');
+        pline(g, [e2[1], top[1]], 'sk-thin');
+        drawBump(g, bump(ts, amp(ts / TB)));
+        var S = sk.P(-ro, ts);
+        sv('circle', { cx: S[0].toFixed(1), cy: S[1].toFixed(1), r: 3.6, 'class': 'sk-mark' }, g);
+        sk.tex(g, -ro, ts, 'S', 'S', 16, 'sing', 'end', -8, 10);
+        sk.tex(g, -(TB - 0.62), 0.62, 'C_1=\\mathcal C', 'C₁ = 𝒞', 15, '', 'start', 16, 0);
+        var lab = sk.P(-0.45, TB + 0.15);
+        // the leader comes down from under the label, across (not along) the outline of C2
+        pline(g, [[lab[0] - 45, lab[1] + 6], [S[0] - 2, S[1] - 6]], 'sk-arrow');
+        noteXY(g, lab, 'apply Theorem 1.3', 'sing', 'end');
+      }
+      if (step === 4) {
+        wavy(g, SL, SR);
+        // above the right part of the singular line; moved left if the larger labels on narrow screens would not fit
+        var sn = sk.note(g, w * 0.55, TB, 'spacelike singularity', 'sing', 'start', 0, -12), snb = sn.getBBox();
+        if (snb.width && snb.x + snb.width > 396) sn.setAttribute('x', (396 - snb.width).toFixed(1));
+        var lb = sk.P(Math.min(w + 0.2, 1.1), TB - 0.5);
+        pline(g, [[lb[0] - 4, lb[1] - 6], sk.P(w * 0.45, TB - 0.12)], 'sk-arrow');
+        noteXY(g, lb, 'black hole', '', 'start');
+      }
+      sk.point(g, 0, TB);
+      if (step === 1) sk.tex(g, 0, TB, 'b', 'b', 17, '', 'end', -26, 5);
+      else if (step === 4) sk.tex(g, 0, TB, 'b', 'b', 17, '', 'middle', 0, 9 + 12 * sk.k);
+      else sk.tex(g, 0, TB, 'b', 'b', 17, '', 'middle', 0, -9);
+      var tC = step === 4 ? 0.72 : 1.2;
+      if (step !== 3) sk.tex(g, -(TB - tC), tC, '\\mathcal C', '𝒞', 17, '', 'end', -10, 4);
     }
-    function update() {
-      var pts = [];
-      for (var i = 0; i <= 100; i++) { var r = i / 100; pts.push(x(r).toFixed(1) + ',' + y(1 + wAt(r) * r * r).toFixed(1)); }
-      prof.setAttribute('d', 'M' + pts.join(' L'));
-      handles.forEach(function (hd, i) { hd.setAttribute('cx', x(R[i])); hd.setAttribute('cy', y(1 + w[i] * R[i] * R[i])); hd.setAttribute('aria-valuetext', 'm = ' + (1 + w[i] * R[i] * R[i]).toFixed(3)); });
-      var bp = bCurve(); drawB(bp);
-    }
-    // Profiles m = 1 + w(r) r^2 with w piecewise linear; these bounds keep m non-decreasing in r.
-    function setW(i, v) {
-      var lo = i > 0 ? w[i - 1] / (1 + 0.5 / R[i]) : 0, hi = i < 3 ? w[i + 1] * (1 + 0.5 / R[i + 1]) : WMAX;
-      w[i] = clamp(v, lo, Math.min(hi, WMAX));
-    }
-    var active = -1;
-    handles.forEach(function (hd, i) {
-      hd.addEventListener('pointerdown', function (e) { active = i; hd.classList.add('drag'); try { hd.setPointerCapture(e.pointerId); } catch (err) {} e.preventDefault(); });
-      hd.addEventListener('pointermove', function (e) {
-        if (active !== i) return;
-        var q = svgXY(svg, e); if (!q) return;
-        setW(i, (yinv(q[1]) - 1) / (R[i] * R[i])); update();
+    // In step 2, copies of the bump leave the initial data, travel inward along the band and grow;
+    // they fade out before b.
+    function frame(now) {
+      requestAnimationFrame(frame);
+      gA.textContent = '';
+      if (!visible || step !== 2) { pulses = []; return; }
+      if (now - last > 1300) { last = now; pulses.push(now); }
+      pulses = pulses.filter(function (t0) {
+        var q = (now - t0) / 1000 * 0.3;
+        if (q > 0.86) return false;
+        drawBump(gA, bump(q * TB, amp(q)), { opacity: Math.min(1, (0.86 - q) / 0.12).toFixed(2) });
+        return true;
       });
-      var stop = function () { active = -1; hd.classList.remove('drag'); };
-      hd.addEventListener('pointerup', stop); hd.addEventListener('pointercancel', stop);
-      hd.addEventListener('keydown', function (e) {
-        var dm = e.key === 'ArrowUp' ? 0.02 : e.key === 'ArrowDown' ? -0.02 : 0; if (!dm) return;
-        e.preventDefault(); setW(i, w[i] + dm / (R[i] * R[i])); update();
-      });
-    });
-    $$('#fig-window [data-w]').forEach(function (b) {
-      b.addEventListener('click', function () { var v = b.getAttribute('data-w').split(',').map(Number); for (var i = 0; i < 4; i++) w[i] = v[i]; update(); });
-    });
-    update();
+    }
+    function go(k) {
+      step = k;
+      btns.forEach(function (b) { b.setAttribute('aria-pressed', String(+b.getAttribute('data-step') === k)); });
+      panes.forEach(function (p) { p.hidden = +p.getAttribute('data-pane') !== k; });
+      // no perturbation yet in step 1, so no slider
+      ctrl.hidden = k === 1;
+      draw();
+    }
+    btns.forEach(function (b) { b.addEventListener('click', function () { go(+b.getAttribute('data-step')); }); });
+    se.addEventListener('input', draw);
+    sk.redraw = draw;
+    watchVisible(svg, function (v) { visible = v; });
+    go(1);
+    if (!RM.matches) requestAnimationFrame(frame);
   }
 
   /* ================= Fig. 6: the critical collapse conjecture ================= */
@@ -1498,9 +1624,6 @@ window.MathJax = {
     sv('path', { d: inner, 'class': 'mod-non' }, svg);
     var thr = sv('path', { d: inner, 'class': 'mod-thr' }, svg);
     sv('path', { d: outer, 'class': 'cc-outline' }, svg);
-    // Naked singularities off the threshold, if any exist: by the main theorem they are surrounded by black holes.
-    [[126, 118], [524, 120]].forEach(function (p) { sv('circle', { cx: p[0], cy: p[1], r: 5, 'class': 'mod-star' }, svg); });
-    ['M466,236 Q500,260 544,244', 'M98,212 Q124,240 166,238'].forEach(function (d) { sv('path', { d: d, 'class': 'mod-off-curve' }, svg); });
     // The family p·Φ, from AdS at p = 0 across the threshold.
     var fam = [[262, 196], [352, 222], [470, 170], [566, 112]], len = thr.getTotalLength(), poly = [], tStar = 0.5;
     for (var i = 0; i <= 200; i++) { var q = thr.getPointAtLength(len * i / 200); poly.push([q.x, q.y]); }
@@ -1508,22 +1631,39 @@ window.MathJax = {
     var pStar = 2 * tStar, S = bez(fam, tStar);
     sv('path', { d: pathD(samp(fam, 60)), 'class': 'mod-fam sel' }, svg);
     sv('circle', { cx: S[0].toFixed(1), cy: S[1].toFixed(1), r: 5.5, 'class': 'mod-star' }, svg);
-    [[S[0] + 8, S[1] + 24, 'p*', 'start', ''], [fam[3][0] + 6, fam[3][1] - 10, 'p·Φ', 'start', ''],
-     [316, 134, 'non-collapsing', 'middle', 'blue'], [150, 92, 'black hole', 'middle', 'sing'], [432, 108, 'threshold', 'start', '']].forEach(function (l) {
+    [[S[0] + 8, S[1] + 24, 'p*', 'start', ''], [550, 100, 'p·Φ', 'end', ''],
+     [315, 165, 'non-collapsing spacetimes', 'middle', 'ink'], [262, 74, 'black hole spacetimes', 'middle', 'ink'], [392, 106, 'threshold', 'start', '']].forEach(function (l) {
       sv('text', { x: l[0].toFixed(1), y: l[1].toFixed(1), 'class': 'mod-note' + (l[4] ? ' ' + l[4] : ''), 'text-anchor': l[3] }, svg).textContent = l[2];
+    });
+    // Naked singularities off the threshold, if any exist: by Theorem 1.1 they are surrounded by black hole spacetimes.
+    // Click one to see its picture, as in the GR version.
+    var picked = -1;
+    var OFF = [{ at: [126, 118] }, { at: [524, 120] }, { d: 'M466,236 Q500,260 544,244' }, { d: 'M98,212 Q124,240 166,238' }];
+    var offs = OFF.map(function (q, i) {
+      var o = sv('g', { 'class': 'mod-off', tabindex: 0, role: 'button', 'aria-label': 'Naked singularity off the threshold' }, svg);
+      if (q.d) { sv('path', { d: q.d, 'class': 'mod-off-hit' }, o); sv('path', { d: q.d, 'class': 'mod-off-curve' }, o); }
+      else { sv('circle', { cx: q.at[0], cy: q.at[1], r: 12, 'class': 'mod-off-ring' }, o); sv('circle', { cx: q.at[0], cy: q.at[1], r: 5, 'class': 'mod-star' }, o); }
+      function choose() { picked = i; update(true); }
+      o.addEventListener('click', choose);
+      o.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); choose(); } });
+      return o;
     });
     var dot = sv('circle', { r: 7, 'class': 'mod-dot' }, svg);
     fitText(svg, 640);
     var mini = new Sketch(msvg, { w: 240, h: 240, s: 52, ox: 120, oy: 204 }), kind = null;
     mini.redraw = function () { if (kind) SCENE[kind](mini, mini.clear(), { small: true }); };
-    function update() {
-      var p = +sl.value, k = Math.abs(p - pStar) <= 0.012 ? 'naked' : p < pStar ? 'non' : 'bh', q = bez(fam, p / 2);
+    function update(keep) {
+      if (keep !== true) picked = -1;
+      offs.forEach(function (o, i) { o.classList.toggle('sel', i === picked); });
+      var p = +sl.value, ks = Math.abs(p - pStar) <= 0.012 ? 'naked' : p < pStar ? 'non' : 'bh', k = picked >= 0 ? 'off' : ks, q = bez(fam, p / 2);
       dot.setAttribute('cx', q[0].toFixed(1)); dot.setAttribute('cy', q[1].toFixed(1));
-      [title, text, pv].forEach(function (box) { $$('[data-kind]', box).forEach(function (e) { e.hidden = e.getAttribute('data-kind') !== k; }); });
-      sl.setAttribute('aria-valuetext', k === 'non' ? 'p < p*' : k === 'bh' ? 'p > p*' : 'p = p*');
-      if (k !== kind) { kind = k; mini.redraw(); }
+      [title, text].forEach(function (box) { $$('[data-kind]', box).forEach(function (e) { e.hidden = e.getAttribute('data-kind') !== k; }); });
+      $$('[data-kind]', pv).forEach(function (e) { e.hidden = e.getAttribute('data-kind') !== ks; });
+      sl.setAttribute('aria-valuetext', ks === 'non' ? 'p < p*' : ks === 'bh' ? 'p > p*' : 'p = p*');
+      var scene = k === 'off' ? 'naked' : k;
+      if (scene !== kind) { kind = scene; mini.redraw(); }
     }
-    sl.addEventListener('input', update);
+    sl.addEventListener('input', function () { update(); });
     $('#cc-snap').addEventListener('click', function () { sl.value = pStar.toFixed(3); update(); });
     update();
   }
@@ -1586,8 +1726,10 @@ window.MathJax = {
     update();
   }
 
+  // The copy of Fig. 1 beside Theorem 1.1.
+  function initHeroCopy() { initHero('thm-hero'); }
   function boot(fn) { try { fn(); } catch (err) { if (window.console) console.error(err); } }
-  [initHero, initRegimes, initMassGap, initTrap, initBlueshift, initCritical, initExamples].forEach(boot);
+  [initHero, initHeroCopy, initRegimes, initMassGap, initCorollary, initTrap, initInstab, initCritical, initExamples].forEach(boot);
 })();
 </script>
 </body>
