@@ -4,40 +4,1591 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Weak Cosmic Censorship in 2+1</title>
-<meta name="description" content="The version of the interactive guide for a general mathematical audience. Under construction.">
+<meta name="description" content="An interactive guide, for a general mathematical audience, to the proof of Weak Cosmic Censorship for the circularly symmetric Einstein-scalar field system in 2+1 dimensions with a negative cosmological constant (arXiv:2605.19143).">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,300..800;1,7..72,300..800&display=swap">
 <style>
 :root{
-  /* Same paper, ink and type as the version for readers familiar with general relativity. */
+  /* Layout: a 40rem essay column set left of a 17rem sidenote gutter; figure plates span both.
+     One family, Literata, for text, labels, controls and figures.
+     Penrose-diagram ink on cool paper. Gold = light, blue = blueshift / regular, crimson = singular / trapped. */
   --paper:#F4F6F9;
   --plate:#FFFFFF;
   --ink:#141A2B;
   --ink-2:#394355;
+  --ink-3:#5D677A;
   --rule:#D3D9E3;
+  --wash:#E8ECF3;
+  --ray:#B5760A;
   --blue:#2350D6;
+  --sing:#C2173A;
+  --ray-wash:rgba(181,118,10,.16);
+  --blue-wash:rgba(35,80,214,.08);
+  --sing-wash:rgba(194,23,58,.12);
   --font:"Literata",Georgia,"Times New Roman",serif;
+  --measure:40rem;
+  --gutter:17rem;
+  --gap:3rem;
+  /* Light only, whatever the reader's system theme. */
   color-scheme:light;
 }
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;min-height:100vh;display:grid;place-items:center;padding:2rem 1rem;background:var(--paper);color:var(--ink);font-family:var(--font);font-size:1.1rem;line-height:1.6;-webkit-font-smoothing:antialiased}
-main{width:100%;max-width:36rem;background:var(--plate);border:1px solid var(--rule);border-radius:14px;padding:2.2rem 1.6rem;text-align:center}
-.eyebrow{font-size:.85rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-2);margin:0}
-h1{font-size:clamp(1.7rem,6vw,2.3rem);line-height:1.15;font-weight:700;margin:.5rem 0 .3rem}
-.sub{color:var(--ink-2);margin:0}
-.status{font-size:clamp(1.4rem,5vw,1.8rem);font-weight:650;margin:1.8rem 0 1.6rem;padding:.8rem 1rem;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
-a{color:var(--blue);font-weight:600}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);font-size:1.1rem;line-height:1.66;font-optical-sizing:auto;font-variant-numeric:lining-nums;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+button,input,output{font-family:inherit}
+a{color:var(--blue);text-decoration-thickness:1px;text-underline-offset:2px}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+p{text-wrap:pretty}
+.wrap{padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:0 3rem}
+.col{max-width:var(--measure);margin-inline:auto}
+.spread{max-width:calc(var(--measure) + var(--gutter) + var(--gap));margin-inline:auto}
+@media (min-width:1040px){
+  .col{margin-left:max(0px, calc((100% - var(--measure) - var(--gutter) - var(--gap)) / 2));margin-right:auto}
+  .plate.wide{margin-right:calc(-1 * (var(--gutter) + var(--gap)))}
+}
+
+/* ---------- type ---------- */
+/* Headings keep a text optical size, so their strokes never thin out at large sizes. */
+h1,h2,h3,.plate-title{font-weight:650;text-wrap:balance;font-optical-sizing:none;font-variation-settings:"opsz" 24}
+h1{font-size:clamp(2.2rem,4.6vw,3.3rem);line-height:1.1;letter-spacing:-.012em;margin:.4rem 0 1rem}
+h2{font-size:clamp(1.55rem,2.8vw,1.95rem);line-height:1.2;letter-spacing:-.006em;margin:4rem 0 1rem}
+h3{font-size:1.25rem;line-height:1.3;margin:2.8rem 0 .6rem}
+.secno{color:inherit;margin-right:.45rem}
+.eyebrow{font-size:.85rem;font-weight:600;line-height:1.3;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-2);margin:0}
+.dek{font-size:1.15rem;line-height:1.6;color:var(--ink-2);margin:0 0 1.1rem;max-width:36rem}
+.byline{font-size:.95rem;color:var(--ink-2);margin:0}
+.byline em{color:var(--ink)}
+dfn{font-style:italic;font-weight:650}
+.lede-claim{font-size:1.1rem;border-left:3px solid var(--blue);padding-left:1rem;margin:1.4rem 0}
+.callout{background:var(--blue-wash);border:1px solid var(--rule);border-radius:6px;padding:.8rem 1rem;margin:1.3rem 0;font-size:1rem;line-height:1.55}
+.callout b{font-weight:700}
+mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;max-width:100%;padding-block:.15rem}
+ul.props{margin:.8rem 0 1rem;padding-left:1.3rem}
+ul.props li{margin:.35rem 0}
+
+/* ---------- sidenotes ---------- */
+.sn{display:block;font-size:.93rem;line-height:1.55;color:var(--ink-2);margin:.2rem 0 1.2rem;padding-left:.85rem;border-left:2px solid var(--rule)}
+@media (min-width:1040px){
+  .sn{float:right;clear:right;width:var(--gutter);margin:.35rem calc(-1 * (var(--gutter) + var(--gap))) 1rem 0;padding:.5rem 0 0;border-left:0;border-top:1px solid var(--rule)}
+}
+
+/* ---------- hero ---------- */
+.hero{padding-block:clamp(1.25rem,4vw,3rem) .5rem}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,22.5rem);grid-template-areas:"text note" "text fig";grid-template-rows:auto 1fr;column-gap:clamp(1.5rem,4vw,3.25rem);row-gap:.9rem;align-items:start}
+@media (max-width:880px){.hero-grid{grid-template-columns:minmax(0,1fr);grid-template-areas:"note" "text" "fig";grid-template-rows:auto;row-gap:1.5rem}}
+.hero-text{grid-area:text;padding-top:clamp(0rem,3vw,2.5rem);min-width:0}
+.version-note{grid-area:note;margin:0;padding:.75rem .9rem .8rem;background:var(--wash);border:1px solid var(--rule);border-radius:6px;font-size:.95rem;line-height:1.5;color:var(--ink-2)}
+.version-note a{display:inline-block;margin-top:.3rem;font-weight:650}
+.hero-fig{grid-area:fig;margin:0;background:var(--plate);border:1px solid var(--rule);border-radius:6px;padding:.75rem .75rem .85rem;min-width:0}
+#hero-svg{display:block;width:100%;height:auto;max-height:min(74vh,600px);margin-inline:auto}
+.hero-controls{display:flex;flex-wrap:wrap;gap:.5rem .7rem;align-items:center;margin-top:.7rem}
+.status{font-size:.98rem;line-height:1.5;color:var(--ink);margin:.7rem 0 0;min-height:4.5em}
+.status b{font-weight:700}
+.ray-out{font-size:.92rem;font-style:italic;line-height:1.45;color:var(--ink-2);margin:.35rem 0 0;min-height:1.4em}
+.ray-out:empty{display:none}
+.legend{list-style:none;margin:.75rem 0 0;padding:.6rem 0 0;border-top:1px solid var(--rule);display:flex;flex-wrap:wrap;gap:.35rem 1rem;font-size:.88rem;line-height:1.3;color:var(--ink-2)}
+.legend li{display:inline-flex;align-items:center;gap:.4rem}
+.legend svg{width:22px;height:10px;overflow:visible}
+.lg-center{stroke:var(--ink);stroke-width:1.6}
+.lg-scri{stroke:var(--ink);stroke-width:1.4;stroke-dasharray:4 3}
+.lg-sing{stroke:var(--sing);stroke-width:2.2;stroke-dasharray:6 2 1.5 2}
+.lg-ray{stroke:var(--ray);stroke-width:2.2}
+.lg-trap{fill:var(--sing)}
+.toc{margin-top:2.2rem;padding-top:.9rem;border-top:1px solid var(--rule)}
+.toc ol{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.35rem 1.2rem;font-size:.95rem;line-height:1.45}
+.toc a{color:var(--ink);text-decoration:none}
+.toc a:hover{color:var(--blue);text-decoration:underline}
+.toc span{color:inherit;font-weight:700;margin-right:.35rem}
+
+/* ---------- controls ---------- */
+.seg-wrap{display:inline-flex;align-items:center;gap:.55rem}
+.seg-label{font-size:.93rem;font-weight:650;color:var(--ink-2)}
+.seg{display:inline-flex;border:1px solid var(--ink);border-radius:999px;overflow:hidden}
+.seg button{font-size:.9rem;font-weight:700;letter-spacing:.03em;line-height:1;padding:.55rem .9rem;background:transparent;color:var(--ink);border:0;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.seg button[data-on][aria-pressed="true"]{background:var(--sing);color:#fff}
+.btn{font-size:.88rem;font-weight:650;line-height:1;padding:.55rem .85rem;border:1px solid var(--rule);background:var(--plate);color:var(--ink);border-radius:999px;cursor:pointer}
+.btn:hover{border-color:var(--ink-3)}
+.btn.quiet{color:var(--ink-2)}
+.presets{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.6rem}
+.ctrl{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:.4rem .8rem;align-items:center;margin-top:.8rem}
+.ctrl label{font-size:.93rem;font-weight:650;line-height:1.3;color:var(--ink-2)}
+.ctrl output{font-size:1rem;font-weight:650;line-height:1;font-variant-numeric:lining-nums tabular-nums;min-width:4.5rem;text-align:right}
+input[type="range"]{width:100%;accent-color:var(--blue);margin:0}
+.range-ends{display:flex;align-items:center;gap:.5rem;min-width:0}
+.range-ends>span{flex:none;font-size:.95rem;color:var(--ink-2)}
+.ctrl output#ex-lv{min-width:3rem}
+.readout{display:grid;grid-template-columns:auto minmax(0,1fr);gap:.3rem .9rem;margin:.9rem 0 0;font-size:.97rem}
+.readout dt{font-weight:650;color:var(--ink-2)}
+.readout dd{margin:0;font-variant-numeric:lining-nums tabular-nums;color:var(--ink)}
+.hint{font-size:.9rem;font-style:italic;line-height:1.4;color:var(--ink-3);margin:.45rem 0 0}
+.out{font-size:1rem;line-height:1.55;margin:.9rem 0 0;min-height:3.2em}
+.out b{font-weight:700}
+
+/* ---------- plates ---------- */
+.plate{clear:both;background:var(--plate);border:1px solid var(--rule);border-radius:6px;margin:2.2rem 0 2.6rem;padding:clamp(.85rem,2.4vw,1.4rem)}
+.plate-head{display:flex;flex-wrap:wrap;gap:.25rem .75rem;align-items:baseline;margin-bottom:.9rem}
+.fig-no{font-size:.88rem;font-weight:700;line-height:1;color:var(--blue)}
+.plate-title{font-size:1.22rem;margin:0;line-height:1.25}
+.badge{display:inline-block;font-size:.8rem;font-weight:700;letter-spacing:.02em;line-height:1.2;padding:.22rem .6rem;border-radius:999px;background:var(--ray-wash);color:#6E4700}
+.badge.blue{background:var(--blue-wash);color:var(--blue)}
+.caption{font-size:.95rem;line-height:1.55;color:var(--ink-2);margin:1rem 0 0;padding-top:.75rem;border-top:1px solid var(--rule)}
+.regime{font-size:1rem;line-height:1.5;margin:.8rem 0 0;min-height:3em}
+.regime b{font-weight:700}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1.4rem;align-items:start}
+@media (max-width:760px){.two{grid-template-columns:minmax(0,1fr)}}
+
+/* ---------- theorem boxes ---------- */
+/* Theorems are set as cards, so they stand out from the text. */
+.thm{background:var(--plate);border:1px solid var(--rule);border-top:3px solid var(--ink);border-radius:10px;padding:1.2rem 1.4rem 1.1rem;margin:2rem 0 2.2rem;box-shadow:0 2px 10px rgba(20,26,43,.06)}
+.thm-label{font-size:1.3rem;font-weight:700;line-height:1.4;color:var(--ink);margin:0 0 .6rem}
+.thm p{margin:.4rem 0;font-style:italic;font-size:1.1rem;line-height:1.62}
+@media (max-width:520px){.thm{padding:1rem 1rem .9rem}}
+details.precise{margin:.7rem 0 0;padding-top:.6rem;border-top:1px dashed var(--rule)}
+details.precise summary{cursor:pointer;font-weight:650;color:var(--blue);font-size:.97rem}
+details.precise[open] summary{margin-bottom:.3rem}
+details.precise p{font-style:normal}
+
+/* ---------- Penrose diagrams ---------- */
+svg.pd{display:block;width:100%;height:auto;cursor:crosshair;touch-action:manipulation;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
+svg.pd.static{cursor:default}
+.pd-center{fill:none;stroke:var(--ink);stroke-width:1.7}
+.pd-cone{fill:none;stroke:var(--ink);stroke-width:1.3}
+.pd-scri{fill:none;stroke:var(--ink);stroke-width:1.5;stroke-dasharray:6 4}
+.pd-B{fill:none;stroke:var(--sing);stroke-width:2.6;stroke-dasharray:8 3 1.6 3;stroke-linecap:round}
+.pd-B0{fill:none;stroke:var(--sing);stroke-width:2;stroke-dasharray:6 4}
+.pd-H{fill:none;stroke:var(--ink-2);stroke-width:1.2}
+.pd-cminus{fill:none;stroke:var(--ink-3);stroke-width:1.1;stroke-dasharray:2 3}
+.pd-u0{fill:none;stroke:var(--ink-3);stroke-width:1;stroke-dasharray:1.5 3}
+.pd-edge{fill:none;stroke:var(--ink-3);stroke-width:1.1;stroke-dasharray:3 3}
+.pd-pert{fill:none;stroke:var(--blue);stroke-width:2;stroke-linecap:round}
+.pd-curveC{fill:none;stroke:var(--sing);stroke-width:1;stroke-dasharray:1.5 2.5}
+.pd-curveC2{fill:none;stroke:var(--sing);stroke-width:1.4;stroke-dasharray:5 3}
+.pd-lead{fill:none;stroke:var(--ink-3);stroke-width:.9}
+.pd-anno-line{fill:none;stroke:var(--ink-2);stroke-width:1.3}
+.pd-arrowhead{fill:var(--ink-2)}
+.pd-pt{fill:var(--plate);stroke:var(--ink);stroke-width:1.4}
+.pd-label{fill:var(--ink);font-family:var(--font);font-style:italic}
+.pd-label.dim{fill:var(--ink-3)}
+.pd-label.sing,.pd-note.sing{fill:var(--sing)}
+.pd-label.blue{fill:var(--blue)}
+.pd-note{fill:var(--ink-2);font-family:var(--font)}
+.pd-anno{fill:var(--ink-2);font-family:var(--font);font-weight:600}
+.pd-anno.sing{fill:var(--sing);font-weight:700}
+.pd-state{fill:var(--ink);font-family:var(--font);font-weight:700}
+.shade-past{fill:var(--blue-wash)}
+.shade-bh{fill:var(--wash)}
+.shade-T{fill:var(--sing-wash)}
+.shade-reg{fill:rgba(35,80,214,.09)}
+.shade-reg-strong{fill:rgba(35,80,214,.22)}
+.shade-unk{fill:rgba(93,103,122,.2)}
+.shade-P{fill:rgba(93,103,122,.12)}
+.mark-T{fill:var(--sing)}
+.ray{stroke:var(--ray);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;fill:none}
+.ray-src{fill:var(--ray)}
+.ray-obs{fill:none;stroke:var(--ray);stroke-width:2}
+.ray-x{stroke:var(--sing);stroke-width:2.4;stroke-linecap:round;fill:none}
+.ray-bounce{fill:var(--plate);stroke:var(--ray);stroke-width:1.8}
+.ray-g.old{opacity:.42}
+.photon{fill:var(--ray)}
+.photon-trail{stroke:var(--ray);stroke-width:2.2;stroke-linecap:round;opacity:.5}
+.flash{fill:none;stroke:var(--sing);stroke-width:1.6}
+.eye-glow{fill:var(--ray-wash)}
+.eye-shape{fill:var(--plate);stroke:var(--ink-3);stroke-width:1.5}
+.eye-shape.lit{fill:#FFF3D6;stroke:var(--ray)}
+.eye-pupil{fill:var(--ink)}
+
+/* ---------- gallery ---------- */
+.gmode{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem .8rem;margin:0 0 1rem}
+.gmode .hint{margin:0}
+.gallery{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.1rem}
+@media (max-width:900px){.gallery{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.gcard{min-width:0;display:flex;flex-direction:column}
+.gcard h4{font-weight:650;font-size:1rem;line-height:1.3;margin:.45rem 0 .1rem;text-wrap:balance}
+.gtag{font-weight:700;color:var(--blue);margin-right:.3rem}
+.gset{font-size:.95rem;margin:.15rem 0 .2rem;color:var(--ink-2)}
+.gdesc{font-size:.93rem;line-height:1.5;color:var(--ink-2);margin:.2rem 0 0}
+.gstatus{font-size:.88rem;font-style:italic;line-height:1.35;color:var(--ink-2);min-height:2.7em;margin:.35rem 0 0}
+
+/* ---------- theorem figure ---------- */
+.duo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.4rem;align-items:end}
+.duo h4{font-size:1rem;font-weight:650;line-height:1.3;margin:0 0 .4rem;min-height:2.6em;text-wrap:balance}
+.duo svg{max-height:420px}
+.duo-ctrl{display:flex;flex-wrap:wrap;gap:.5rem .8rem;align-items:center;margin-top:.9rem}
+
+/* ---------- BTZ ---------- */
+.btz-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:1.2rem;align-items:start}
+@media (max-width:760px){.btz-grid{grid-template-columns:minmax(0,1fr)}}
+#btz-canvas{display:block;width:100%;aspect-ratio:4/3;max-width:100%;cursor:grab;touch-action:pan-y}
+#btz-canvas:active{cursor:grabbing}
+.slice-tag{display:inline-block;margin:.2rem 0 0;font-size:.9rem;font-weight:650;color:var(--ink-2)}
+#btz-cut{display:block;width:100%;max-width:15rem;height:auto;margin-inline:auto}
+.cut-keep{fill:var(--blue-wash);stroke:var(--ink);stroke-width:1.3}
+.cut-gone{fill:none;stroke:var(--ink-3);stroke-width:1;stroke-dasharray:3 3}
+.cut-edge{stroke:var(--blue);stroke-width:2}
+.cut-glue{fill:none;stroke:var(--blue);stroke-width:1.2}
+.cut-tip{fill:var(--sing)}
+.cut-txt{fill:var(--ink-2);font-family:var(--font);font-size:13px}
+.cut-hor{fill:none;stroke:var(--blue);stroke-width:2}
+.scale{position:relative;height:1.6rem;margin:.2rem 0 0;font-size:.86rem;line-height:1;color:var(--ink-2)}
+.scale span{position:absolute;top:.4rem;transform:translateX(-50%);white-space:nowrap}
+.scale span:first-child{transform:none}
+.scale span:last-child{transform:translateX(-100%)}
+
+/* ---------- moduli cartoons ---------- */
+.mod-grid{display:grid;grid-template-columns:minmax(0,1fr) 15.5rem;gap:1.2rem;align-items:center}
+@media (max-width:780px){.mod-grid{grid-template-columns:minmax(0,1fr)}}
+#mod-svg,#ex-svg{display:block;width:100%;height:auto}
+.mod-side{display:grid;grid-template-columns:minmax(0,1fr);gap:.7rem;justify-items:center}
+.mod-side>div{justify-self:stretch}
+#mod-mini,#ex-mini{display:block;width:100%;max-width:8.5rem;height:auto}
+#mod-mini{max-width:5.5rem}
+/* a few labels sit at the very edge of their figure; let them spill into the plate padding instead of being cut */
+#hero-svg,#thm-a,#thm-b,#gap-plot,#win-svg,#b-svg{overflow:visible}
+.mod-title{font-weight:700;margin:0 0 .25rem;font-size:1.02rem}
+.mod-text{font-size:.95rem;line-height:1.5;color:var(--ink-2);margin:0}
+.mod-non{fill:var(--blue-wash)}
+.mod-bh{fill:var(--sing-wash)}
+.mod-thr{fill:none;stroke:var(--ink);stroke-width:1.6;stroke-dasharray:6 3}
+.mod-outline{fill:none;stroke:var(--ink-3);stroke-width:1.2}
+.mod-fam{stroke:var(--ink-2);stroke-width:1.4;fill:none;stroke-linecap:round}
+.mod-fam.sel{stroke:var(--ink);stroke-width:2.6}
+.mod-dot{fill:var(--ink);stroke:var(--plate);stroke-width:2}
+.mod-star{fill:var(--sing)}
+/* --k (set from script) keeps figure text near its intended screen size when a figure is drawn small. */
+.mod-lab{fill:var(--ink);font-family:var(--font);font-style:italic;font-size:calc(19px * var(--k, 1))}
+.mod-note{fill:var(--ink-2);font-family:var(--font);font-size:calc(13.5px * var(--k, 1))}
+.mod-note.sing{fill:var(--sing);font-weight:650}
+.qbtns{display:inline-flex;gap:.3rem;flex-wrap:wrap}
+.qbtns button{min-width:2.6rem}
+.qbtns button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+/* ---------- proof map ---------- */
+.pmap{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-areas:"gap . crit" "blue . ctrl" ". inst ." "ext thm .";gap:2.6rem 1.4rem}
+.pmap-edges{position:absolute;left:0;top:0;pointer-events:none;overflow:visible}
+.pnode{position:relative;z-index:1;text-align:left;background:var(--plate);border:1px solid var(--rule);border-radius:6px;padding:.65rem .75rem .7rem;cursor:pointer;color:var(--ink);font:inherit;display:flex;flex-direction:column;gap:.15rem;min-width:0}
+.pnode:hover{border-color:var(--ink-3)}
+.pnode[aria-pressed="true"]{border-color:var(--blue);box-shadow:0 0 0 1px var(--blue) inset}
+.ptag{font-size:.86rem;font-weight:700;line-height:1.3;color:var(--blue)}
+.pname{font-weight:650;font-size:1.02rem;line-height:1.25}
+.pline{font-size:.9rem;color:var(--ink-2);line-height:1.35}
+.pfrom{display:none;font-size:.86rem;font-style:italic;color:var(--ink-3)}
+.pnode[data-node="gap"]{grid-area:gap}.pnode[data-node="crit"]{grid-area:crit}.pnode[data-node="blue"]{grid-area:blue}.pnode[data-node="ctrl"]{grid-area:ctrl}.pnode[data-node="inst"]{grid-area:inst}.pnode[data-node="ext"]{grid-area:ext}.pnode[data-node="thm"]{grid-area:thm}
+.pnode[data-node="thm"]{border-color:var(--ink)}
+.edge{fill:none;stroke:var(--ink-3);stroke-width:1.3}
+.edge-lab{fill:var(--ink-2);font-family:var(--font);font-style:italic;font-size:13.5px;paint-order:stroke;stroke:var(--plate);stroke-width:5px;stroke-linejoin:round}
+.arrowhead{fill:var(--ink-3)}
+@media (max-width:700px){
+  .pmap{grid-template-columns:minmax(0,1fr);grid-template-areas:"gap" "crit" "blue" "ctrl" "inst" "ext" "thm";gap:.6rem}
+  .pmap-edges{display:none}
+  .pfrom{display:block}
+}
+.pdetail{margin-top:1.3rem;padding:1rem 1.1rem;background:var(--wash);border-radius:6px;font-size:1rem;line-height:1.6}
+.pdetail h4{margin:0 0 .35rem;font-size:1.05rem;font-weight:700}
+.pdetail p{margin:.35rem 0}
+
+/* ---------- plots ---------- */
+.plot{display:block;width:100%;height:auto;overflow:visible}
+.grid{stroke:var(--rule);stroke-width:1}
+.axis{stroke:var(--ink-3);stroke-width:1;fill:none}
+.tick{fill:var(--ink-3);font-family:var(--font);font-size:calc(13px * var(--k, 1));font-variant-numeric:lining-nums tabular-nums}
+.axlab{fill:var(--ink-2);font-family:var(--font);font-size:calc(13.5px * var(--k, 1))}
+.plot-lab{fill:var(--ink);font-family:var(--font);font-style:italic;font-size:calc(14.5px * var(--k, 1))}
+.plot-lab.blue{fill:var(--blue)}
+.plot-lab.sing{fill:var(--sing)}
+.reg-trap{fill:var(--sing-wash)}
+.reg-gap{fill:var(--blue-wash)}
+.reg-txt-trap{fill:var(--sing);font-family:var(--font);font-size:calc(13.5px * var(--k, 1))}
+.reg-txt-gap{fill:var(--blue);font-family:var(--font);font-size:calc(13.5px * var(--k, 1))}
+.floor{stroke:var(--blue);stroke-width:1.4;stroke-dasharray:5 3}
+.ceiling{fill:none;stroke:var(--sing);stroke-width:1.6}
+.prof{fill:none;stroke:var(--ink);stroke-width:2.6;stroke-linecap:round}
+.bG{fill:var(--sing)}
+.handle{fill:var(--plate);stroke:var(--blue);stroke-width:2.6;cursor:ns-resize;touch-action:none}
+.handle:hover,.handle.drag{fill:var(--blue)}
+.bcurve{fill:none;stroke:var(--blue);stroke-width:2.8}
+.bbound{fill:none;stroke:var(--ink);stroke-width:1.8;stroke-dasharray:6 4}
+.mcurve-lo{fill:none;stroke:var(--blue);stroke-width:2.8}
+.mcurve-hi{fill:none;stroke:var(--ink-3);stroke-width:2.8}
+.mline{stroke:var(--sing);stroke-width:1.5;stroke-dasharray:5 3}
+.Mline{stroke:var(--ink-3);stroke-width:1.2;stroke-dasharray:2 3}
+.pdot{fill:var(--plate);stroke:var(--blue);stroke-width:2.6}
+.sline{stroke:var(--blue);stroke-width:1.2;stroke-dasharray:4 3}
+
+/* ---------- mass gap ---------- */
+.gap-dline{fill:none;stroke:var(--blue);stroke-width:1.5}
+.gap-dline.unk{stroke:var(--ink-3)}
+.gap-star{fill:none;stroke:var(--blue);stroke-width:1.5;stroke-dasharray:4 3}
+.gap-S{fill:var(--plate);stroke:var(--blue);stroke-width:2.6}
+.gap-q{fill:var(--ink-3);font-family:var(--font);font-style:italic}
+#gap-svg{max-height:500px}
+#trap-pd{max-height:440px}
+#inst-svg{max-height:560px}
+
+/* ---------- trapped surfaces criterion ---------- */
+.trap-c{fill:none;stroke:var(--ink);stroke-width:1.3}
+.trap-c2{fill:none;stroke:var(--ink);stroke-width:1.3;stroke-dasharray:5 3}
+.trap-c2.on{stroke:var(--sing);stroke-dasharray:none;stroke-width:1.6}
+.trap-ann{fill:none;stroke:var(--sing);stroke-width:7;stroke-linecap:round}
+.ring-fill{fill:var(--sing)}
+.ring-line{fill:none;stroke:var(--ink);stroke-width:1.3}
+.ring-rad{stroke:var(--ink-2);stroke-width:1.1}
+.ring-c{fill:var(--ink)}
+.ring-txt{fill:var(--ink);font-family:var(--font);font-style:italic;font-size:calc(15px * var(--k, 1))}
+
+/* ---------- blueshift instability ---------- */
+.inst-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1.4rem;align-items:center}
+@media (max-width:760px){.inst-grid{grid-template-columns:minmax(0,1fr)}}
+.ingoing{fill:none;stroke:var(--blue);stroke-linecap:round}
+.pulse{fill:var(--blue)}
+.trap-seg{fill:none;stroke:var(--sing);stroke-width:3.4;stroke-linecap:round}
+.step-c{fill:var(--ink)}
+.step-t{fill:#fff;font-family:var(--font);font-weight:700}
+.steps{margin:0;padding-left:1.5rem;font-size:1rem;line-height:1.55}
+.steps li{margin:.5rem 0}
+.steptabs{display:flex;flex-wrap:wrap;gap:.4rem;margin:0 0 .8rem}
+.steptabs button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.pane{font-size:1rem;line-height:1.55}
+.pane p{margin:.45rem 0}
+.shade-R{fill:rgba(35,80,214,.16)}
+.trap-curve{fill:none;stroke:var(--sing);stroke-width:3.4;stroke-linecap:round;opacity:.8}
+.mod-off{cursor:pointer;outline:none}
+.mod-off-ring{fill:transparent;stroke:none;stroke-width:2}
+.mod-off:hover .mod-off-ring,.mod-off:focus-visible .mod-off-ring{stroke:var(--ink-3)}
+.mod-off.sel .mod-off-ring{stroke:var(--sing)}
+.mod-off-curve{fill:none;stroke:var(--sing);stroke-width:3.4;stroke-linecap:round}
+.mod-off-hit{fill:none;stroke:transparent;stroke-width:16;stroke-linecap:round}
+.mod-off:hover .mod-off-hit,.mod-off:focus-visible .mod-off-hit{stroke:rgba(93,103,122,.16)}
+.mod-off.sel .mod-off-hit{stroke:var(--sing-wash)}
+.pd-thin{fill:none;stroke:var(--ink-2);stroke-width:1.1}
+
+/* ---------- TeX labels and light ---------- */
+.tex{color:var(--ink)}
+.tex.sing{color:var(--sing)}
+.tex.blue{color:var(--blue)}
+.tex.dim{color:var(--ink-3)}
+.tex.edge{color:var(--ink-2)}
+.nobr{white-space:nowrap}
+.ray.in{stroke-dasharray:7 4}
+.beam{fill:var(--blue)}
+.beam-trail{stroke:var(--blue);stroke-linecap:round;opacity:.45}
+.lg-beam{fill:var(--blue)}
+.lg-in{stroke:var(--ray);stroke-width:2.2;stroke-dasharray:4 3}
+svg.lg{width:22px;height:10px;vertical-align:middle;overflow:visible}
+
+/* ---------- table ---------- */
+.table-wrap{overflow-x:auto;margin:1.4rem 0}
+.cmp{border-collapse:collapse;width:100%;min-width:30rem;font-size:.97rem}
+.cmp th,.cmp td{text-align:left;vertical-align:top;padding:.55rem .6rem;border-bottom:1px solid var(--rule)}
+.cmp thead th{font-size:.93rem;font-weight:700;color:var(--ink);border-bottom:1.5px solid var(--ink)}
+.cmp tbody th{font-weight:650;color:var(--ink-2);font-size:.95rem}
+
+.cite{color:var(--blue);text-decoration:none;white-space:nowrap}
+.cite:hover{text-decoration:underline}
+.xref{color:var(--blue);text-decoration:none}
+.xref:hover{text-decoration:underline}
+#fig-proof{scroll-margin-top:1rem}
+.refs{list-style:none;margin:1rem 0 0;padding:0;font-size:.95rem;line-height:1.5}
+.refs li{display:grid;grid-template-columns:4.8rem minmax(0,1fr);gap:.5rem;margin:0 0 .65rem;padding:.1rem .3rem;border-radius:4px;scroll-margin-top:1.2rem}
+.refs li:target{background:var(--blue-wash)}
+.ref-label{color:var(--ink-2);font-variant-numeric:lining-nums}
+.ref-link{font-size:.85rem;white-space:nowrap}
+.refs li>span:last-child{overflow-wrap:anywhere}
+@media (max-width:520px){.refs li{grid-template-columns:minmax(0,1fr);gap:0}}
+footer{margin-top:4.5rem;padding-top:1.2rem;border-top:1px solid var(--rule);font-size:.95rem;color:var(--ink-2)}
+footer p{margin:.4rem 0}
+@media (prefers-reduced-motion: reduce){*{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+/* ---------- spacetime sketches: time up, space a plane seen from above ---------- */
+.sk{display:block;width:100%;height:auto;overflow:visible}
+#hero-svg.sk{max-height:min(74vh,600px)}
+.sk-slice{fill:none;stroke:var(--ink-3);stroke-width:1.1}
+.sk-line{fill:none;stroke:var(--ink);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.sk-thin{fill:none;stroke:var(--ink-2);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
+.sk-back{fill:none;stroke:var(--ink-3);stroke-width:1;stroke-dasharray:3 4}
+.sk-axis{fill:none;stroke:var(--ink-3);stroke-width:1;stroke-dasharray:2 4}
+.sk-hor{fill:none;stroke:var(--ink-2);stroke-width:1.2;stroke-dasharray:6 4}
+.sk-sing{fill:none;stroke:var(--sing);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.sk-pt{fill:var(--plate);stroke:var(--sing);stroke-width:2}
+.sk-ray{fill:none;stroke:var(--ray);stroke-width:2;stroke-linecap:round}
+.sk-rayhead{fill:var(--ray)}
+.sk-arrow{fill:none;stroke:var(--ink-2);stroke-width:1.3}
+.sk-arrowhead{fill:var(--ink-2)}
+.sk-dom{fill:var(--blue-wash);stroke:none}
+.sk-dom-line{fill:none;stroke:var(--blue);stroke-width:1.5;stroke-linejoin:round}
+.sk-unk-line{fill:none;stroke:var(--ink-3);stroke-width:1.3;stroke-dasharray:5 4;stroke-linejoin:round}
+.sk-star-line{fill:none;stroke:var(--blue);stroke-width:1.3;stroke-dasharray:4 3;stroke-linejoin:round}
+.sk-disk{fill:rgba(35,80,214,.2);stroke:var(--blue);stroke-width:1.5}
+.sk-ring{fill:var(--sing)}
+.sk-trap{fill:none;stroke:var(--sing);stroke-width:2.4}
+.sk-bump{fill:rgba(35,80,214,.16);stroke:var(--blue);stroke-width:1.8;stroke-linejoin:round}
+.sk-note{fill:var(--ink-2);font-family:var(--font);font-size:calc(13px * var(--k, 1))}
+.sk-note.sing{fill:var(--sing);font-weight:650}
+.sk-note.blue{fill:var(--blue);font-weight:650}
+/* not "ray": the shared .ray rule strokes light rays */
+.sk-note.gold{fill:#8A5A06;font-weight:650}
+.sk-note.state{fill:var(--ink);font-weight:700;font-size:calc(17px * var(--k, 1))}
+.sk-lead{fill:none;stroke:var(--blue);stroke-width:1}
+.lg-cone{stroke:var(--ink);stroke-width:1.5}
+.lg-wavy{stroke:var(--sing);stroke-width:2.2}
+.trio{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+@media (max-width:640px){.trio{grid-template-columns:minmax(0,1fr);max-width:20rem;margin-inline:auto}}
+.trio-item{margin:0;text-align:center}
+.trio-item figcaption{font-size:.95rem;color:var(--ink-2);margin-top:.35rem}
+.trio-item figcaption b{color:var(--ink)}
+#cc-mini,#ex-mini{width:100%;max-width:14rem;height:auto}
+.ctrl output#cc-pv{min-width:3rem}
+ul.known li{margin:.45rem 0}
+/* A margin note that starts level with the list it explains; on narrow screens it stays after the list. */
+@media (min-width:1040px){.sn.lift{margin-top:-6.2rem}}
+.cc-under{fill:var(--plate)}
+.cc-outline{fill:none;stroke:var(--ink-3);stroke-width:1.2;stroke-dasharray:6 5}
 </style>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+  svg: { fontCache: 'none' },
+  options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code', 'svg', 'canvas'] },
+  startup: {
+    pageReady: function () {
+      return MathJax.startup.defaultPageReady().then(function () { if (window.onTexReady) window.onTexReady(); });
+    }
+  }
+};
+</script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+<!-- Google Analytics: counts visits on serbancicortas.github.io only, not local previews. -->
+<script>
+  if (location.hostname === 'serbancicortas.github.io') {
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { window.dataLayer.push(arguments); };
+    window.gtag('js', new Date());
+    window.gtag('config', 'G-T0GR05JR3E');
+    (function (s) {
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-T0GR05JR3E';
+      document.head.appendChild(s);
+    })(document.createElement('script'));
+  }
+</script>
 </head>
 <body>
+<div class="wrap">
+
+<header class="hero">
+  <div class="spread hero-grid">
+    <div class="hero-text">
+      <p class="eyebrow">An interactive guide by Serban Cicortas</p>
+      <h1>Weak Cosmic Censorship in 2<span class="plus">+</span>1&nbsp;dimensions</h1>
+      <p class="dek">Penrose's Weak Cosmic Censorship conjecture [<a class="cite" href="#ref-P69">Pen69</a>] states that, for generic initial data, singularities are hidden inside black holes. This paper establishes the conjecture for the circularly symmetric Einstein-scalar field system in 2+1 dimensions with a negative cosmological constant.</p>
+      <p class="dek">An essential step of the proof is establishing the presence of a mass gap. In particular, this implies that all naked singularities have infinite blueshift, which represents the main instability mechanism.</p>
+      <p class="byline">Serban Cicortas, <em>Weak cosmic censorship for the circularly symmetric Einstein-scalar field system in 2+1 dimensions</em>, 2026. <a href="https://arxiv.org/abs/2605.19143">Abstract</a> · <a href="https://arxiv.org/pdf/2605.19143">PDF</a></p>
+      <nav class="toc" aria-label="Contents">
+        <ol>
+          <li><a href="#gravity"><span>1.</span>Gravity in 2+1 dimensions</a></li>
+          <li><a href="#regimes"><span>2.</span>Global dynamics</a></li>
+          <li><a href="#wcc"><span>3.</span>Weak Cosmic Censorship</a></li>
+          <li><a href="#result"><span>4.</span>The main result</a></li>
+          <li><a href="#proof"><span>5.</span>Idea of the proof</a></li>
+          <li><a href="#examples"><span>6.</span>Upcoming work</a></li>
+        </ol>
+      </nav>
+    </div>
+    <aside class="version-note" aria-label="About this version">
+      This version is for a general mathematical audience.
+      <a href="cosmic-censorship-2plus1.html">Switch to the version for readers familiar with general relativity&nbsp;→</a>
+    </aside>
+    <figure class="hero-fig" aria-labelledby="hero-cap">
+      <svg id="hero-svg" role="img" aria-label="Picture of a naked singularity spacetime. Turn the perturbation on to see a black hole form."></svg>
+      <div class="hero-controls">
+        <div class="seg-wrap">
+          <span class="seg-label" id="pert-label">Perturbation</span>
+          <div class="seg" role="group" aria-labelledby="pert-label">
+            <button type="button" id="hero-off" aria-pressed="true">OFF</button>
+            <button type="button" id="hero-on" data-on aria-pressed="false">ON</button>
+          </div>
+        </div>
+      </div>
+      <p class="status" id="hero-status" aria-live="polite">
+        <span data-st="off"><b>Perturbation off.</b> A <em>naked</em> singularity spacetime: light from arbitrarily close to the point singularity \(b\) escapes, so far-away observers “see” the singularity.</span>
+        <span data-st="on" hidden><b>Perturbation on.</b> The small perturbation, supported outside \(\mathcal C\), is amplified by a blueshift effect as it travels toward \(b\). A black hole forms, and the singularity now occurs across a hypersurface, hidden inside the black hole region.</span>
+      </p>
+      <ul class="legend" aria-label="Legend">
+        <li><svg aria-hidden="true"><line x1="1" y1="5" x2="21" y2="5" class="lg-cone"/></svg>light cone</li>
+        <li><svg aria-hidden="true"><line x1="1" y1="5" x2="21" y2="5" class="lg-wavy"/></svg>singularity</li>
+        <li><svg aria-hidden="true"><line x1="1" y1="5" x2="21" y2="5" class="lg-ray"/></svg>light</li>
+        <li><svg aria-hidden="true"><circle cx="11" cy="5" r="3.5" class="lg-beam"/></svg>perturbation</li>
+      </ul>
+      <p class="caption" id="hero-cap"><b>Fig. 1.</b> A naked singularity spacetime. An arbitrarily small perturbation of the initial data leads to the formation of a black hole.</p>
+    </figure>
+  </div>
+</header>
+
 <main>
-  <p class="eyebrow">An interactive guide by Serban Cicortas</p>
-  <h1>Weak Cosmic Censorship in 2+1&nbsp;dimensions</h1>
-  <p class="sub">The version for a general mathematical audience</p>
-  <p class="status">Under construction</p>
-  <p><a href="cosmic-censorship-2plus1.html">← Go to the version for readers familiar with general relativity</a></p>
+
+<section class="col" id="gravity">
+  <h2><span class="secno">1.</span>Gravity in 2+1 dimensions</h2>
+  <p>The goal of general relativity is to understand gravity, which is given through the geometry of spacetime. We consider triples \((M,g,\phi)\), where:</p>
+  <ul class="props">
+    <li>\(M\) is a manifold of dimension 2+1 or 3+1;</li>
+    <li>\(g\) is a Lorentzian metric with signature \((-,+,\dots,+)\);</li>
+    <li>\(\phi:M\to\mathbb R\) is a scalar field, which models matter in the spacetime.</li>
+  </ul>
+  <aside class="sn lift">The signature of \(g\) encodes the fact that locally there is one time direction and the other directions correspond to space. At each point in the spacetime, the vectors \(X\) with \(g(X,X)=0\) form a light cone. One of the assumptions of the theory is that light travels along light cones and massive observers travel on curves that stay inside of the light cones, which encodes the fact that nothing can travel faster than the speed of light.</aside>
+  <p>To study gravity, we consider solutions of the Einstein-scalar field system</p>
+  \[\begin{cases}\mathrm{Ric}_{\mu\nu}[g]-\tfrac12R[g]\,g_{\mu\nu}+\Lambda g_{\mu\nu}=T_{\mu\nu}[\phi],\\[3pt] T_{\mu\nu}[\phi]=\nabla_\mu\phi\,\nabla_\nu\phi-\tfrac12g_{\mu\nu}\,g(\nabla\phi,\nabla\phi),\\[3pt] \square_g\phi=0.\end{cases}\]
+  <p>The first line is the Einstein equations, expressed in terms of the curvature of the metric \(g\). On the right hand side of the Einstein equations we have \(T_{\mu\nu}[\phi]\), the energy-momentum tensor of the scalar field. To get a closed system of equations, we add the corresponding equation of motion for matter, which is the wave equation on the curved spacetime \((M,g)\). The resulting system is hyperbolic, and it can be written as a system of nonlinear wave equations in suitable coordinates.</p>
+  <p>As a simplification, we restrict to symmetric solutions. In 2+1 dimensions, we work in circular symmetry, and in 3+1 dimensions, spherical symmetry. In both cases the metric has the form</p>
+  \[g=\bar g+r^2\,d\sigma^2,\]
+  <p>where \(\bar g\) is the metric on the quotient 1+1 Lorentzian manifold, \(d\sigma^2\) is the round metric on \(S^1\) or \(S^2\), and \(r\) is the radius of the spheres. The axis of symmetry is \(\{r=0\}\).</p>
+  <aside class="sn lift">To justify studying the Einstein-scalar field system, we note that matter is needed for dynamics: in vacuum and the symmetry class above, the solutions are rigid (and time independent). The simplest matter model that does not form singularities in the absence of gravity and breaks this rigidity is the scalar field (note that electromagnetism does not break the rigidity, while fluids can form singularities on their own).</aside>
+  <p>The constant \(\Lambda\) represents the cosmological constant (attributed to dark energy). In our universe, \(\Lambda\) is positive, since the expansion of the universe is accelerating. However, \(\Lambda\) is so small that it only matters on the scale of the whole universe, and it is negligible for the formation of black holes. Thus, in 3+1 dimensions, we simply consider \(\Lambda=0\). On the other hand, in 2+1 dimensions with \(\Lambda=0\), no singularities form dynamically, so we take \(\Lambda&lt;0\) instead. We remark that in 2+1 dimensions this is the most elementary model that allows for the dynamical formation of singularities [<a class="cite" href="#ref-Pretorius">PC00</a>, <a class="cite" href="#ref-jalmuzna">JGC15</a>].</p>
+</section>
+
+<section class="col" id="regimes">
+  <h2><span class="secno">2.</span>Global dynamics</h2>
+  <p>The Einstein-scalar field system is hyperbolic, so we study the global behavior of solutions arising from data at an initial time. Note that gravity is an attractive force, while waves want to disperse. There are three possible outcomes in global dynamics:</p>
+  <ol class="steps">
+    <li><b>Non-collapse.</b> No singularities form and the solution exists for all time.</li>
+    <li><b>Black hole.</b> A black hole region develops in evolution, defined by the fact that gravity is so strong in this region that nothing can escape it (this is represented using light cones in Fig. 2). Moreover, a singular hypersurface forms inside the black hole, and anything that enters the black hole region encounters this singularity in finite time.</li>
+    <li><b>Naked singularity.</b> A singularity \(b\) forms, but there is no black hole region. The singularity is visible to far-away observers.</li>
+  </ol>
+
+  <figure class="plate wide" id="fig-reg" aria-labelledby="reg-title">
+    <div class="plate-head"><span class="fig-no">Fig. 2</span><h3 class="plate-title" id="reg-title">The regimes in global dynamics</h3></div>
+    <div class="trio">
+      <figure class="trio-item"><svg id="reg-non" role="img" aria-label="Non-collapse: the light from two points escapes in both directions"></svg><figcaption><b>(a)</b> Non-collapse</figcaption></figure>
+      <figure class="trio-item"><svg id="reg-bh" role="img" aria-label="Black hole: light from outside it can escape or fall in, and light from inside it ends on the singular hypersurface"></svg><figcaption><b>(b)</b> Black hole</figcaption></figure>
+      <figure class="trio-item"><svg id="reg-nak" role="img" aria-label="Naked singularity: light from just before the singular point escapes"></svg><figcaption><b>(c)</b> Naked singularity</figcaption></figure>
+    </div>
+    <p class="caption">In (b), light from inside the black hole cannot escape and it ends at the singular hypersurface. In (c), light from near the singular point escapes to far-away observers. For the purpose of our discussion, the reader can think of naked singularities as isolated “point singularities”, and of black holes as necessarily having a singular hypersurface.</p>
+  </figure>
+  <p>In a black hole spacetime, observers who never enter the black hole region exist for all time, so general relativity only breaks down as a physical theory inside the black hole region. For naked singularities, on the other hand, all observers eventually see the singularity and stop existing. This is pathological.</p>
+</section>
+
+<section class="col" id="wcc">
+  <h2><span class="secno">3.</span>Weak Cosmic Censorship</h2>
+  <p>One of the main open problems in general relativity is the Weak Cosmic Censorship conjecture, proposed by Penrose in 1969 [<a class="cite" href="#ref-P69">Pen69</a>]. It states that, for generic initial data, naked singularities do not form. That is to say, singularities are generically hidden inside black holes and invisible to far-away observers. The conjecture is motivated by the fact that naked singularities would threaten the predictability of general relativity as a physical theory.</p>
+  <p>Christodoulou proved a suitable formulation of the conjecture for the model problem of the spherically symmetric Einstein-scalar field system in 3+1 dimensions [<a class="cite" href="#ref-ChrWCC">Chr99a</a>]. Explicit naked singularity spacetimes can be constructed: Christodoulou's examples [<a class="cite" href="#ref-C94">Chr94</a>] are self-similar, and their initial data are \(C^{1,\alpha}\). However, all naked singularities are in fact unstable to black hole formation, and the set of naked singularity spacetimes is non-generic in a suitable sense. The instability mechanism required working in a low-regularity topology, like \(C^1\). Thus, the question of Weak Cosmic Censorship in a smoother topology remains open even in this setting.</p>
+  <p class="lede-claim">This paper initiates the mathematical study of gravitational collapse for the circularly symmetric Einstein-scalar field system in 2+1 dimensions with \(\Lambda&lt;0\), and proves Weak Cosmic Censorship in a topology of arbitrary smoothness: in \(C^k\), for any \(k\ge2\).</p>
+</section>
+
+<section class="col" id="result">
+  <h2><span class="secno">4.</span>The main result</h2>
+  <div class="thm">
+    <p class="thm-label">Theorem 1.1 · Weak Cosmic Censorship</p>
+    <p>Consider the circularly symmetric Einstein-scalar field system in 2+1 dimensions with \(\Lambda&lt;0\). For any \(k\ge2\), naked singularities do not occur for generic \(C^k\) initial data.</p>
+    <p>In particular, naked singularity spacetimes are non-generic and are unstable to black hole formation.</p>
+  </div>
+  <p>The paper chooses a more elementary notion of genericity than Christodoulou [<a class="cite" href="#ref-ChrWCC">Chr99a</a>]: naked singularity data lie in the complement of an open and dense set, rather than having positive codimension. The proof shows that naked singularities are unstable to black hole formation: after an arbitrarily small perturbation of the initial data, a black hole forms instead (Fig. 1).</p>
+</section>
+
+<section class="col" id="proof">
+  <h2><span class="secno">5.</span>Idea of the proof</h2>
+  <p>The proof has three steps: a description of singularities, a criterion for black hole formation, and an instability.</p>
+
+  <h3 id="mass"><span class="secno">5.1.</span>Description of singularities</h3>
+  <p>The Hawking mass \(m\) is a quasi-local quantity, defined on each circle of symmetry by</p>
+  \[m=-g(\nabla r,\nabla r)-\Lambda r^2+1.\]
+  <p>It measures the energy of the scalar field in the disk bounded by the circle,</p>
+  \[m\approx\int_0^r r'\,(\partial\phi)^2\,dr',\]
+  <p>so \(m=0\) at the center \(r=0\). More precisely, \(m\) is non-negative, and it vanishes on a circle exactly when there is no matter in the domain of dependence of the disk bounded by that circle: the region of spacetime determined by the initial data on the disk (Fig. 3). Outside of black holes, the Hawking mass has monotonicity properties.</p>
+  <div class="thm">
+    <p class="thm-label">Theorem 1.2 · Mass gap</p>
+    <p>No singularities form in the domain of dependence of a disk bounded by a circle with Hawking mass strictly less than 1.</p>
+    <details class="precise">
+      <summary>Proof idea</summary>
+      <p>For the proof of Theorem 1.2, the bound on \(m\) first gives quantitative control of the geometry. A non-concentration estimate then shows that the scalar field cannot blow up at a faster than self-similar rate, so \(r\partial_r\phi\) is bounded. This improves by a small power of \(r\): \(r^{1-\rho}\partial_r\phi\) is bounded for some small \(\rho&gt;0\). These bounds propagate the local well-posedness norm from the initial data, so no singularities form.</p>
+    </details>
+  </div>
+  <aside class="sn">Similar statements hold for scaling-critical problems: no singularities form if the energy is below the energy of the ground state. The Einstein-scalar field system with \(\Lambda&lt;0\) has no scaling symmetry, but morally, near \(r=0\), the cosmological constant is lower order.</aside>
+
+  <figure class="plate wide" id="fig-gap" aria-labelledby="gap-title">
+    <div class="plate-head"><span class="fig-no">Fig. 3</span><h3 class="plate-title" id="gap-title">The mass gap</h3></div>
+    <div class="two">
+      <svg id="gap-sk" role="img" aria-label="A disk in the initial data and its domain of dependence"></svg>
+      <div>
+        <svg id="gap-plot" class="plot" viewBox="0 0 360 250" role="img" aria-label="Hawking mass of the circles in the initial data, compared with 1"></svg>
+        <div class="ctrl">
+          <label for="gap-s">Circle \(S\)</label>
+          <input type="range" id="gap-s" min="0.04" max="0.985" step="0.005" value="0.4">
+          <output id="gap-sv" for="gap-s"></output>
+        </div>
+      </div>
+    </div>
+    <p class="out" id="gap-out" aria-live="polite">
+      <span data-gap="lo" hidden><b>\(m(S)\) = <span class="gap-m"></span> &lt; 1.</b> By the mass gap, no singularities form in the domain of dependence of the disk bounded by \(S\) (shaded).</span>
+      <span data-gap="hi" hidden><b>\(m(S)\) = <span class="gap-m"></span> ≥ 1.</b> The mass gap says nothing about this disk. It applies to every smaller disk with \(m&lt;1\), up to the dashed outline.</span>
+    </p>
+    <p class="caption">Example initial data, with Hawking mass \(m=Mr^2/(1+r^2)\) increasing from 0 at the center to the Bondi mass \(M=1.6\) far away (units \(\lvert\Lambda\rvert=1\)). Move the circle \(S\): while \(m(S)&lt;1\), the region of spacetime determined by the disk bounded by \(S\) is regular.</p>
+  </figure>
+
+  <p>The main use of the mass gap is the following description of first singularities at the center:</p>
+  <div class="thm">
+    <p class="thm-label">Corollary 1.1</p>
+    <p>Let \(b\) be a first singularity at the center, and let \(\mathcal C\) be its past light cone. Then, approaching \(b\) along \(\mathcal C\), \(r\searrow0\) and \(m\searrow1\).</p>
+  </div>
+  <p>So the energy is 1, but \(r=0\).</p>
+  <p>Globally, the Hawking mass is non-decreasing away from the center, and it tends to the Bondi mass \(M\) far away. As a corollary, we obtain the mass gap in terms of the Bondi mass:</p>
+  <div class="thm">
+    <p class="thm-label">Corollary 1.2</p>
+    <p>Solutions with Bondi mass less than 1 do not form singularities. In particular, solutions with small initial data are non-collapsing.</p>
+  </div>
+  <p>This proves a conjecture of Bizoń and Jałmużna [<a class="cite" href="#ref-ADS3">BJ13</a>], who gave numerical evidence for very small Bondi mass. It marks a sharp contrast with 3+1 dimensions and \(\Lambda&lt;0\), where arbitrarily small initial data can form black holes, see [<a class="cite" href="#ref-dafhol">DH06</a>, <a class="cite" href="#ref-BzRo">BR11</a>, <a class="cite" href="#ref-nulldust">Mos20</a>, <a class="cite" href="#ref-vlasov">Mos23</a>].</p>
+
+  <h3 id="criterion"><span class="secno">5.2.</span>A criterion for black hole formation</h3>
+  <p>If there is too much energy in an annular region, relative to the size of the region, then a black hole forms. This is inspired by Christodoulou's work in 3+1 dimensions [<a class="cite" href="#ref-ChrBH">Chr91</a>].</p>
+  <div class="thm">
+    <p class="thm-label">Theorem 1.3 · Formation of trapped surfaces</p>
+    <p>Consider two circles of radii \(r_1&lt;r_2\) in the initial data, with Hawking masses \(m_1\) and \(m_2\). Let \(C_1\) and \(C_2\) be their ingoing light cones, and assume that \(r\to0\) and \(m\ge1\) along \(C_1\). Set</p>
+    \[\delta_0=\frac{r_2}{r_1}-1,\qquad \eta_0=\frac{m_2-m_1}{\lvert\Lambda\rvert\,r_2^2}.\]
+    <p>If \(\delta_0&gt;0\) is small enough and \(\eta_0&gt;\delta_0\), then a marginally trapped surface forms on \(C_2\).</p>
+    <details class="precise">
+      <summary>Proof idea</summary>
+      <p>The proof adapts Christodoulou's argument [<a class="cite" href="#ref-ChrBH">Chr91</a>] to 2+1 dimensions: the monotonicity properties of the system give a differential inequality for the energy content of the annulus between \(C_1\) and \(C_2\), as it evolves along \(C_2\).</p>
+    </details>
+  </div>
+  <p>Here \(\delta_0\) is the relative width of the annulus and \(\eta_0\) is its energy content. A circle is trapped exactly when \(m&gt;1+\lvert\Lambda\rvert r^2\): its energy is too large for its size. It is marginally trapped when equality holds. Trapped surfaces lie inside black holes.</p>
+
+  <figure class="plate wide" id="fig-trap" aria-labelledby="trap-title">
+    <div class="plate-head"><span class="fig-no">Fig. 4</span><h3 class="plate-title" id="trap-title">Formation of trapped surfaces</h3></div>
+    <div class="two">
+      <svg id="trap-sk" role="img" aria-label="An annulus in the initial data, the light cones of its two circles, and the trapped surface"></svg>
+      <div>
+        <div class="ctrl">
+          <label for="trap-d">Width \(\delta_0\)</label>
+          <input type="range" id="trap-d" min="0.02" max="0.3" step="0.005" value="0.1">
+          <output id="trap-dv" for="trap-d"></output>
+        </div>
+        <div class="ctrl">
+          <label for="trap-e">Energy content \(\eta_0\)</label>
+          <input type="range" id="trap-e" min="0" max="0.6" step="0.005" value="0.22">
+          <output id="trap-ev" for="trap-e"></output>
+        </div>
+        <p class="out" id="trap-out" aria-live="polite">
+          <span data-trap="yes" hidden><b>\(\eta_0\) = <span class="trap-e"></span> &gt; \(\delta_0\) = <span class="trap-d"></span>.</b> A marginally trapped surface forms on \(C_2\), so a black hole forms.</span>
+          <span data-trap="no" hidden><b>\(\eta_0\) = <span class="trap-e"></span> ≤ \(\delta_0\) = <span class="trap-d"></span>.</b> The energy is not large compared to the width, and the criterion gives no conclusion.</span>
+        </p>
+      </div>
+    </div>
+    <p class="caption">The annulus between the circles of radii \(r_1&lt;r_2\) has relative width \(\delta_0\) and energy content \(\eta_0\), shown by its color. The light cones \(C_1\) and \(C_2\) of the two circles converge to the center.</p>
+  </figure>
+
+  <p>Following Christodoulou [<a class="cite" href="#ref-ChrWCC">Chr99a</a>], the criterion is used in two ways. Directly: after a perturbation, it shows that a black hole forms. And through its contrapositive: a naked singularity has no trapped surfaces near it, so the criterion gives bounds for the energy on small scales.</p>
+
+  <h3 id="instability"><span class="secno">5.3.</span>The instability</h3>
+  <p>Along the past light cone \(\mathcal C\) of a first singularity, \(m\searrow1\) and \(r\searrow0\). This creates a linear instability for the wave equation. Let \(L\) and \(\underline L\) be the outgoing and ingoing light-like directions. The renormalized outgoing derivative of the scalar field</p>
+  \[\theta=\sqrt r\,\frac{L\phi}{Lr}\]
+  <p>satisfies, in the ingoing direction,</p>
+  \[\underline L\theta=\frac{2\lvert\Lambda\rvert r}{\lvert\Lambda\rvert r^2+1-m}\,\theta+\dots\]
+  <p>Near \(\mathcal C\), the mass gap gives \(m\ge1\), and the absence of trapped surfaces gives \(m\le1+\lvert\Lambda\rvert r^2\). So the coefficient is at least \(2/r\), which blows up at \(b\). A perturbation traveling toward \(b\) along \(\mathcal C\) is amplified by the factor \(e^{\mathbf b}\), where the blueshift satisfies</p>
+  \[\mathbf b\ \ge\ 2\log\frac{r_0}{r},\]
+  <p>and \(r_0\) is the radius of \(\mathcal C\) at the initial time. So all first singularities at the center have infinite blueshift, whether or not they are naked (Fig. 5).</p>
+
+  <figure class="plate wide" id="fig-window" aria-labelledby="win-title">
+    <div class="plate-head"><span class="fig-no">Fig. 5</span><h3 class="plate-title" id="win-title">Infinite blueshift from the mass gap</h3></div>
+    <div class="two">
+      <svg id="win-svg" class="plot" viewBox="0 0 560 330" role="img" aria-label="Hawking mass on the past light cone of the singularity, between m = 1 and m = 1 + r squared, with four draggable points"></svg>
+      <svg id="b-svg" class="plot" viewBox="0 0 420 300" role="img" aria-label="The blueshift for the chosen mass profile, compared with 2 log(r0/r)"></svg>
+    </div>
+    <div class="presets">
+      <button type="button" class="btn" data-w="0,0,0,0">m ≡ 1</button>
+      <button type="button" class="btn" data-w="0.15,0.3,0.45,0.6">Example</button>
+      <button type="button" class="btn" data-w="0.05,0.2,0.5,0.85">Steeper outward</button>
+      <button type="button" class="btn" data-w="0.88,0.88,0.88,0.88">Near the ceiling</button>
+    </div>
+    <p class="caption">On the past light cone \(\mathcal C\), the Hawking mass stays between the floor \(m=1\) (mass gap) and the ceiling \(m=1+\lvert\Lambda\rvert r^2\) (no trapped surfaces), and it increases with \(r\). Drag the four points to choose such a profile. The right panel shows the blueshift \(\mathbf b\), which always stays above \(2\log(r_0/r)\).</p>
+  </figure>
+
+  <p>For the naked singularity itself, everything is arranged just right, and the instability is not activated. Now perturb the initial data by an \(\varepsilon\)-small amount, outside \(\mathcal C\), so that the causal past of \(b\) is unchanged. The main role of the blueshift is to amplify this perturbation as it travels toward \(b\). Since the contrapositive of the criterion gives bounds for the background spacetime, we can control the perturbed solution and apply the black hole formation criterion. So the perturbed spacetime contains a sequence of trapped surfaces converging to \(b\), and its singularity is spacelike-only (Fig. 1).</p>
+  <div class="callout"><b>A comment on regularity.</b> The higher the regularity of the perturbation at \(\mathcal C\), the smaller the perturbation is near \(\mathcal C\). In our case, the different scaling of the problem and the quantitative lower bound \(\mathbf b\ge2\log(r_0/r)\) give quantitative control of the strength of the linear instability, which allows us to use perturbations in any \(C^k\). In Christodoulou's case only a soft statement is available, so he needs very rough perturbations.</div>
+</section>
+
+<section class="col" id="examples">
+  <h2><span class="secno">6.</span>Upcoming work</h2>
+  <p>Constructing examples of naked singularities plays a fundamental role in understanding their general properties and their instability. Moreover, the existence of such examples justifies the need to include genericity conditions in any formulation of the Weak Cosmic Censorship conjecture.</p>
+  <p>Numerical relativity works on critical collapse suggest the following picture. Take an initial data profile \(\Phi\) and an amplitude \(p&gt;0\), and evolve the data \(p\cdot\Phi\):</p>
+  <ol class="steps">
+    <li>for \(p\ll1\), the solution does not collapse;</li>
+    <li>for \(p=p^*\), the solution is expected to form a naked singularity;</li>
+    <li>for \(p\gg1\), a black hole forms.</li>
+  </ol>
+  <p>This behavior is universal: it holds for every profile \(\Phi\). It was discovered by Choptuik in 3+1 dimensions [<a class="cite" href="#ref-Cho93">Cho93</a>], see also the review [<a class="cite" href="#ref-Gundlach2007">GMG07</a>], and it is also seen in 2+1 dimensions by Pretorius–Choptuik [<a class="cite" href="#ref-Pretorius">PC00</a>] and Jałmużna–Gundlach–Chmaj [<a class="cite" href="#ref-jalmuzna">JGC15</a>].</p>
+  <p>This suggests the conjectural picture of the moduli space in Fig. 6. In this infinite-dimensional space, the threshold between non-collapsing spacetimes and black hole spacetimes is a codimension-1 set of naked singularity spacetimes, consistent with Theorem 1.1. The theorem also covers naked singularities off the threshold, if they exist, showing they are surrounded by black hole spacetimes.</p>
+
+  <figure class="plate wide" id="fig-cc" aria-labelledby="cc-title-h">
+    <div class="plate-head"><span class="fig-no">Fig. 6</span><h3 class="plate-title" id="cc-title-h">A conjectural picture of the moduli space</h3><span class="badge">Conjecture, based on numerics</span></div>
+    <div class="mod-grid">
+      <svg id="cc-svg" class="plot" role="img" aria-label="Cartoon of the moduli space: non-collapsing spacetimes inside, black hole spacetimes around them, and the threshold between them. The family p times Phi crosses the threshold."></svg>
+      <div class="mod-side">
+        <svg id="cc-mini" role="img" aria-label="Picture of the spacetime for the current amplitude"></svg>
+        <div aria-live="polite">
+          <p class="mod-title" id="cc-title"><span data-kind="non" hidden>\(p&lt;p^*\): non-collapsing</span><span data-kind="naked" hidden>\(p=p^*\): threshold</span><span data-kind="bh" hidden>\(p&gt;p^*\): black hole</span></p>
+          <p class="mod-text" id="cc-text"><span data-kind="non" hidden>No singularities form, and the solution exists for all time.</span><span data-kind="naked" hidden>Numerics suggest a naked singularity here. Theorem 1.1 shows such data are non-generic.</span><span data-kind="bh" hidden>A trapped surface forms. Black hole data form an open set.</span></p>
+        </div>
+      </div>
+    </div>
+    <div class="ctrl">
+      <label for="cc-p">Amplitude \(p\)</label>
+      <input type="range" id="cc-p" min="0" max="2" step="0.005" value="0.6">
+      <output id="cc-pv" for="cc-p"><span data-kind="non" hidden>\(p&lt;p^*\)</span><span data-kind="naked" hidden>\(p=p^*\)</span><span data-kind="bh" hidden>\(p&gt;p^*\)</span></output>
+    </div>
+    <div class="presets"><button type="button" class="btn" id="cc-snap">Go to \(p=p^*\)</button></div>
+    <p class="caption">This conjectural picture comes from numerical work on critical collapse. Theorem 1.1 implies that naked singularities are on the threshold, or they are surrounded by black hole spacetimes.</p>
+  </figure>
+
+  <div class="callout"><b>A more general question.</b> Two behaviors, non-collapse and black hole formation, with a threshold between them made of naked singularities: this question is not specific to general relativity. For semilinear equations such as the nonlinear wave and Klein–Gordon equations, solitons, or collapsing solitons, can sit on the threshold between dispersion and blow-up. The differences with our problem: there are no solitons and no conserved energy, so one cannot look at the energy level of the ground state.</div>
+  <p>What is known about naked singularities:</p>
+  <ul class="props known">
+    <li>They are non-generic, since they are unstable to black hole formation ✓. Are they also unstable to non-collapse? This is harder.</li>
+    <li>There are examples, by Christodoulou [<a class="cite" href="#ref-C94">Chr94</a>] for the spherically symmetric Einstein-scalar field system and by Rodnianski and Shlapentokh-Rothman [<a class="cite" href="#ref-RSR23">RSR23</a>, <a class="cite" href="#ref-SR22">SR22</a>] for the Einstein vacuum equations ✓. They arise from low-regularity initial data, and they are not proved to be on the threshold. Are there examples on the threshold, arising from smooth data?</li>
+  </ul>
+  <aside class="sn">For the Einstein-dust system (Christodoulou [<a class="cite" href="#ref-dust">Chr84</a>]) and the Einstein–Euler system (Guo, Hadžić and Jang [<a class="cite" href="#ref-euler">GHJ23</a>]), there are naked singularities arising from smooth data, but these matter models are prone to singularity formation even in the absence of gravity.</aside>
+  <p>In 3+1 dimensions, threshold examples are difficult to construct, because the numerical critical solution is discretely self-similar. In upcoming work with Igor Rodnianski [<a class="cite" href="#ref-preparation">CR26</a>], we give the first rigorous construction of naked singularities on the threshold of gravitational collapse: locally naked singularities arising in (local) critical collapse.</p>
+  <div class="thm">
+    <p class="thm-label">Theorem (Cicortas–Rodnianski) · Threshold examples</p>
+    <p>There exists a 2-parameter family of \(C^3\) initial data \(\Phi^q_\lambda\), for integers \(q\ge4\) and \(\lambda\in(-\epsilon,\epsilon)\), such that:</p>
+    <ul class="props">
+      <li>for \(\lambda&lt;0\), no singularities form;</li>
+      <li>for \(\lambda=0\), the solution is a locally naked singularity with no trapped surfaces, and the case \((\lambda,q)=(0,4)\) corresponds to the numerical examples of [<a class="cite" href="#ref-Pretorius">PC00</a>, <a class="cite" href="#ref-jalmuzna">JGC15</a>];</li>
+      <li>for \(\lambda&gt;0\), trapped surfaces form.</li>
+    </ul>
+  </div>
+  <p>The data are on a finite light cone, so this is a local version of critical collapse. The examples form a tower indexed by \(q\), and in the numerics the \(q=4\) solution is the attractor on the threshold. Unlike all previous naked singularity examples for scalar field models, our examples arise from high-regularity data, as the numerics predict.</p>
+
+  <figure class="plate wide" id="fig-ex" aria-labelledby="ex-title-h">
+    <div class="plate-head"><span class="fig-no">Fig. 7</span><h3 class="plate-title" id="ex-title-h">Threshold examples</h3><span class="badge blue">Upcoming work with Igor Rodnianski</span></div>
+    <div class="mod-grid">
+      <svg id="ex-svg" viewBox="0 0 640 300" role="img" aria-label="Cartoon of the space of data on a finite cone: a threshold, and one-parameter families crossing it, one for each q"></svg>
+      <div class="mod-side">
+        <svg id="ex-mini" role="img" aria-label="Picture of the spacetime for the current data"></svg>
+        <div aria-live="polite">
+          <p class="mod-title" id="ex-title"><span data-sign="reg" hidden>\(\lambda&lt;0\)</span><span data-sign="naked" hidden>\(\lambda=0\)</span><span data-sign="trap" hidden>\(\lambda&gt;0\)</span></p>
+          <p class="mod-text" id="ex-text"></p>
+        </div>
+      </div>
+    </div>
+    <div class="duo-ctrl">
+      <span class="seg-label">Family \(q\)</span>
+      <div class="qbtns">
+        <button type="button" class="btn" data-q="4" aria-pressed="true">4</button>
+        <button type="button" class="btn" data-q="5" aria-pressed="false">5</button>
+        <button type="button" class="btn" data-q="6" aria-pressed="false">6</button>
+        <button type="button" class="btn" data-q="7" aria-pressed="false">7</button>
+      </div>
+    </div>
+    <div class="ctrl">
+      <label for="ex-l">Parameter λ</label>
+      <div class="range-ends"><span aria-hidden="true">\(-\epsilon\)</span><input type="range" id="ex-l" min="-1" max="1" step="0.01" value="-0.5"><span aria-hidden="true">\(\epsilon\)</span></div>
+      <output id="ex-lv" for="ex-l"><span data-sign="reg" hidden>\(\lambda&lt;0\)</span><span data-sign="naked" hidden>\(\lambda=0\)</span><span data-sign="trap" hidden>\(\lambda&gt;0\)</span></output>
+    </div>
+    <div class="presets"><button type="button" class="btn" id="ex-zero">Go to λ = 0</button></div>
+    <p class="caption">These are data on a finite cone, so this is a picture of the local problem. Each family \(\lambda\mapsto\Phi^q_\lambda\) is a short curve and it crosses the threshold at \(\lambda=0\), where the solution is a naked singularity.</p>
+  </figure>
+
+  <p>For \(\lambda=0\) the blueshift has the exact rate</p>
+  \[\mathbf b=\Big(3-\frac1{2q}\Big)\log\frac{r_0}{r}+O(1),\]
+  <p>which should be compared with the general lower bound \(2\log(r_0/r)\) of Section 5.3.</p>
+</section>
+
+<section class="col" id="references">
+  <h2>References</h2>
+  <ol class="refs">
+    <li id="ref-ADS3"><span class="ref-label">[BJ13]</span><span>P. Bizoń and J. Jałmużna, <em>Globally regular instability of 3-dimensional Anti–de Sitter spacetime</em>, Phys. Rev. Lett. <b>111</b> (2013). <a class="ref-link" href="https://doi.org/10.1103/PhysRevLett.111.041102">DOI</a></span></li>
+    <li id="ref-BzRo"><span class="ref-label">[BR11]</span><span>P. Bizoń and A. Rostworowski, <em>Weakly turbulent instability of Anti–de Sitter spacetime</em>, Phys. Rev. Lett. <b>107</b> (2011). <a class="ref-link" href="https://doi.org/10.1103/PhysRevLett.107.031102">DOI</a></span></li>
+    <li id="ref-Cho93"><span class="ref-label">[Cho93]</span><span>M. Choptuik, <em>Universality and scaling in gravitational collapse of a massless scalar field</em>, Phys. Rev. Lett. <b>70</b> (1993), 9–12. <a class="ref-link" href="https://doi.org/10.1103/PhysRevLett.70.9">DOI</a></span></li>
+    <li id="ref-dust"><span class="ref-label">[Chr84]</span><span>D. Christodoulou, <em>Violation of cosmic censorship in the gravitational collapse of a dust cloud</em>, Comm. Math. Phys. <b>93</b> (1984), no. 2, 171–195. <a class="ref-link" href="http://projecteuclid.org/euclid.cmp/1103941053">Link</a></span></li>
+    <li id="ref-ChrBH"><span class="ref-label">[Chr91]</span><span>D. Christodoulou, <em>The formation of black holes and singularities in spherically symmetric gravitational collapse</em>, Comm. Pure Appl. Math. <b>44</b> (1991), no. 3, 339–373. <a class="ref-link" href="https://doi.org/10.1002/cpa.3160440305">DOI</a></span></li>
+    <li id="ref-C94"><span class="ref-label">[Chr94]</span><span>D. Christodoulou, <em>Examples of naked singularity formation in the gravitational collapse of a scalar field</em>, Ann. of Math. (2) <b>140</b> (1994), no. 3, 607–653. <a class="ref-link" href="https://doi.org/10.2307/2118619">DOI</a></span></li>
+    <li id="ref-ChrWCC"><span class="ref-label">[Chr99a]</span><span>D. Christodoulou, <em>The instability of naked singularities in the gravitational collapse of a scalar field</em>, Ann. of Math. (2) <b>149</b> (1999), no. 1, 183–217. <a class="ref-link" href="https://doi.org/10.2307/121023">DOI</a></span></li>
+    <li id="ref-preparation"><span class="ref-label">[CR26]</span><span>S. Cicortas and I. Rodnianski, <em>Critical collapse in 2+1 gravity</em>, in preparation (2026).</span></li>
+    <li id="ref-dafhol"><span class="ref-label">[DH06]</span><span>M. Dafermos and G. Holzegel, <em>Dynamic instability of solitons in 4+1-dimensional gravity with negative cosmological constant</em>, 2006, available online at <a href="https://www.dpmms.cam.ac.uk/~md384/ADSinstability.pdf">https://www.dpmms.cam.ac.uk/~md384/ADSinstability.pdf</a>.</span></li>
+    <li id="ref-euler"><span class="ref-label">[GHJ23]</span><span>Y. Guo, M. Hadžić, and J. Jang, <em>Naked singularities in the Einstein-Euler system</em>, Ann. PDE <b>9</b> (2023), no. 1, Paper No. 4, 182. <a class="ref-link" href="https://doi.org/10.1007/s40818-022-00144-3">DOI</a></span></li>
+    <li id="ref-Gundlach2007"><span class="ref-label">[GMG07]</span><span>C. Gundlach and J. Martín-García, <em>Critical phenomena in gravitational collapse</em>, Living Rev. Relativ. <b>10</b> (2007), no. 1. <a class="ref-link" href="https://doi.org/10.12942/lrr-2007-5">DOI</a></span></li>
+    <li id="ref-jalmuzna"><span class="ref-label">[JGC15]</span><span>J. Jałmużna, C. Gundlach, and T. Chmaj, <em>Scalar field critical collapse in 2+1 dimensions</em>, Phys. Rev. D <b>92</b> (2015). <a class="ref-link" href="https://doi.org/10.1103/PhysRevD.92.124044">DOI</a></span></li>
+    <li id="ref-nulldust"><span class="ref-label">[Mos20]</span><span>G. Moschidis, <em>A proof of the instability of AdS for the Einstein-null dust system with an inner mirror</em>, Anal. PDE <b>13</b> (2020), no. 6, 1671–1754. <a class="ref-link" href="https://doi.org/10.2140/apde.2020.13.1671">DOI</a></span></li>
+    <li id="ref-vlasov"><span class="ref-label">[Mos23]</span><span>G. Moschidis, <em>A proof of the instability of AdS for the Einstein-massless Vlasov system</em>, Invent. Math. <b>231</b> (2023), no. 2, 467–672. <a class="ref-link" href="https://doi.org/10.1007/s00222-022-01152-7">DOI</a></span></li>
+    <li id="ref-Pretorius"><span class="ref-label">[PC00]</span><span>F. Pretorius and M. Choptuik, <em>Gravitational collapse in 2+1 dimensional AdS spacetime</em>, Phys. Rev. D <b>62</b> (2000). <a class="ref-link" href="https://doi.org/10.1103/PhysRevD.62.124012">DOI</a></span></li>
+    <li id="ref-P69"><span class="ref-label">[Pen69]</span><span>R. Penrose, <em>Gravitational collapse: The role of general relativity</em>, Riv. Nuovo Cim. <b>1</b> (1969), 252–276. <a class="ref-link" href="https://doi.org/10.1023/A:1016578408204">DOI</a></span></li>
+    <li id="ref-RSR23"><span class="ref-label">[RSR23]</span><span>I. Rodnianski and Y. Shlapentokh-Rothman, <em>Naked singularities for the Einstein vacuum equations: the exterior solution</em>, Ann. of Math. (2) <b>198</b> (2023), no. 1, 231–391. <a class="ref-link" href="https://doi.org/10.4007/annals.2023.198.1.3">DOI</a></span></li>
+    <li id="ref-SR22"><span class="ref-label">[SR22]</span><span>Y. Shlapentokh-Rothman, <em>Naked singularities for the Einstein vacuum equations: The interior solution</em>, arXiv e-prints (2022), <a href="https://arxiv.org/abs/2204.09891">arxiv:2204.09891</a>.</span></li>
+  </ol>
+</section>
+
 </main>
+
+<footer class="col">
+  <p>Serban Cicortas. <em>Weak cosmic censorship for the circularly symmetric Einstein-scalar field system in 2+1 dimensions.</em> arXiv:2605.19143 [gr-qc], 2026. <a href="https://arxiv.org/abs/2605.19143">arxiv.org/abs/2605.19143</a></p>
+  <p>Acknowledgement: this webpage was created with the help of Claude (Claude Opus 5.5, by Anthropic), using <a href="https://claude.com/claude-code">Claude Code</a>.</p>
+</footer>
+
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var NS = 'http://www.w3.org/2000/svg';
+  var RM = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
+  function $(q, r) { return (r || document).querySelector(q); }
+  function $$(q, r) { return Array.prototype.slice.call((r || document).querySelectorAll(q)); }
+  function sv(tag, a, parent) {
+    var e = document.createElementNS(NS, tag);
+    if (a) for (var k in a) if (a[k] !== null && a[k] !== undefined) e.setAttribute(k, a[k]);
+    if (parent) parent.appendChild(e);
+    return e;
+  }
+  function lerp(a, b, t) { return a + (b - a) * t; }
+  function clamp(x, a, b) { return Math.max(a, Math.min(b, x)); }
+  function lp(p, q, t) { return [lerp(p[0], q[0], t), lerp(p[1], q[1], t)]; }
+  function lc(c, d, t) { return c.map(function (p, i) { return lp(p, d[i], t); }); }
+  function bez(c, t) {
+    var u = 1 - t, a = u * u * u, b = 3 * u * u * t, d = 3 * u * t * t, e = t * t * t;
+    return [a * c[0][0] + b * c[1][0] + d * c[2][0] + e * c[3][0], a * c[0][1] + b * c[1][1] + d * c[2][1] + e * c[3][1]];
+  }
+  function L(a, b) { return [a, lp(a, b, 1 / 3), lp(a, b, 2 / 3), b]; }
+  function samp(c, n, t0, t1) {
+    if (t0 == null) t0 = 0; if (t1 == null) t1 = 1;
+    var o = []; for (var i = 0; i <= n; i++) o.push(bez(c, lerp(t0, t1, i / n))); return o;
+  }
+  function solveT(c, fn) {
+    var prev = fn(bez(c, 0)), tp = 0;
+    for (var i = 1; i <= 400; i++) {
+      var t = i / 400, v = fn(bez(c, t));
+      if ((prev <= 0) !== (v <= 0)) {
+        var a = tp, b = t, fa = prev;
+        for (var k = 0; k < 50; k++) { var m = (a + b) / 2, fm = fn(bez(c, m)); if ((fa <= 0) === (fm <= 0)) { a = m; fa = fm; } else b = m; }
+        return (a + b) / 2;
+      }
+      prev = v; tp = t;
+    }
+    return 1;
+  }
+  function hit(p, d, poly) {
+    var best = Infinity;
+    for (var i = 0; i < poly.length - 1; i++) {
+      var a = poly[i], b = poly[i + 1], ex = b[0] - a[0], ey = b[1] - a[1], den = d[0] * ey - d[1] * ex;
+      if (Math.abs(den) < 1e-12) continue;
+      var ax = a[0] - p[0], ay = a[1] - p[1], t = (ax * ey - ay * ex) / den, s = (ax * d[1] - ay * d[0]) / den;
+      if (t > 1e-6 && s >= -1e-9 && s <= 1 + 1e-9 && t < best) best = t;
+    }
+    return best;
+  }
+  function inPoly(pt, poly) {
+    var c = false;
+    for (var i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+      var xi = poly[i][0], yi = poly[i][1], xj = poly[j][0], yj = poly[j][1];
+      if ((yi > pt[1]) !== (yj > pt[1]) && pt[0] < (xj - xi) * (pt[1] - yi) / (yj - yi) + xi) c = !c;
+    }
+    return c;
+  }
+  // SVG text with _{sub} and ^{sup}. Offsets are in em, so CSS can rescale a whole label.
+  function rich(parent, x, y, str, size, cls, anchor) {
+    var t = sv('text', { x: x.toFixed(2), y: y.toFixed(2), 'font-size': size.toFixed(2), 'class': cls || 'pd-label', 'text-anchor': anchor || 'start' }, parent);
+    var parts = String(str).split(/(_\{[^}]*\}|\^\{[^}]*\}|\*[^*]+\*)/).filter(function (s) { return s.length; });
+    var shift = 0, prevSub = null;
+    parts.forEach(function (part) {
+      var txt = part, target = 0, small = false, ital = false;
+      if (part.charAt(0) === '_' && part.charAt(1) === '{') { txt = part.slice(2, -1); target = 0.3; small = true; }
+      else if (part.charAt(0) === '^' && part.charAt(1) === '{') { txt = part.slice(2, -1); target = -0.42; small = true; }
+      else if (part.charAt(0) === '*' && part.length > 2) { txt = part.slice(1, -1); ital = true; }
+      var sp = sv('tspan', { dy: ((target - shift) / (small ? 0.7 : 1)).toFixed(3) + 'em' }, t);
+      if (small) sp.setAttribute('font-size', '70%');
+      if (ital) sp.setAttribute('font-style', 'italic');
+      // A superscript right after a subscript is stacked above it, as in C_0^+.
+      if (target < 0 && prevSub) sp.setAttribute('dx', (-0.58 * prevSub.length).toFixed(2) + 'em');
+      sp.textContent = txt; shift = target; prevSub = target > 0 ? txt : null;
+    });
+    return t;
+  }
+  // A figure drawn in a fixed viewBox shrinks on narrow screens; --k scales its text back up.
+  function fitText(svg, viewW, onChange, kMax) {
+    var last = 0;
+    function fit() {
+      var w = svg.getBoundingClientRect().width; if (!w) return;
+      var k = Math.max(1, Math.min(kMax || 2.2, Math.round(viewW / w * 20) / 20));
+      if (k === last) return;
+      last = k; svg.style.setProperty('--k', k);
+      if (onChange) onChange(k);
+    }
+    if (window.ResizeObserver) new ResizeObserver(fit).observe(svg); else window.addEventListener('resize', fit);
+    fit();
+  }
+  // Math labels in the diagrams use MathJax's TeX glyphs (\mathcal I for null infinity, as in the paper).
+  // Until MathJax has loaded they show plain text, and every diagram is redrawn once it is ready.
+  var TEX = { ready: false, cache: {}, waiting: [] }, ALL = [];
+  function texNode(tex) {
+    if (!TEX.ready) return null;
+    if (!(tex in TEX.cache)) {
+      try { TEX.cache[tex] = window.MathJax.tex2svg(tex, { display: false }).querySelector('svg'); }
+      catch (err) { TEX.cache[tex] = null; }
+    }
+    return TEX.cache[tex] ? TEX.cache[tex].cloneNode(true) : null;
+  }
+  function texLabel(parent, x, y, tex, size, cls, anchor, fallback, rot) {
+    var s = texNode(tex), node;
+    if (!s) node = rich(parent, x, y, fallback || tex, size, 'pd-label ' + (cls || ''), anchor);
+    else {
+      var vb = (s.getAttribute('viewBox') || '0 0 0 0').split(/[\s,]+/).map(Number), k = size * 1.1 / 1000, w = vb[2] * k;
+      ['style', 'role', 'focusable', 'aria-hidden'].forEach(function (a) { s.removeAttribute(a); });
+      s.setAttribute('x', (x - (anchor === 'middle' ? w / 2 : anchor === 'end' ? w : 0)).toFixed(2));
+      s.setAttribute('y', (y + vb[1] * k).toFixed(2));
+      s.setAttribute('width', w.toFixed(2)); s.setAttribute('height', (vb[3] * k).toFixed(2));
+      s.setAttribute('overflow', 'visible'); s.setAttribute('class', 'tex ' + (cls || ''));
+      node = parent.appendChild(s);
+    }
+    if (rot) { var g = sv('g', { transform: 'rotate(' + rot + ' ' + x.toFixed(2) + ' ' + y.toFixed(2) + ')' }, parent); g.appendChild(node); node = g; }
+    return node;
+  }
+  // A TeX label outside the diagrams, upgraded in place once MathJax is ready.
+  function mathLabel(parent, x, y, tex, size, cls, anchor, fallback) {
+    var node = texLabel(parent, x, y, tex, size, cls, anchor, fallback);
+    if (!TEX.ready) TEX.waiting.push(function () { var fresh = texLabel(parent, x, y, tex, size, cls, anchor, fallback); parent.replaceChild(fresh, node); node = fresh; });
+    return node;
+  }
+  // A display formula wider than its column is scaled down to fit, so the page never scrolls sideways.
+  function fitDisplay(m) {
+    var w = m.clientWidth; if (!w || +m.dataset.fitW === w) return;
+    m.dataset.fitW = w;
+    if (m.dataset.fs0 == null) m.dataset.fs0 = m.style.fontSize || '100%';
+    m.style.fontSize = m.dataset.fs0;
+    // Two passes, since a formula does not scale exactly in proportion to its font size.
+    for (var k = 1, pass = 0; pass < 2 && m.scrollWidth > w + 1; pass++) {
+      k = Math.max(0.42, k * 0.99 * w / m.scrollWidth);
+      m.style.fontSize = 'calc(' + m.dataset.fs0 + ' * ' + k.toFixed(3) + ')';
+    }
+  }
+  function fitMath() {
+    var ro = window.ResizeObserver ? new ResizeObserver(function (es) { es.forEach(function (e) { fitDisplay(e.target); }); }) : null;
+    $$('mjx-container[display="true"]').forEach(function (m) { fitDisplay(m); if (ro) ro.observe(m); });
+  }
+  // A period or comma right after an inline formula stays on the formula's line.
+  function gluePunctuation(root) {
+    $$('mjx-container:not([display="true"])', root).forEach(function (m) {
+      var t = m.nextSibling;
+      if (!t || t.nodeType !== 3 || !/^[.,;:!?)]/.test(t.data) || m.parentNode.classList.contains('nobr')) return;
+      var w = document.createElement('span'); w.className = 'nobr';
+      m.parentNode.insertBefore(w, m); w.appendChild(m);
+      var k = t.data.match(/^[.,;:!?)]+/)[0].length;
+      w.appendChild(document.createTextNode(t.data.slice(0, k))); t.data = t.data.slice(k);
+    });
+  }
+  window.onTexReady = function () {
+    TEX.ready = true; gluePunctuation(document); fitMath();
+    SKETCHES.forEach(function (sk) { if (sk.redraw) sk.redraw(); });
+    TEX.waiting.forEach(function (f) { f(); }); TEX.waiting = [];
+  };
+  // A small wave drawn along the segment a-b: the perturbation of the data.
+  function squiggle(a, b, amp) {
+    var o = [], d = [b[0] - a[0], b[1] - a[1]], len = Math.hypot(d[0], d[1]), nx = -d[1] / len, ny = d[0] / len;
+    for (var i = 0; i <= 64; i++) { var s = i / 64, p = lp(a, b, s), w = amp * Math.sin(Math.PI * s) * Math.sin(5 * Math.PI * s); o.push([p[0] + w * nx, p[1] + w * ny]); }
+    return o;
+  }
+  function fmtBig(e) {
+    if (e < 6) return Math.round(Math.pow(10, e)).toLocaleString('en-US');
+    var k = Math.floor(e), m = Math.pow(10, e - k);
+    if (m >= 9.95) { m = 1; k += 1; }
+    return m.toFixed(1) + ' × 10<sup>' + k + '</sup>';
+  }
+  function ease(k) { return k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2; }
+  function svgXY(svg, e) {
+    var m = svg.getScreenCTM(); if (!m) return null;
+    var pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY;
+    var q = pt.matrixTransform(m.inverse()); return [q.x, q.y];
+  }
+  function watchVisible(el, cb) {
+    if (window.IntersectionObserver) new IntersectionObserver(function (es) { cb(es[0].isIntersecting); }).observe(el); else cb(true);
+  }
+  function pressed(buttons, active) { buttons.forEach(function (b) { b.setAttribute('aria-pressed', String(b === active)); }); }
+  function piece(g, id) { for (var i = 0; i < g.pieces.length; i++) if (g.pieces[i].id === id) return g.pieces[i]; return null; }
+  // Animates a parameter t between 0 and 1, calling drawAt(t) every frame and done() at the end.
+  function morpher(drawAt, done) {
+    var t = 0, raf = 0;
+    return {
+      go: function (to) {
+        cancelAnimationFrame(raf);
+        if (RM.matches) { t = to; drawAt(t); done(); return; }
+        var t0 = performance.now(), from = t, dur = 950 * Math.abs(to - from) || 1;
+        var step = function (now) {
+          var k = Math.min(1, (now - t0) / dur); t = lerp(from, to, ease(k)); drawAt(t);
+          if (k < 1) raf = requestAnimationFrame(step); else done();
+        };
+        raf = requestAnimationFrame(step);
+      }
+    };
+  }
+
+  /* ================= Spacetime sketches, drawn like the pictures in the talk ================= */
+  // Time points up and space is a plane seen from slightly above: the circle of radius R at time t
+  // is an ellipse with semi-axes R and K R. Light cones have slope 1.
+  var K = 0.26, ASK = Math.asin(K), SKETCHES = [];
+  function pathD(pts) { return 'M' + pts.map(function (p) { return p[0].toFixed(1) + ',' + p[1].toFixed(1); }).join(' L'); }
+  function pline(g, pts, cls, extra) {
+    var a = { d: pathD(pts), 'class': cls };
+    if (extra) for (var k in extra) a[k] = extra[k];
+    return sv('path', a, g);
+  }
+  function Sketch(svg, o) {
+    var self = this;
+    this.svg = svg; this.s = o.s; this.ox = o.ox; this.oy = o.oy; this.k = 1; this.redraw = null;
+    svg.setAttribute('viewBox', '0 0 ' + o.w + ' ' + o.h);
+    svg.classList.add('sk');
+    this.g = sv('g', null, svg);
+    fitText(svg, o.w, function (k) { self.k = k; if (self.redraw) self.redraw(); }, o.kMax);
+    SKETCHES.push(this);
+  }
+  Sketch.prototype.clear = function () { this.g.textContent = ''; return this.g; };
+  Sketch.prototype.P = function (x, t) { return [this.ox + this.s * x, this.oy - this.s * t]; };
+  // Points of the circle of radius R around the axis through x0, at time t, for angles a0..a1 (0 = right, π/2 = front).
+  Sketch.prototype.arc = function (x0, t, R, a0, a1) {
+    var c = this.P(x0, t), o = [], n = Math.max(8, Math.ceil(Math.abs(a1 - a0) * 18));
+    for (var i = 0; i <= n; i++) { var a = lerp(a0, a1, i / n); o.push([c[0] + this.s * R * Math.cos(a), c[1] + this.s * K * R * Math.sin(a)]); }
+    return o;
+  };
+  // A circle in space, solid in front and dashed behind. The solid part runs from angle a0 to π − a0.
+  Sketch.prototype.ring = function (g, x0, t, R, cls, a0) {
+    a0 = a0 || 0;
+    pline(g, this.arc(x0, t, R, Math.PI - a0, 2 * Math.PI + a0), 'sk-back');
+    pline(g, this.arc(x0, t, R, a0, Math.PI - a0), cls || 'sk-line');
+  };
+  // The light cone of the point (x0, ta), cut at time tc: its outline, and its rim unless noRim.
+  // The outline meets the rim where the tangent from the apex touches it. Returns those two points.
+  Sketch.prototype.ends = function (x0, ta, tc) {
+    var R = Math.abs(tc - ta), a = tc > ta ? ASK : -ASK, c = this.P(x0, tc);
+    var dx = this.s * R * Math.cos(a), dy = this.s * K * R * Math.sin(a);
+    return [[c[0] - dx, c[1] + dy], [c[0] + dx, c[1] + dy]];
+  };
+  Sketch.prototype.cone = function (g, x0, ta, tc, cls, noRim) {
+    var e = this.ends(x0, ta, tc);
+    pline(g, [e[0], this.P(x0, ta), e[1]], cls || 'sk-line');
+    if (!noRim) this.ring(g, x0, tc, Math.abs(tc - ta), cls, tc > ta ? 0 : -ASK);
+    return e;
+  };
+  Sketch.prototype.disk = function (g, R, cls) {
+    var c = this.P(0, 0);
+    return sv('ellipse', { cx: c[0].toFixed(1), cy: c[1].toFixed(1), rx: (this.s * R).toFixed(1), ry: (this.s * K * R).toFixed(1), 'class': cls }, g);
+  };
+  // The initial data: a large disk in the plane {t = 0}.
+  Sketch.prototype.slice = function (g, R) { return this.disk(g, R, 'sk-slice'); };
+  Sketch.prototype.point = function (g, x, t) { var p = this.P(x, t); return sv('circle', { cx: p[0].toFixed(1), cy: p[1].toFixed(1), r: 4.8, 'class': 'sk-pt' }, g); };
+  Sketch.prototype.tex = function (g, x, t, tex, fb, size, cls, anchor, dx, dy) {
+    var p = this.P(x, t);
+    return texLabel(g, p[0] + (dx || 0), p[1] + (dy || 0), tex, size * this.k, cls, anchor, fb);
+  };
+  Sketch.prototype.note = function (g, x, t, txt, cls, anchor, dx, dy) {
+    var p = this.P(x, t), e = sv('text', { x: (p[0] + (dx || 0)).toFixed(1), y: (p[1] + (dy || 0)).toFixed(1), 'class': 'sk-note' + (cls ? ' ' + cls : ''), 'text-anchor': anchor || 'start' }, g);
+    e.textContent = txt;
+    return e;
+  };
+  // A singular hypersurface seen edge-on: a wavy line between two points of the picture.
+  function wavyPts(a, b) {
+    var d = [b[0] - a[0], b[1] - a[1]], len = Math.hypot(d[0], d[1]), nx = -d[1] / len, ny = d[0] / len;
+    var waves = Math.max(2, Math.round(len / 13)), n = waves * 12, o = [];
+    for (var i = 0; i <= n; i++) { var u = i / n, w = 2.6 * Math.sin(u * waves * 2 * Math.PI); o.push([a[0] + u * d[0] + w * nx, a[1] + u * d[1] + w * ny]); }
+    return o;
+  }
+  function wavy(g, a, b, cls) { return pline(g, wavyPts(a, b), cls || 'sk-sing'); }
+  // A label at a point of the picture, in screen units.
+  function noteXY(g, p, txt, cls, anchor) {
+    var e = sv('text', { x: p[0].toFixed(1), y: p[1].toFixed(1), 'class': 'sk-note' + (cls ? ' ' + cls : ''), 'text-anchor': anchor || 'start' }, g);
+    e.textContent = txt;
+    return e;
+  }
+  function arrow(g, a, b, cls, head) {
+    pline(g, [a, b], cls || 'sk-arrow');
+    var d = [b[0] - a[0], b[1] - a[1]], l = Math.hypot(d[0], d[1]), ux = d[0] / l, uy = d[1] / l, s = 8, w = 3.6;
+    pline(g, [b, [b[0] - s * ux - w * uy, b[1] - s * uy + w * ux], [b[0] - s * ux + w * uy, b[1] - s * uy - w * ux], b], head || 'sk-arrowhead');
+  }
+
+  // The regimes in global dynamics, with the initial data at t = 0. With o.small, fewer labels.
+  // Each scene returns the paths of its light pulses: from the point (x, t) in the direction d = ±1,
+  // for a parameter length end. A pulse with hit ends at a singular hypersurface; the others escape.
+  function escapes(x, t, d) { return { x: x, t: t, d: d, end: Math.min(3.3 - t, 2.25 - d * x), hit: false }; }
+  var SCENE = {
+    non: function (sk, g, o) {
+      var paths = [];
+      sk.slice(g, 1.9);
+      [[-1.05, 0.95], [0.95, 0.7]].forEach(function (c) {
+        sk.cone(g, c[0], c[1], c[1] + 0.5, 'sk-line');
+        paths.push(escapes(c[0], c[1], -1), escapes(c[0], c[1], 1));
+      });
+      return paths;
+    },
+    bh: function (sk, g, o) {
+      var ends = sk.ends(0, 0.55, 2.35), tS = (sk.oy - ends[0][1]) / sk.s, out = [1.62, 0.72], ins = [-0.25, 1.6];
+      sk.slice(g, 1.9);
+      pline(g, [sk.P(0, 0.55), ends[0]].concat(wavyPts(ends[0], ends[1]), [sk.P(0, 0.55)]), 'shade-bh');
+      sk.cone(g, 0, 0.55, 2.35, 'sk-line', true);
+      wavy(g, ends[0], ends[1]);
+      sk.cone(g, out[0], out[1], out[1] + 0.45, 'sk-thin');
+      sk.cone(g, ins[0], ins[1], ins[1] + 0.35, 'sk-thin');
+      if (!o.small) {
+        sk.note(g, 0, 2.35, 'singular hypersurface', 'sing', 'middle', 0, -14);
+        sk.note(g, 0, 1.29, 'black hole', '', 'middle');
+      }
+      // Outside the black hole, the outgoing pulse escapes and the ingoing one ends at the singularity.
+      // Inside the black hole, every pulse ends at the singularity.
+      return [escapes(out[0], out[1], 1),
+        { x: out[0], t: out[1], d: -1, end: tS - out[1], hit: true },
+        { x: ins[0], t: ins[1], d: -1, end: tS - ins[1], hit: true },
+        { x: ins[0], t: ins[1], d: 1, end: tS - ins[1], hit: true }];
+    },
+    naked: function (sk, g, o) {
+      var tb = 1.45;
+      sk.slice(g, 1.9);
+      // The future light cone of b, dashed. Nothing is drawn inside it.
+      sk.cone(g, 0, tb, tb + 1.35, 'sk-hor');
+      sk.point(g, 0, tb);
+      sk.tex(g, 0, tb, 'b', 'b', o.small ? 15 : 17, '', 'middle', 0, 9 + 12 * sk.k);
+      if (!o.small) sk.note(g, 0.35, tb - 0.12, 'light escapes', 'gold', 'start');
+      // Light from just before b escapes, as in Fig. 1.
+      return [escapes(-0.05, tb - 0.08, -1), escapes(0.05, tb - 0.08, 1)];
+    }
+  };
+
+  /* ================= Fig. 1: a naked singularity and its instability ================= */
+  function initHero() {
+    var svg = $('#hero-svg'); if (!svg) return;
+    var bOff = $('#hero-off'), bOn = $('#hero-on'), st = $('#hero-status');
+    var sk = new Sketch(svg, { w: 400, h: 505, s: 92, ox: 196, oy: 424 }), gA = sv('g', null, svg);
+    // b = (0, TB). After the perturbation, the event horizon is the light cone of (0, TH), and the singularity
+    // is a spacelike hypersurface from b out to the horizon, at time TE. The bumps form at radius X0.
+    var TB = 1.75, TH = 0.35, TE = 2.35, X0 = 1.89, target = 0, tm = 0, visible = true;
+    var B, H, E;
+    function geom() { B = sk.P(0, TB); H = sk.P(0, TH); E = sk.ends(0, TH, TE); }
+    // How far the point q lies below the singular hypersurface, in pixels (negative above it).
+    function below(q) {
+      var e = q[0] >= B[0] ? E[1] : E[0], ex = e[0] - B[0], ey = e[1] - B[1], cr = (ex * (q[1] - B[1]) - ey * (q[0] - B[0])) / Math.hypot(ex, ey);
+      return e[0] > B[0] ? cr : -cr;
+    }
+    // A bump on the ingoing light ray x + t = X0, pointing away from C.
+    function bumpPts(x, t, amp) {
+      var p = sk.P(x, t), d = [-Math.SQRT1_2, -Math.SQRT1_2], n = [Math.SQRT1_2, -Math.SQRT1_2], w = 15, pts = [];
+      for (var i = -12; i <= 12; i++) { var u = i / 12 * w, h = amp * Math.exp(-Math.pow(u / (w * 0.42), 2)); pts.push([p[0] + u * d[0] + h * n[0], p[1] + u * d[1] + h * n[1]]); }
+      return pts.concat([pts[0]]);
+    }
+    function drawAt(t) {
+      tm = t; geom();
+      var g = sk.clear(), c = sk.P(0, 0), bottom = c[1] + sk.s * K * 2.0;
+      sk.slice(g, 2.0);
+      noteXY(g, [c[0] - 40, bottom + 22], 'initial data', '', 'middle');
+      if (t > 0.01) {
+        var bh = sv('g', { opacity: t.toFixed(2) }, g);
+        // the black hole region: inside the event horizon, below the singular hypersurface
+        pline(bh, [H, E[0]].concat(wavyPts(E[0], B), wavyPts(B, E[1]), [H]), 'shade-bh');
+        pline(bh, [E[0], H, E[1]], 'sk-hor');
+        // the perturbation on the initial data, where the bumps form
+        var q = sk.P(X0, 0), lab = [c[0] + sk.s * 1.95, bottom + 22];
+        pline(bh, bumpPts(X0, 0, 5), 'sk-bump');
+        pline(bh, [[q[0] - 2, q[1] + 7], [lab[0] - 10, lab[1] - 15]], 'sk-lead');
+        noteXY(bh, lab, 'small perturbation', 'blue', 'end');
+      }
+      sk.cone(g, 0, TB, 0, 'sk-line');
+      sk.ring(g, 0, TB / 2, TB / 2, 'sk-line', -ASK);
+      if (t < 0.98) {
+        var fut = sv('g', { opacity: (1 - t).toFixed(2) }, g);
+        // The future light cone of b, dashed. Nothing is drawn inside it.
+        sk.cone(fut, 0, TB, TB + 1.75, 'sk-hor');
+        sk.note(fut, 0.8, TB + 0.75, 'light escapes', 'gold', 'start', 24, 0);
+      }
+      if (t > 0.01) {
+        var top = sv('g', { opacity: t.toFixed(2) }, g);
+        wavy(top, B, E[0]); wavy(top, B, E[1]);
+        var m = lp(B, E[1], 0.4);
+        noteXY(top, [m[0], m[1] - 30], 'singular hypersurface', 'sing', 'middle');
+        noteXY(top, sk.P(-0.71, 1.6), 'black hole', '', 'middle');
+      }
+      sk.point(g, 0, TB);
+      sk.tex(g, 0, TB, 'b', 'b', 18, '', 'middle', 0, 10 + 13 * sk.k);
+      sk.tex(g, -0.86, 0.86, '\\mathcal C', '𝒞', 18, '', 'end', -10, 4);
+      noteXY(g, [8, 24], t < 0.5 ? 'Naked singularity spacetime' : 'Black hole spacetime', 'state', 'start');
+      if (RM.matches) {
+        if (t < 0.5) {
+          arrow(g, sk.P(0.17, TB + 0.04), sk.P(0.85, TB + 0.72), 'sk-ray', 'sk-rayhead');
+          arrow(g, sk.P(-0.17, TB + 0.04), sk.P(-0.85, TB + 0.72), 'sk-ray', 'sk-rayhead');
+        } else pline(g, bumpPts(X0 - 0.9, 0.9, 14), 'sk-bump');
+      }
+    }
+    var photons = [], bumps = [], flashes = [], lastP = -1e9, lastB = -1e9, nP = 0;
+    function frame(now) {
+      requestAnimationFrame(frame);
+      if (!visible) return;
+      gA.textContent = '';
+      var on = target === 1 && tm > 0.5;
+      if (now - lastP > 560) { lastP = now; photons.push({ side: (nP++ % 2) ? 1 : -1, t0: now }); }
+      if (target === 1 && now - lastB > 1400) { lastB = now; bumps.push({ t0: now }); }
+      // Light from just below b, outside its future light cone, moving outward.
+      photons = photons.filter(function (ph) {
+        var s = (now - ph.t0) / 1000 * 0.8, x = ph.side * (0.05 + s), b = sk.P(x, TB - 0.08 + s);
+        if (on && below(b) <= 0) { flashes.push({ at: b, t0: now }); return false; }
+        if (s > 1.7) return false;
+        var s0 = Math.max(0, s - 0.22), a = sk.P(ph.side * (0.05 + s0), TB - 0.08 + s0);
+        sv('line', { x1: a[0].toFixed(1), y1: a[1].toFixed(1), x2: b[0].toFixed(1), y2: b[1].toFixed(1), 'class': 'photon-trail' }, gA);
+        sv('circle', { cx: b[0].toFixed(1), cy: b[1].toFixed(1), r: 3, 'class': 'photon' }, gA);
+        return true;
+      });
+      // The perturbation travels toward b just outside C, the blueshift amplifies it,
+      // and it fades out before it reaches the singular hypersurface.
+      bumps = bumps.filter(function (bp) {
+        if (target !== 1) return false;
+        var s = (now - bp.t0) / 1000 * 0.62, x = X0 - s;
+        var pts = bumpPts(x, s, 5 + 3.2 * Math.min(9, Math.pow(X0 / Math.max(x, 0.3), 2) - 1));
+        var gap = Math.min.apply(null, pts.map(below)), op = Math.min(1, (gap - 6) / 16);
+        if (op <= 0) return false;
+        pline(gA, pts, 'sk-bump', { opacity: op.toFixed(2) });
+        return true;
+      });
+      flashes = flashes.filter(function (f) {
+        var k = (now - f.t0) / 450; if (k >= 1) return false;
+        sv('circle', { cx: f.at[0].toFixed(1), cy: f.at[1].toFixed(1), r: (3 + 10 * k).toFixed(1), 'class': 'flash', opacity: (1 - k).toFixed(2) }, gA);
+        return true;
+      });
+    }
+    var mo = morpher(drawAt, function () {});
+    function go(to) {
+      if (to === target) return;
+      target = to; pressed([bOff, bOn], to ? bOn : bOff);
+      $$('[data-st]', st).forEach(function (e) { e.hidden = e.getAttribute('data-st') !== (to ? 'on' : 'off'); });
+      photons = []; bumps = []; flashes = []; mo.go(to);
+    }
+    bOff.addEventListener('click', function () { go(0); });
+    bOn.addEventListener('click', function () { go(1); });
+    watchVisible(svg, function (v) { visible = v; });
+    sk.redraw = function () { drawAt(tm); };
+    drawAt(0);
+    if (!RM.matches) requestAnimationFrame(frame);
+  }
+
+  /* ================= Fig. 2: the regimes in global dynamics ================= */
+  // The light is emitted in pulses, as in Fig. 1. A pulse that reaches a singular hypersurface ends there with a flash.
+  function initRegimes() {
+    [['#reg-non', 'non'], ['#reg-bh', 'bh'], ['#reg-nak', 'naked']].forEach(function (q) {
+      var svg = $(q[0]); if (!svg) return;
+      var sk = new Sketch(svg, { w: 300, h: 300, s: 66, ox: 150, oy: 256, kMax: 1.3 }), gA = sv('g', null, svg);
+      var paths = [], pulses = [], flashes = [], last = -1e9, visible = true;
+      function at(p, s) { return sk.P(p.x + p.d * s, p.t + s); }
+      sk.redraw = function () {
+        var g = sk.clear();
+        paths = SCENE[q[1]](sk, g, {}) || [];
+        // With reduced motion, each pulse is drawn as an arrow along its path.
+        if (RM.matches) paths.forEach(function (p) { arrow(g, at(p, 0.12), at(p, p.hit ? p.end : Math.min(p.end, 0.95)), 'sk-ray', 'sk-rayhead'); });
+      };
+      sk.redraw();
+      function frame(now) {
+        requestAnimationFrame(frame);
+        gA.textContent = '';
+        if (!visible) { pulses = []; flashes = []; return; }
+        if (now - last > 1100) { last = now; paths.forEach(function (p) { pulses.push({ p: p, t0: now }); }); }
+        pulses = pulses.filter(function (u) {
+          var p = u.p, s = (now - u.t0) / 1000 * 0.8;
+          if (s >= p.end) { if (p.hit) flashes.push({ at: at(p, p.end), t0: now }); return false; }
+          var g = sv('g', { opacity: (p.hit ? 1 : Math.min(1, (p.end - s) / 0.4)).toFixed(2) }, gA), a = at(p, Math.max(0, s - 0.22)), b = at(p, s);
+          sv('line', { x1: a[0].toFixed(1), y1: a[1].toFixed(1), x2: b[0].toFixed(1), y2: b[1].toFixed(1), 'class': 'photon-trail' }, g);
+          sv('circle', { cx: b[0].toFixed(1), cy: b[1].toFixed(1), r: 3, 'class': 'photon' }, g);
+          return true;
+        });
+        flashes = flashes.filter(function (f) {
+          var k = (now - f.t0) / 450; if (k >= 1) return false;
+          sv('circle', { cx: f.at[0].toFixed(1), cy: f.at[1].toFixed(1), r: (3 + 10 * k).toFixed(1), 'class': 'flash', opacity: (1 - k).toFixed(2) }, gA);
+          return true;
+        });
+      }
+      watchVisible(svg, function (v) { visible = v; });
+      if (!RM.matches) requestAnimationFrame(frame);
+    });
+  }
+
+  /* ================= Fig. 3: the mass gap ================= */
+  function initMassGap() {
+    var svg = $('#gap-sk'), plot = $('#gap-plot'); if (!svg || !plot) return;
+    var sS = $('#gap-s'), vS = $('#gap-sv'), out = $('#gap-out'), M = 1.6;
+    var sk = new Sketch(svg, { w: 360, h: 250, s: 72, ox: 180, oy: 194 });
+    function rOf(s) { return Math.tan(Math.PI * s / 2); }
+    function sOfR(r) { return 2 / Math.PI * Math.atan(r); }
+    function mOf(s) { var q = Math.sin(Math.PI * s / 2); return M * q * q; }   // = M r^2 / (1 + r^2)
+    var sStar = sOfR(1 / Math.sqrt(M - 1));                                    // where m = 1
+    var PW = 360, PH = 250, pm = { l: 50, r: 18, t: 16, b: 50 };
+    fitText(plot, PW);
+    function px(s) { return pm.l + s * (PW - pm.l - pm.r); }
+    function py(m) { return PH - pm.b - m / 2.2 * (PH - pm.t - pm.b); }
+    function drawPlot(s, m) {
+      plot.textContent = '';
+      [0, 0.5, 1, 1.5, 2].forEach(function (v) { sv('line', { x1: px(0), y1: py(v), x2: px(1), y2: py(v), 'class': 'grid' }, plot); sv('text', { x: px(0) - 7, y: py(v) + 4, 'class': 'tick', 'text-anchor': 'end' }, plot).textContent = String(v); });
+      [[0, '0'], [0.5, '0.5'], [1, '1'], [2, '2'], [5, '5']].forEach(function (r) { sv('text', { x: px(sOfR(r[0])), y: py(0) + 19, 'class': 'tick', 'text-anchor': 'middle' }, plot).textContent = r[1]; });
+      sv('text', { x: px(1), y: py(0) + 19, 'class': 'tick', 'text-anchor': 'middle' }, plot).textContent = '∞';
+      sv('line', { x1: px(0), y1: py(0), x2: px(1), y2: py(0), 'class': 'axis' }, plot);
+      sv('line', { x1: px(0), y1: py(0), x2: px(0), y2: py(2.2), 'class': 'axis' }, plot);
+      rich(plot, px(0.5), PH - 8, 'radius *r* of the circle *S*', 12, 'axlab', 'middle');
+      var yl = sv('text', { x: 14, y: py(1.1), 'class': 'axlab', 'text-anchor': 'middle', transform: 'rotate(-90 14 ' + py(1.1) + ')' }, plot); yl.textContent = 'Hawking mass m';
+      sv('line', { x1: px(0), y1: py(1), x2: px(1), y2: py(1), 'class': 'mline' }, plot);
+      rich(plot, px(0.02), py(1) - 7, 'm = 1', 12, 'plot-lab sing');
+      sv('line', { x1: px(0), y1: py(M), x2: px(1), y2: py(M), 'class': 'Mline' }, plot);
+      rich(plot, px(1) - 4, py(M) - 7, 'M', 12, 'plot-lab', 'end');
+      var lo = [], hi = [];
+      for (var i = 0; i <= 200; i++) { var ss = i / 200 * 0.999, mm = mOf(ss), q = px(ss).toFixed(1) + ',' + py(mm).toFixed(1); if (mm < 1) lo.push(q); else hi.push(q); }
+      if (lo.length > 1) sv('path', { d: 'M' + lo.join(' L'), 'class': 'mcurve-lo' }, plot);
+      if (hi.length > 1) sv('path', { d: 'M' + hi.join(' L'), 'class': 'mcurve-hi' }, plot);
+      sv('line', { x1: px(sStar), y1: py(0), x2: px(sStar), y2: py(1), 'class': 'sline' }, plot);
+      sv('circle', { cx: px(s), cy: py(m), r: 6, 'class': 'pdot' }, plot);
+    }
+    // The domain of dependence of the disk bounded by S is the cone over the disk.
+    function drawSketch(s, m) {
+      var g = sk.clear(), R = 2.1 * s, ok = m < 1;
+      sk.slice(g, 2.3);
+      if (ok) pline(g, [sk.P(0, R)].concat(sk.arc(0, 0, R, -ASK, Math.PI + ASK), [sk.P(0, R)]), 'sk-dom');
+      sk.disk(g, R, 'sk-disk');
+      if (!ok) sk.cone(g, 0, 2.1 * sStar, 0, 'sk-star-line', true);
+      sk.cone(g, 0, R, 0, ok ? 'sk-dom-line' : 'sk-unk-line', true);
+      sk.tex(g, R, 0, 'S', 'S', 17, 'blue', 'start', 7, 5);
+      if (ok) sk.note(g, 0, R, 'no singularities', 'blue', 'middle', 0, -12);
+      else sk.note(g, 0, R, 'no conclusion', '', 'middle', 0, -12);
+    }
+    function update() {
+      var s = +sS.value, m = mOf(s);
+      vS.textContent = s >= 0.98 ? 'r ≈ ∞' : 'r = ' + rOf(s).toFixed(2);
+      drawSketch(s, m); drawPlot(s, m);
+      $$('[data-gap]', out).forEach(function (e) { e.hidden = e.getAttribute('data-gap') !== (m < 1 ? 'lo' : 'hi'); });
+      $$('.gap-m', out).forEach(function (e) { e.textContent = m.toFixed(2); });
+    }
+    sk.redraw = update;
+    sS.addEventListener('input', update);
+    update();
+  }
+
+  /* ================= Fig. 4: formation of trapped surfaces ================= */
+  function initTrap() {
+    var svg = $('#trap-sk'); if (!svg) return;
+    var sd = $('#trap-d'), se = $('#trap-e'), vd = $('#trap-dv'), ve = $('#trap-ev'), out = $('#trap-out');
+    var sk = new Sketch(svg, { w: 380, h: 245, s: 84, ox: 190, oy: 182 });
+    function ell(c, rx, ry) {
+      var a = (c[0] - rx).toFixed(1) + ',' + c[1].toFixed(1), b = (c[0] + rx).toFixed(1) + ',' + c[1].toFixed(1), r = rx.toFixed(1) + ',' + ry.toFixed(1);
+      return 'M' + a + ' A' + r + ' 0 1 0 ' + b + ' A' + r + ' 0 1 0 ' + a + 'Z';
+    }
+    function update() {
+      var d0 = +sd.value, e0 = +se.value, trapped = e0 > d0, r1 = 1.32, r2 = r1 * (1 + d0);
+      vd.textContent = d0.toFixed(2); ve.textContent = e0.toFixed(2);
+      var g = sk.clear(), c = sk.P(0, 0);
+      sk.slice(g, 2.1);
+      sv('path', { d: ell(c, sk.s * r2, sk.s * K * r2) + ell(c, sk.s * r1, sk.s * K * r1), 'fill-rule': 'evenodd', 'class': 'sk-ring', opacity: (0.15 + 0.85 * Math.min(1, e0 / 0.5)).toFixed(2) }, g);
+      sk.ring(g, 0, 0, r1, 'sk-line');
+      sk.ring(g, 0, 0, r2, 'sk-line');
+      sk.cone(g, 0, r1, 0, 'sk-thin', true);
+      var tT = 0.42 * r2;
+      if (trapped) {
+        var A = sk.P(0, r2), dx = sk.s * r2 * Math.cos(ASK), dy = -sk.s * K * r2 * Math.sin(ASK), L2 = [c[0] - dx, c[1] + dy], R2 = [c[0] + dx, c[1] + dy];
+        pline(g, [L2, lp(L2, A, tT / r2)], 'sk-line');
+        pline(g, [R2, lp(R2, A, tT / r2)], 'sk-line');
+      } else sk.cone(g, 0, r2, 0, 'sk-thin', true);
+      sk.tex(g, -r1 * 0.5, r1 * 0.5, 'C_1', 'C_{1}', 16, '', 'start', 8, 0);
+      sk.tex(g, r2 * 0.8, r2 * 0.2, 'C_2', 'C_{2}', 16, '', 'start', 9, 0);
+      sk.tex(g, r1, 0, 'r_1', 'r_{1}', 15, '', 'end', -6, 5);
+      sk.tex(g, r2, 0, 'r_2', 'r_{2}', 15, '', 'start', 6, 5);
+      if (trapped) {
+        sk.ring(g, 0, tT, r2 - tT, 'sk-trap', -ASK);
+        sk.note(g, r2 - tT, tT, 'trapped', 'sing', 'start', 10, -4);
+      } else sk.note(g, 0, r2, 'no conclusion', '', 'middle', 0, -14);
+      $$('[data-trap]', out).forEach(function (e) { e.hidden = e.getAttribute('data-trap') !== (trapped ? 'yes' : 'no'); });
+      $$('.trap-e', out).forEach(function (e) { e.textContent = e0.toFixed(2); });
+      $$('.trap-d', out).forEach(function (e) { e.textContent = d0.toFixed(2); });
+    }
+    sk.redraw = update;
+    [sd, se].forEach(function (el) { el.addEventListener('input', update); });
+    update();
+  }
+
+  /* ================= Fig. 5: infinite blueshift from the mass gap ================= */
+  function initBlueshift() {
+    var svg = $('#win-svg'), bsvg = $('#b-svg'); if (!svg || !bsvg) return;
+    var W = 560, H = 330, m = { l: 76, r: 16, t: 14, b: 56 };
+    var R = [0.25, 0.5, 0.75, 1], w = [0.15, 0.3, 0.45, 0.6], WMAX = 0.92, LMAX = 7;
+    fitText(svg, W); fitText(bsvg, 420);
+    function x(r) { return m.l + r * (W - m.l - m.r); }
+    function y(v) { return H - m.b - (v - 0.7) / 1.4 * (H - m.t - m.b); }
+    function yinv(p) { return 0.7 + (H - m.b - p) / (H - m.t - m.b) * 1.4; }
+    var ceil = []; for (var i = 0; i <= 60; i++) { var r = i / 60; ceil.push(x(r).toFixed(1) + ',' + y(1 + r * r).toFixed(1)); }
+    sv('path', { d: 'M' + x(0) + ',' + y(2.1) + ' L' + ceil.join(' L') + ' L' + x(1) + ',' + y(2.1) + 'Z', 'class': 'reg-trap' }, svg);
+    sv('rect', { x: x(0), y: y(1), width: x(1) - x(0), height: y(0.7) - y(1), 'class': 'reg-gap' }, svg);
+    [0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0].forEach(function (v) { sv('line', { x1: x(0), y1: y(v), x2: x(1), y2: y(v), 'class': 'grid' }, svg); sv('text', { x: x(0) - 8, y: y(v) + 4, 'class': 'tick', 'text-anchor': 'end' }, svg).textContent = v.toFixed(1); });
+    [0, 0.25, 0.5, 0.75, 1].forEach(function (r) { sv('text', { x: x(r), y: y(0.7) + 20, 'class': 'tick', 'text-anchor': 'middle' }, svg).textContent = String(r); });
+    sv('line', { x1: x(0), y1: y(0.7), x2: x(1), y2: y(0.7), 'class': 'axis' }, svg);
+    sv('line', { x1: x(0), y1: y(0.7), x2: x(0), y2: y(2.1), 'class': 'axis' }, svg);
+    sv('line', { x1: x(0), y1: y(1), x2: x(1), y2: y(1), 'class': 'floor' }, svg);
+    sv('path', { d: 'M' + ceil.join(' L'), 'class': 'ceiling' }, svg);
+    rich(svg, x(0.5), H - 6, 'radius *r* on the past light cone   (|Λ| = 1, r_{0} = 1)', 12, 'axlab', 'middle');
+    sv('text', { x: 14, y: y(1.4), 'class': 'axlab', 'text-anchor': 'middle', transform: 'rotate(-90 14 ' + y(1.4) + ')' }, svg).textContent = 'Hawking mass m';
+    rich(svg, x(0.03), y(1.95), 'trapped: m > 1 + |Λ|r^{2}', 12, 'reg-txt-trap');
+    sv('text', { x: x(0.14), y: y(0.8), 'class': 'reg-txt-gap' }, svg).textContent = 'm < 1: excluded by the mass gap';
+    var prof = sv('path', { 'class': 'prof' }, svg);
+    sv('circle', { cx: x(0), cy: y(1), r: 5, 'class': 'bG' }, svg);
+    rich(svg, x(0) + 9, y(1) + 17, '*b*', 13, 'reg-txt-trap');
+    var handles = R.map(function (r, i) { return sv('circle', { r: 8, 'class': 'handle', tabindex: 0, role: 'slider', 'aria-label': 'Mass at r = ' + r }, svg); });
+    function wAt(r) {
+      if (r <= R[0]) return w[0];
+      for (var i = 0; i < 3; i++) if (r <= R[i + 1]) return lerp(w[i], w[i + 1], (r - R[i]) / 0.25);
+      return w[3];
+    }
+    // b(L) with L = log(r0/r) = log(1/r): db/dL = 2 / (1 - w(r)), since |Λ| r / (1 + |Λ| r^2 - m) = 1 / ((1 - w) r).
+    function bCurve() {
+      var pts = [[0, 0]], b = 0, d = 0.02, prev = 2 / (1 - wAt(1));
+      for (var l = d; l <= LMAX + 1e-9; l += d) { var f = 2 / (1 - wAt(Math.exp(-l))); b += d * (prev + f) / 2; prev = f; pts.push([l, b]); }
+      return pts;
+    }
+    function drawB(pts) {
+      bsvg.textContent = '';
+      var BW = 420, BH = 300, bm = { l: 58, r: 22, t: 34, b: 50 }, bmax = Math.max(pts[pts.length - 1][1], 2 * LMAX) * 1.06;
+      function X(l) { return bm.l + l / LMAX * (BW - bm.l - bm.r); }
+      function Y(b) { return BH - bm.b - b / bmax * (BH - bm.t - bm.b); }
+      var step = bmax > 120 ? 50 : bmax > 60 ? 20 : bmax > 30 ? 10 : 5;
+      for (var v = 0; v <= bmax; v += step) { sv('line', { x1: X(0), y1: Y(v), x2: X(LMAX), y2: Y(v), 'class': 'grid' }, bsvg); sv('text', { x: X(0) - 7, y: Y(v) + 4, 'class': 'tick', 'text-anchor': 'end' }, bsvg).textContent = String(v); }
+      for (var l = 0; l <= LMAX; l++) sv('text', { x: X(l), y: Y(0) + 19, 'class': 'tick', 'text-anchor': 'middle' }, bsvg).textContent = String(l);
+      [1, 2, 3].forEach(function (k) { var lx = X(k * Math.LN10); sv('line', { x1: lx, y1: bm.t - 4, x2: lx, y2: Y(0), 'class': 'grid' }, bsvg); rich(bsvg, lx, bm.t - 9, '10^{−' + k + '}', 12, 'tick', 'middle'); });
+      rich(bsvg, X(0), bm.t - 9, '*r* / *r*_{0}:', 12, 'tick', 'start');
+      sv('rect', { x: X(0), y: Y(bmax), width: X(LMAX) - X(0), height: Y(0) - Y(bmax), 'class': 'axis' }, bsvg);
+      rich(bsvg, X(LMAX / 2), BH - 8, 'log(*r*_{0}/*r*)', 12, 'axlab', 'middle');
+      sv('text', { x: 15, y: Y(bmax / 2), 'class': 'axlab', 'text-anchor': 'middle', transform: 'rotate(-90 15 ' + Y(bmax / 2) + ')' }, bsvg).textContent = 'blueshift b';
+      sv('line', { x1: X(0), y1: Y(0), x2: X(LMAX), y2: Y(2 * LMAX), 'class': 'bbound' }, bsvg);
+      rich(bsvg, X(4.4), Y(8.8) + 24, '2 log(r_{0}/r)', 12, 'plot-lab', 'start');
+      sv('path', { d: 'M' + pts.map(function (p) { return X(p[0]).toFixed(1) + ',' + Y(p[1]).toFixed(1); }).join(' L'), 'class': 'bcurve' }, bsvg);
+      var end = pts[pts.length - 1], ly = Math.max(bm.t + 14, Y(end[1]) - 8);
+      rich(bsvg, X(LMAX) - 4, ly, 'b', 12, 'plot-lab blue', 'end');
+    }
+    function update() {
+      var pts = [];
+      for (var i = 0; i <= 100; i++) { var r = i / 100; pts.push(x(r).toFixed(1) + ',' + y(1 + wAt(r) * r * r).toFixed(1)); }
+      prof.setAttribute('d', 'M' + pts.join(' L'));
+      handles.forEach(function (hd, i) { hd.setAttribute('cx', x(R[i])); hd.setAttribute('cy', y(1 + w[i] * R[i] * R[i])); hd.setAttribute('aria-valuetext', 'm = ' + (1 + w[i] * R[i] * R[i]).toFixed(3)); });
+      var bp = bCurve(); drawB(bp);
+    }
+    // Profiles m = 1 + w(r) r^2 with w piecewise linear; these bounds keep m non-decreasing in r.
+    function setW(i, v) {
+      var lo = i > 0 ? w[i - 1] / (1 + 0.5 / R[i]) : 0, hi = i < 3 ? w[i + 1] * (1 + 0.5 / R[i + 1]) : WMAX;
+      w[i] = clamp(v, lo, Math.min(hi, WMAX));
+    }
+    var active = -1;
+    handles.forEach(function (hd, i) {
+      hd.addEventListener('pointerdown', function (e) { active = i; hd.classList.add('drag'); try { hd.setPointerCapture(e.pointerId); } catch (err) {} e.preventDefault(); });
+      hd.addEventListener('pointermove', function (e) {
+        if (active !== i) return;
+        var q = svgXY(svg, e); if (!q) return;
+        setW(i, (yinv(q[1]) - 1) / (R[i] * R[i])); update();
+      });
+      var stop = function () { active = -1; hd.classList.remove('drag'); };
+      hd.addEventListener('pointerup', stop); hd.addEventListener('pointercancel', stop);
+      hd.addEventListener('keydown', function (e) {
+        var dm = e.key === 'ArrowUp' ? 0.02 : e.key === 'ArrowDown' ? -0.02 : 0; if (!dm) return;
+        e.preventDefault(); setW(i, w[i] + dm / (R[i] * R[i])); update();
+      });
+    });
+    $$('#fig-window [data-w]').forEach(function (b) {
+      b.addEventListener('click', function () { var v = b.getAttribute('data-w').split(',').map(Number); for (var i = 0; i < 4; i++) w[i] = v[i]; update(); });
+    });
+    update();
+  }
+
+  /* ================= Fig. 6: the critical collapse conjecture ================= */
+  function initCritical() {
+    var svg = $('#cc-svg'), msvg = $('#cc-mini'); if (!svg || !msvg) return;
+    var sl = $('#cc-p'), pv = $('#cc-pv'), title = $('#cc-title'), text = $('#cc-text');
+    svg.setAttribute('viewBox', '0 0 640 320');
+    var outer = 'M52,168 C46,82 170,30 326,28 C492,26 600,84 598,166 C596,250 486,296 324,294 C164,292 58,252 52,168 Z';
+    var inner = 'M206,172 C200,124 248,92 312,94 C384,96 430,126 424,172 C420,214 378,238 310,236 C246,234 212,212 206,172 Z';
+    sv('path', { d: outer, 'class': 'mod-bh' }, svg);
+    sv('path', { d: inner, 'class': 'cc-under' }, svg);
+    sv('path', { d: inner, 'class': 'mod-non' }, svg);
+    var thr = sv('path', { d: inner, 'class': 'mod-thr' }, svg);
+    sv('path', { d: outer, 'class': 'cc-outline' }, svg);
+    // Naked singularities off the threshold, if any exist: by the main theorem they are surrounded by black holes.
+    [[126, 118], [524, 120]].forEach(function (p) { sv('circle', { cx: p[0], cy: p[1], r: 5, 'class': 'mod-star' }, svg); });
+    ['M466,236 Q500,260 544,244', 'M98,212 Q124,240 166,238'].forEach(function (d) { sv('path', { d: d, 'class': 'mod-off-curve' }, svg); });
+    // The family p·Φ, from AdS at p = 0 across the threshold.
+    var fam = [[262, 196], [352, 222], [470, 170], [566, 112]], len = thr.getTotalLength(), poly = [], tStar = 0.5;
+    for (var i = 0; i <= 200; i++) { var q = thr.getPointAtLength(len * i / 200); poly.push([q.x, q.y]); }
+    for (var j = 0; j <= 400; j++) if (!inPoly(bez(fam, j / 400), poly)) { tStar = j / 400; break; }
+    var pStar = 2 * tStar, S = bez(fam, tStar);
+    sv('path', { d: pathD(samp(fam, 60)), 'class': 'mod-fam sel' }, svg);
+    sv('circle', { cx: S[0].toFixed(1), cy: S[1].toFixed(1), r: 5.5, 'class': 'mod-star' }, svg);
+    [[S[0] + 8, S[1] + 24, 'p*', 'start', ''], [fam[3][0] + 6, fam[3][1] - 10, 'p·Φ', 'start', ''],
+     [316, 134, 'non-collapsing', 'middle', 'blue'], [150, 92, 'black hole', 'middle', 'sing'], [432, 108, 'threshold', 'start', '']].forEach(function (l) {
+      sv('text', { x: l[0].toFixed(1), y: l[1].toFixed(1), 'class': 'mod-note' + (l[4] ? ' ' + l[4] : ''), 'text-anchor': l[3] }, svg).textContent = l[2];
+    });
+    var dot = sv('circle', { r: 7, 'class': 'mod-dot' }, svg);
+    fitText(svg, 640);
+    var mini = new Sketch(msvg, { w: 240, h: 240, s: 52, ox: 120, oy: 204 }), kind = null;
+    mini.redraw = function () { if (kind) SCENE[kind](mini, mini.clear(), { small: true }); };
+    function update() {
+      var p = +sl.value, k = Math.abs(p - pStar) <= 0.012 ? 'naked' : p < pStar ? 'non' : 'bh', q = bez(fam, p / 2);
+      dot.setAttribute('cx', q[0].toFixed(1)); dot.setAttribute('cy', q[1].toFixed(1));
+      [title, text, pv].forEach(function (box) { $$('[data-kind]', box).forEach(function (e) { e.hidden = e.getAttribute('data-kind') !== k; }); });
+      sl.setAttribute('aria-valuetext', k === 'non' ? 'p < p*' : k === 'bh' ? 'p > p*' : 'p = p*');
+      if (k !== kind) { kind = k; mini.redraw(); }
+    }
+    sl.addEventListener('input', update);
+    $('#cc-snap').addEventListener('click', function () { sl.value = pStar.toFixed(3); update(); });
+    update();
+  }
+
+  /* ================= Fig. 7: the threshold examples of Cicortas–Rodnianski ================= */
+  function initExamples() {
+    var svg = $('#ex-svg'); if (!svg) return;
+    var sl = $('#ex-l'), lv = $('#ex-lv'), title = $('#ex-title'), text = $('#ex-text'), qb = $$('#fig-ex [data-q]'), q = 4;
+    var blob = 'M40,150 C40,70 140,30 320,28 C500,26 600,70 604,150 C608,230 500,272 320,272 C140,272 40,230 40,150 Z';
+    var defs = sv('defs', null, svg), cp = sv('clipPath', { id: 'exclip' }, defs); sv('path', { d: blob }, cp);
+    var g = sv('g', { 'clip-path': 'url(#exclip)' }, svg);
+    function xThr(y) { return 322 + 16 * Math.sin(y / 38); }
+    var thr = []; for (var yy = 0; yy <= 300; yy += 5) thr.push(xThr(yy).toFixed(1) + ',' + yy);
+    sv('path', { d: 'M0,0 L' + thr.join(' L') + ' L0,300 Z', 'class': 'mod-non' }, g);
+    sv('path', { d: 'M640,0 L' + thr.join(' L') + ' L640,300 Z', 'class': 'mod-bh' }, g);
+    sv('path', { d: 'M' + thr.join(' L'), 'class': 'mod-thr' }, g);
+    sv('path', { d: blob, 'class': 'mod-outline' }, svg);
+    // λ is small (a local construction), so each family is a short curve through the threshold.
+    var Y = { 4: 96, 5: 136, 6: 176, 7: 216 }, fams = {}, HALF = 80;
+    function famY(qq, x) { return Y[qq] + 7 * Math.sin((x - xThr(Y[qq])) / 55); }
+    [4, 5, 6, 7].forEach(function (qq) {
+      var x0 = xThr(Y[qq]), pts = []; for (var x = x0 - HALF; x <= x0 + HALF + 0.1; x += 4) pts.push(x.toFixed(1) + ',' + famY(qq, x).toFixed(1));
+      fams[qq] = sv('path', { d: 'M' + pts.join(' L'), 'class': 'mod-fam' }, g);
+      sv('circle', { cx: x0, cy: Y[qq], r: 4.5, 'class': 'mod-star' }, svg);
+      sv('text', { x: x0 - HALF - 10, y: famY(qq, x0 - HALF) + 4, 'class': 'mod-note', 'text-anchor': 'end' }, svg).textContent = 'q = ' + qq;
+    });
+    sv('text', { x: xThr(Y[4]) + 10, y: Y[4] - 10, 'class': 'mod-note sing' }, svg).textContent = 'numerics';
+    // Region names; on narrow screens the text is scaled up, so only the values of λ fit.
+    var regs = [
+      [sv('text', { 'class': 'mod-note' }, svg), [xThr(48) + 10, 58, 'start', 'λ = 0: naked singularity'], [xThr(48) + 10, 58, 'start', 'λ = 0']],
+      [sv('text', { 'class': 'mod-note' }, svg), [150, 244, 'start', 'λ < 0: no singularities'], [200, 252, 'middle', 'λ < 0']],
+      [sv('text', { 'class': 'mod-note' }, svg), [350, 244, 'start', 'λ > 0: black hole'], [450, 252, 'middle', 'λ > 0']]
+    ];
+    function placeRegs(k) {
+      regs.forEach(function (r) {
+        var o = k > 1.4 ? r[2] : r[1];
+        r[0].setAttribute('x', o[0]); r[0].setAttribute('y', o[1]); r[0].setAttribute('text-anchor', o[2]); r[0].textContent = o[3];
+      });
+    }
+    placeRegs(1);
+    var dot = sv('circle', { r: 7, 'class': 'mod-dot' }, svg);
+    fitText(svg, 640, placeRegs);
+    var mini = new Sketch($('#ex-mini'), { w: 240, h: 240, s: 52, ox: 120, oy: 204 }), scene = null;
+    mini.redraw = function () { if (scene) SCENE[scene](mini, mini.clear(), { small: true }); };
+    function update() {
+      var lam = +sl.value; if (Math.abs(lam) < 0.04) lam = 0;
+      var kind = lam < 0 ? 'reg' : lam > 0 ? 'trap' : 'naked';
+      [lv, title].forEach(function (box) { $$('[data-sign]', box).forEach(function (e) { e.hidden = e.getAttribute('data-sign') !== kind; }); });
+      sl.setAttribute('aria-valuetext', kind === 'reg' ? 'λ < 0' : kind === 'trap' ? 'λ > 0' : 'λ = 0');
+      var x0 = xThr(Y[q]), xx = x0 + lam * HALF;
+      dot.setAttribute('cx', xx); dot.setAttribute('cy', famY(q, xx));
+      [4, 5, 6, 7].forEach(function (qq) { fams[qq].setAttribute('class', 'mod-fam' + (qq === q ? ' sel' : '')); });
+      var sc = kind === 'reg' ? 'non' : kind === 'trap' ? 'bh' : 'naked';
+      if (sc !== scene) { scene = sc; mini.redraw(); }
+      text.textContent = kind === 'reg' ? 'No singularities form.' : kind === 'trap' ? 'A black hole forms.' : 'A naked singularity.' + (q === 4 ? ' This case corresponds to the numerical examples.' : '');
+    }
+    sl.addEventListener('input', update);
+    $('#ex-zero').addEventListener('click', function () { sl.value = 0; update(); });
+    qb.forEach(function (b) { b.addEventListener('click', function () { q = +b.getAttribute('data-q'); pressed(qb, b); update(); }); });
+    update();
+  }
+
+  function boot(fn) { try { fn(); } catch (err) { if (window.console) console.error(err); } }
+  [initHero, initRegimes, initMassGap, initTrap, initBlueshift, initCritical, initExamples].forEach(boot);
+})();
+</script>
 </body>
 </html>
