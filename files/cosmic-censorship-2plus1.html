@@ -414,6 +414,20 @@ window.MathJax = {
 };
 </script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+<!-- Google Analytics: counts visits on serbancicortas.github.io only, not local previews. -->
+<script>
+  if (location.hostname === 'serbancicortas.github.io') {
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { window.dataLayer.push(arguments); };
+    window.gtag('js', new Date());
+    window.gtag('config', 'G-T0GR05JR3E');
+    (function (s) {
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-T0GR05JR3E';
+      document.head.appendChild(s);
+    })(document.createElement('script'));
+  }
+</script>
 </head>
 <body>
 <div class="wrap">
@@ -423,7 +437,7 @@ window.MathJax = {
     <div class="hero-text">
       <p class="eyebrow">An interactive guide by Serban Cicortas</p>
       <h1>Weak Cosmic Censorship in 2<span class="plus">+</span>1&nbsp;dimensions</h1>
-      <p class="dek">Penrose's Weak Cosmic Censorship conjecture states that, for generic initial data, singularities are hidden inside black holes. This paper establishes the conjecture for the circularly symmetric Einstein-scalar field system in 2+1 dimensions with \(\Lambda&lt;0\), in the \(C^k\) initial data topology, for any \(k\geq2\). An essential step of the proof is establishing the presence of a mass gap. In particular, this implies that all naked singularities have infinite blueshift, which represents the main instability mechanism.</p>
+      <p class="dek">Penrose's Weak Cosmic Censorship conjecture [<a class="cite" href="#ref-P69">Pen69</a>] states that, for generic initial data, singularities are hidden inside black holes. This paper establishes the conjecture for the circularly symmetric Einstein-scalar field system in 2+1 dimensions with \(\Lambda&lt;0\), in the \(C^k\) initial data topology, for any \(k\geq2\). An essential step of the proof is establishing the presence of a mass gap. In particular, this implies that all naked singularities have infinite blueshift, which represents the main instability mechanism.</p>
       <p class="byline">Serban Cicortas, <em>Weak cosmic censorship for the circularly symmetric Einstein-scalar field system in 2+1 dimensions</em>, 2026. <a href="https://arxiv.org/abs/2605.19143">Abstract</a> · <a href="https://arxiv.org/pdf/2605.19143">PDF</a></p>
       <nav class="toc" aria-label="Contents">
         <ol>
