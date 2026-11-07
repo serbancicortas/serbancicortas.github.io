@@ -394,7 +394,7 @@ svg.lg{width:22px;height:10px;vertical-align:middle;overflow:visible}
 
 .cite,.xref{color:var(--blue);text-decoration:none;white-space:nowrap}
 .cite:hover,.xref:hover{text-decoration:underline}
-.thm{scroll-margin-top:1.2rem}
+.thm,h3[id]{scroll-margin-top:1.2rem}
 .thm:target{box-shadow:0 0 0 3px var(--blue-wash),0 2px 10px rgba(20,26,43,.06)}
 .xref{color:var(--blue);text-decoration:none}
 .xref:hover{text-decoration:underline}
@@ -524,7 +524,7 @@ window.MathJax = {
       </div>
       <p class="status" id="hero-status" aria-live="polite">
         <span data-st="off"><b>Perturbation off.</b> A <em>naked</em> singularity spacetime: light from arbitrarily close to the point singularity \(b\) escapes, so far-away observers “see” the singularity.</span>
-        <span data-st="on" hidden><b>Perturbation on.</b> The small perturbation, supported outside \(\mathcal C\), is amplified by a blueshift effect as it travels toward \(b\). A black hole forms, and the singularity now occurs across a hypersurface, hidden inside the black hole region.</span>
+        <span data-st="on" hidden><b>Perturbation on.</b> The small perturbation, supported outside \(\mathcal C\), is amplified by a blueshift effect as it travels toward \(b\). A black hole forms, and the curvature singularity now occurs across a hypersurface, hidden inside the black hole region.</span>
       </p>
       <ul class="legend" aria-label="Legend">
         <li><svg aria-hidden="true"><line x1="1" y1="5" x2="21" y2="5" class="lg-cone"/></svg>light cone</li>
@@ -564,7 +564,7 @@ window.MathJax = {
   <ol class="steps">
     <li><b>Non-collapse.</b> No singularities form and the solution exists for all time.</li>
     <li><b>Black hole.</b> A black hole region develops in evolution, defined by the fact that gravity is so strong in this region that nothing can escape it (this is represented using light cones in Fig.&nbsp;2). Moreover, a singular hypersurface forms inside the black hole, and anything that enters the black hole region encounters this singularity in finite time.</li>
-    <li><b>Naked singularity.</b> A singularity \(b\) forms, but there is no black hole region. The singularity is visible to far-away observers. Note that by finite speed of propagation, the equations cannot be solved beyond the future characteristic cone arising from \(b\) (see the dashed cone in Fig.&nbsp;2).</li>
+    <li><b>Naked singularity.</b> A curvature singularity \(b\) forms, but there is no black hole region. The singularity is visible to far-away observers. Note that by finite speed of propagation, the equations cannot be solved beyond the future characteristic cone arising from \(b\) (see the dashed cone in Fig.&nbsp;2).</li>
   </ol>
 
   <figure class="plate wide" id="fig-reg" aria-labelledby="reg-title">
@@ -603,7 +603,7 @@ window.MathJax = {
         </div>
         <p class="status" id="thm-hero-status" aria-live="polite">
           <span data-st="off"><b>Perturbation off.</b> A <em>naked</em> singularity spacetime: light from arbitrarily close to the point singularity \(b\) escapes, so far-away observers “see” the singularity.</span>
-          <span data-st="on" hidden><b>Perturbation on.</b> The small perturbation, supported outside \(\mathcal C\), is amplified by a blueshift effect as it travels toward \(b\). A black hole forms, and the singularity now occurs across a hypersurface, hidden inside the black hole region.</span>
+          <span data-st="on" hidden><b>Perturbation on.</b> The small perturbation, supported outside \(\mathcal C\), is amplified by a blueshift effect as it travels toward \(b\). A black hole forms, and the curvature singularity now occurs across a hypersurface, hidden inside the black hole region.</span>
         </p>
         <ul class="legend" aria-label="Legend">
           <li><svg aria-hidden="true"><line x1="1" y1="5" x2="21" y2="5" class="lg-cone"/></svg>light cone</li>
@@ -782,32 +782,37 @@ window.MathJax = {
       <output id="cc-pv" for="cc-p"><span data-kind="non" hidden>\(p&lt;p^*\)</span><span data-kind="naked" hidden>\(p=p^*\)</span><span data-kind="bh" hidden>\(p&gt;p^*\)</span></output>
     </div>
     <div class="presets"><button type="button" class="btn" id="cc-snap">Go to \(p=p^*\)</button></div>
-    <p class="caption">This conjectural picture comes from numerical works on critical collapse. <a class="xref" href="#thm-1-1">Theorem&nbsp;1.1</a> implies that naked singularities are non-generic and either occur on the threshold, or they are surrounded by black hole spacetimes.</p>
+    <p class="caption">This conjectural picture is motivated by numerical works on critical collapse. <a class="xref" href="#thm-1-1">Theorem&nbsp;1.1</a> implies that naked singularities are non-generic and either occur on the threshold, or they are surrounded by black hole spacetimes.</p>
   </figure>
 
-  <div class="callout"><b>A more general question.</b> Two behaviors, non-collapse and black hole formation, with a threshold between them made of naked singularities: this question is not specific to general relativity. For semilinear equations such as the nonlinear wave and Klein–Gordon equations, solitons, or collapsing solitons, can sit on the threshold between dispersion and blow-up. The differences with our problem: there are no solitons and no conserved energy.</div>
-  <p>What is known about naked singularities:</p>
+  <div class="callout"><b>A more general question.</b> Understanding the phase transition between two behaviors (in our case non-collapse and black hole formation) is a more general question that can be studied outside of general relativity. For semilinear equations, such as the nonlinear wave or Klein–Gordon equations, solitons, or collapsing solitons, can sit on the threshold between dispersion and blow-up [<a class="cite" href="#ref-NS11a">NS11a</a>, <a class="cite" href="#ref-NS11b">NS11b</a>, <a class="cite" href="#ref-KNS15">KNS15</a>]. An essential difference is that in our problem there are no solitons and no conserved energy.</div>
+  <p>Very little is known rigorously regarding the conjectural picture outlined in Fig.&nbsp;6. For the Einstein-scalar field models that we introduced above:</p>
   <ul class="props known">
-    <li>By <a class="xref" href="#thm-1-1">Theorem&nbsp;1.1</a>, naked singularity spacetimes are non-generic and are unstable to black hole formation.</li>
-    <li>There are examples, by Christodoulou [<a class="cite" href="#ref-C94">Chr94</a>] for the spherically symmetric Einstein-scalar field system and by Rodnianski and Shlapentokh-Rothman [<a class="cite" href="#ref-RSR23">RSR23</a>, <a class="cite" href="#ref-SR22">SR22</a>] for the Einstein vacuum equations. They arise from low-regularity initial data, and they are not proved to be on the threshold.</li>
+    <li>In symmetry, by [<a class="cite" href="#ref-ChrWCC">Chr99a</a>] and <a class="xref" href="#thm-1-1">Theorem&nbsp;1.1</a>, naked singularity spacetimes are non-generic and are unstable to black hole formation.</li>
+    <li id="known-3p1">In 3+1 dimensions, there are examples of naked singularity spacetimes, [<a class="cite" href="#ref-C94">Chr94</a>] in spherical symmetry and [<a class="cite" href="#ref-RSR23">RSR23</a>, <a class="cite" href="#ref-SR22">SR22</a>] for the Einstein vacuum equations. All the known examples arise from low-regularity initial data, and they are not proved to be on the threshold. Moreover, the conjectural threshold examples are difficult to construct, because the numerics suggest they are discretely self-similar [<a class="cite" href="#ref-Cho93">Cho93</a>, <a class="cite" href="#ref-CK26">CK26</a>].</li>
   </ul>
-  <aside class="sn">For the Einstein-dust system (Christodoulou [<a class="cite" href="#ref-dust">Chr84</a>]) and the Einstein–Euler system (Guo, Hadžić and Jang [<a class="cite" href="#ref-euler">GHJ23</a>]), there are naked singularities arising from smooth data, but these matter models are prone to singularity formation even in the absence of gravity.</aside>
-  <p>In 3+1 dimensions, threshold examples are difficult to construct, because the numerical critical solution is discretely self-similar. In upcoming work with Igor Rodnianski [<a class="cite" href="#ref-preparation">CR26</a>], we give the first rigorous construction of naked singularities on the threshold of gravitational collapse: locally naked singularities arising in (local) critical collapse.</p>
+  <aside class="sn" data-beside="known-3p1">For the Einstein-dust system (Christodoulou [<a class="cite" href="#ref-dust">Chr84</a>]) and the Einstein–Euler system (Guo, Hadžić and Jang [<a class="cite" href="#ref-euler">GHJ23</a>]), there are naked singularities arising from smooth data, but these matter models are prone to singularity formation even in the absence of gravity.</aside>
+  <p>In upcoming work with Igor Rodnianski [<a class="cite" href="#ref-preparation">CR26</a>], we give the first rigorous construction of naked singularities on the threshold of gravitational collapse: (locally) naked singularities arising in (local) critical collapse.</p>
   <div class="thm" id="thm-examples">
     <p class="thm-label">Theorem (Cicortas–Rodnianski) · Threshold examples</p>
-    <p>There exists a 2-parameter family of \(C^3\) initial data \(\Phi^q_\lambda\), for integers \(q\ge4\) and \(\lambda\in(-\epsilon,\epsilon)\), such that:</p>
+    <p>There exists a 2-parameter family of \(C^3\) initial data \(\Phi^n_\lambda\), for integers \(n\ge4\) and \(\lambda\in(-\epsilon,\epsilon)\), such that:</p>
     <ul class="props">
       <li>for \(\lambda&lt;0\), no singularities form;</li>
-      <li>for \(\lambda=0\), the solution is a locally naked singularity with no trapped surfaces, and the case \((\lambda,q)=(0,4)\) corresponds to the numerical examples of [<a class="cite" href="#ref-Pretorius">PC00</a>, <a class="cite" href="#ref-jalmuzna">JGC15</a>];</li>
-      <li>for \(\lambda&gt;0\), trapped surfaces form.</li>
+      <li>for \(\lambda=0\), the solution is a (locally) naked singularity and the case \((\lambda,n)=(0,4)\) corresponds to the numerical examples of [<a class="cite" href="#ref-Pretorius">PC00</a>, <a class="cite" href="#ref-jalmuzna">JGC15</a>];</li>
+      <li>for \(\lambda&gt;0\), a black hole forms (locally).</li>
     </ul>
   </div>
-  <p>The data are on a finite light cone, so this is a local version of critical collapse. The examples form a tower indexed by \(q\), and in the numerics the \(q=4\) solution is the attractor on the threshold. Unlike all previous naked singularity examples for scalar field models, our examples arise from high-regularity data, as the numerics predict.</p>
+  <aside class="sn" data-beside="thm-examples">For technical reasons pertaining to the structure of the boundary at infinity due to the negative cosmological constant, the initial data for the examples in the theorem is prescribed in a bounded set. Thus, this result is local in nature, as suggested by our informal terminology of (local) naked singularities and black holes. For a precise mathematical formulation of this result, see the <a href="cosmic-censorship-2plus1.html#examples">version for readers familiar with general relativity</a>.</aside>
+  <p>We note that unlike all previous naked singularity examples for scalar field models, our examples arise from high-regularity data, as the numerics predict. Moreover, we expect that one can prove that the initial data in our examples are not only \(C^3\), but actually \(C^\infty\).</p>
+  <p>Additionally, the numerical relativity works [<a class="cite" href="#ref-Pretorius">PC00</a>, <a class="cite" href="#ref-jalmuzna">JGC15</a>] only construct the corresponding \(n=4\) solution, as this acts as an attractor on the threshold. However, we construct a whole family of threshold solutions, indexed by \(n\), for all \(n\ge4\).</p>
+  <p>Finally, to explain the connection between the parameter \(n\) and the solutions, we note that for \(\lambda=0\) the blueshift has the exact rate</p>
+  \[\mathbf b=\Big(3-\frac1{2n}\Big)\log\frac{r_0}{r}+O(1),\]
+  <p>which should be compared with the general lower bound \(2\log(r_0/r)\) of <a class="xref" href="#instability">Section&nbsp;4.3</a>.</p>
 
   <figure class="plate wide" id="fig-ex" aria-labelledby="ex-title-h">
     <div class="plate-head"><span class="fig-no">Fig.&nbsp;7</span><h3 class="plate-title" id="ex-title-h">Threshold examples</h3><span class="badge blue">Upcoming work with Igor Rodnianski</span></div>
     <div class="mod-grid">
-      <svg id="ex-svg" viewBox="0 0 640 300" role="img" aria-label="Cartoon of the space of data on a finite cone: a threshold, and one-parameter families crossing it, one for each q"></svg>
+      <svg id="ex-svg" viewBox="0 0 640 300" role="img" aria-label="Cartoon of the space of data on a bounded set: a threshold, and one-parameter families crossing it, one for each n"></svg>
       <div class="mod-side">
         <svg id="ex-mini" role="img" aria-label="Picture of the spacetime for the current data"></svg>
         <div aria-live="polite">
@@ -817,7 +822,7 @@ window.MathJax = {
       </div>
     </div>
     <div class="duo-ctrl">
-      <span class="seg-label">Family \(q\)</span>
+      <span class="seg-label">Family \(n\)</span>
       <div class="qbtns">
         <button type="button" class="btn" data-q="4" aria-pressed="true">4</button>
         <button type="button" class="btn" data-q="5" aria-pressed="false">5</button>
@@ -831,12 +836,9 @@ window.MathJax = {
       <output id="ex-lv" for="ex-l"><span data-sign="reg" hidden>\(\lambda&lt;0\)</span><span data-sign="naked" hidden>\(\lambda=0\)</span><span data-sign="trap" hidden>\(\lambda&gt;0\)</span></output>
     </div>
     <div class="presets"><button type="button" class="btn" id="ex-zero">Go to λ = 0</button></div>
-    <p class="caption">These are data on a finite cone, so this is a picture of the local problem. Each family \(\lambda\mapsto\Phi^q_\lambda\) is a short curve and it crosses the threshold at \(\lambda=0\), where the solution is a naked singularity.</p>
+    <p class="caption">These are data on a bounded set, so this is a picture of the local problem. Each family \(\lambda\mapsto\Phi^n_\lambda\) is a short curve and it crosses the threshold at \(\lambda=0\), where the solution is a (locally) naked singularity.</p>
   </figure>
 
-  <p>For \(\lambda=0\) the blueshift has the exact rate</p>
-  \[\mathbf b=\Big(3-\frac1{2q}\Big)\log\frac{r_0}{r}+O(1),\]
-  <p>which should be compared with the general lower bound \(2\log(r_0/r)\) of Section 4.3.</p>
 </section>
 
 <section class="col" id="references">
@@ -848,10 +850,14 @@ window.MathJax = {
     <li id="ref-ChrBH"><span class="ref-label">[Chr91]</span><span>D. Christodoulou, <em>The formation of black holes and singularities in spherically symmetric gravitational collapse</em>, Comm. Pure Appl. Math. <b>44</b> (1991), no. 3, 339–373. <a class="ref-link" href="https://doi.org/10.1002/cpa.3160440305">DOI</a></span></li>
     <li id="ref-C94"><span class="ref-label">[Chr94]</span><span>D. Christodoulou, <em>Examples of naked singularity formation in the gravitational collapse of a scalar field</em>, Ann. of Math. (2) <b>140</b> (1994), no. 3, 607–653. <a class="ref-link" href="https://doi.org/10.2307/2118619">DOI</a></span></li>
     <li id="ref-ChrWCC"><span class="ref-label">[Chr99a]</span><span>D. Christodoulou, <em>The instability of naked singularities in the gravitational collapse of a scalar field</em>, Ann. of Math. (2) <b>149</b> (1999), no. 1, 183–217. <a class="ref-link" href="https://doi.org/10.2307/121023">DOI</a></span></li>
+    <li id="ref-CK26"><span class="ref-label">[CK26]</span><span>S. Cicortas and C. Kehle, <em>Discretely self-similar exterior-naked singularities for the Einstein-scalar field system</em>, Arch. Rational Mech. Anal. <b>250</b> (2026), no. 37. <a class="ref-link" href="https://doi.org/10.1007/s00205-026-02194-4">DOI</a></span></li>
     <li id="ref-preparation"><span class="ref-label">[CR26]</span><span>S. Cicortas and I. Rodnianski, <em>Critical collapse in 2+1 gravity</em>, in preparation (2026).</span></li>
     <li id="ref-euler"><span class="ref-label">[GHJ23]</span><span>Y. Guo, M. Hadžić, and J. Jang, <em>Naked singularities in the Einstein-Euler system</em>, Ann. PDE <b>9</b> (2023), no. 1, Paper No. 4, 182. <a class="ref-link" href="https://doi.org/10.1007/s40818-022-00144-3">DOI</a></span></li>
     <li id="ref-Gundlach2007"><span class="ref-label">[GMG07]</span><span>C. Gundlach and J. Martín-García, <em>Critical phenomena in gravitational collapse</em>, Living Rev. Relativ. <b>10</b> (2007), no. 1. <a class="ref-link" href="https://doi.org/10.12942/lrr-2007-5">DOI</a></span></li>
     <li id="ref-jalmuzna"><span class="ref-label">[JGC15]</span><span>J. Jałmużna, C. Gundlach, and T. Chmaj, <em>Scalar field critical collapse in 2+1 dimensions</em>, Phys. Rev. D <b>92</b> (2015). <a class="ref-link" href="https://doi.org/10.1103/PhysRevD.92.124044">DOI</a></span></li>
+    <li id="ref-KNS15"><span class="ref-label">[KNS15]</span><span>J. Krieger, K. Nakanishi, and W. Schlag, <em>Center-stable manifold of the ground state in the energy space for the critical wave equation</em>, Math. Ann. <b>361</b> (2015), no. 1-2, 1–50. <a class="ref-link" href="https://doi.org/10.1007/s00208-014-1059-x">DOI</a></span></li>
+    <li id="ref-NS11a"><span class="ref-label">[NS11a]</span><span>K. Nakanishi and W. Schlag, <em>Global dynamics above the ground state energy for the focusing nonlinear Klein-Gordon equation</em>, J. Differential Equations <b>250</b> (2011), no. 5, 2299–2333. <a class="ref-link" href="https://doi.org/10.1016/j.jde.2010.10.027">DOI</a></span></li>
+    <li id="ref-NS11b"><span class="ref-label">[NS11b]</span><span>K. Nakanishi and W. Schlag, <em>Invariant manifolds and dispersive Hamiltonian evolution equations</em>, Zurich Lectures in Advanced Mathematics, European Mathematical Society (EMS), Zürich, 2011. <a class="ref-link" href="https://doi.org/10.4171/095">DOI</a></span></li>
     <li id="ref-Pretorius"><span class="ref-label">[PC00]</span><span>F. Pretorius and M. Choptuik, <em>Gravitational collapse in 2+1 dimensional AdS spacetime</em>, Phys. Rev. D <b>62</b> (2000). <a class="ref-link" href="https://doi.org/10.1103/PhysRevD.62.124012">DOI</a></span></li>
     <li id="ref-P69"><span class="ref-label">[Pen69]</span><span>R. Penrose, <em>Gravitational collapse: The role of general relativity</em>, Riv. Nuovo Cim. <b>1</b> (1969), 252–276. <a class="ref-link" href="https://doi.org/10.1023/A:1016578408204">DOI</a></span></li>
     <li id="ref-RSR23"><span class="ref-label">[RSR23]</span><span>I. Rodnianski and Y. Shlapentokh-Rothman, <em>Naked singularities for the Einstein vacuum equations: the exterior solution</em>, Ann. of Math. (2) <b>198</b> (2023), no. 1, 231–391. <a class="ref-link" href="https://doi.org/10.4007/annals.2023.198.1.3">DOI</a></span></li>
@@ -1688,24 +1694,26 @@ window.MathJax = {
       var x0 = xThr(Y[qq]), pts = []; for (var x = x0 - HALF; x <= x0 + HALF + 0.1; x += 4) pts.push(x.toFixed(1) + ',' + famY(qq, x).toFixed(1));
       fams[qq] = sv('path', { d: 'M' + pts.join(' L'), 'class': 'mod-fam' }, g);
       sv('circle', { cx: x0, cy: Y[qq], r: 4.5, 'class': 'mod-star' }, svg);
-      sv('text', { x: x0 - HALF - 10, y: famY(qq, x0 - HALF) + 4, 'class': 'mod-note', 'text-anchor': 'end' }, svg).textContent = 'q = ' + qq;
+      sv('text', { x: x0 - HALF - 10, y: famY(qq, x0 - HALF) + 4, 'class': 'mod-note', 'text-anchor': 'end' }, svg).textContent = 'n = ' + qq;
     });
     sv('text', { x: xThr(Y[4]) + 10, y: Y[4] - 10, 'class': 'mod-note sing' }, svg).textContent = 'numerics';
     // Region names; on narrow screens the text is scaled up, so only the values of λ fit.
     var regs = [
-      [sv('text', { 'class': 'mod-note' }, svg), [xThr(48) + 10, 58, 'start', 'λ = 0: naked singularity'], [xThr(48) + 10, 58, 'start', 'λ = 0']],
+      [sv('text', { 'class': 'mod-note' }, svg), [xThr(48) - 10, 54, 'end', 'λ = 0: (locally)\nnaked singularity'], [xThr(48) - 10, 58, 'end', 'λ = 0']],
       [sv('text', { 'class': 'mod-note' }, svg), [150, 244, 'start', 'λ < 0: no singularities'], [200, 252, 'middle', 'λ < 0']],
-      [sv('text', { 'class': 'mod-note' }, svg), [350, 244, 'start', 'λ > 0: black hole'], [450, 252, 'middle', 'λ > 0']]
+      [sv('text', { 'class': 'mod-note' }, svg), [350, 244, 'start', 'λ > 0: black hole (locally)'], [450, 252, 'middle', 'λ > 0']]
     ];
     function placeRegs(k) {
       regs.forEach(function (r) {
         var o = k > 1.4 ? r[2] : r[1];
-        r[0].setAttribute('x', o[0]); r[0].setAttribute('y', o[1]); r[0].setAttribute('text-anchor', o[2]); r[0].textContent = o[3];
+        r[0].setAttribute('x', o[0]); r[0].setAttribute('y', o[1]); r[0].setAttribute('text-anchor', o[2]); r[0].textContent = '';
+        // a label may have several lines, separated by \n
+        o[3].split('\n').forEach(function (line, i) { sv('tspan', { x: o[0], dy: i ? '1.2em' : '0' }, r[0]).textContent = line; });
       });
     }
     placeRegs(1);
     var dot = sv('circle', { r: 7, 'class': 'mod-dot' }, svg);
-    fitText(svg, 640, placeRegs);
+    fitText(svg, 640, placeRegs, 1.7);
     var mini = new Sketch($('#ex-mini'), { w: 240, h: 240, s: 52, ox: 120, oy: 204 }), scene = null;
     mini.redraw = function () { if (scene) SCENE[scene](mini, mini.clear(), { small: true }); };
     function update() {
@@ -1718,7 +1726,7 @@ window.MathJax = {
       [4, 5, 6, 7].forEach(function (qq) { fams[qq].setAttribute('class', 'mod-fam' + (qq === q ? ' sel' : '')); });
       var sc = kind === 'reg' ? 'non' : kind === 'trap' ? 'bh' : 'naked';
       if (sc !== scene) { scene = sc; mini.redraw(); }
-      text.textContent = kind === 'reg' ? 'No singularities form.' : kind === 'trap' ? 'A black hole forms.' : 'A naked singularity.' + (q === 4 ? ' This case corresponds to the numerical examples.' : '');
+      text.textContent = kind === 'reg' ? 'No singularities form.' : kind === 'trap' ? 'A black hole forms (locally).' : 'A (locally) naked singularity.' + (q === 4 ? ' This case corresponds to the numerical examples.' : '');
     }
     sl.addEventListener('input', update);
     $('#ex-zero').addEventListener('click', function () { sl.value = 0; update(); });
@@ -1728,8 +1736,31 @@ window.MathJax = {
 
   // The copy of Fig. 1 beside Theorem 1.1.
   function initHeroCopy() { initHero('thm-hero'); }
+  // A side note with data-beside="id" sits next to that element on wide screens, where side notes float in the
+  // margin. It stays after the element in the text, so on phones it simply follows it.
+  function initBeside() {
+    var notes = $$('.sn[data-beside]');
+    if (!notes.length) return;
+    function align() {
+      notes.forEach(function (n) {
+        n.style.marginTop = '';
+        var t = document.getElementById(n.getAttribute('data-beside'));
+        if (!t || getComputedStyle(n).cssFloat === 'none') return;
+        var d = t.getBoundingClientRect().top - n.getBoundingClientRect().top;
+        n.style.marginTop = (parseFloat(getComputedStyle(n).marginTop) + d).toFixed(1) + 'px';
+      });
+    }
+    align();
+    window.addEventListener('resize', align);
+    window.addEventListener('load', align);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(align);
+    if (window.ResizeObserver) {
+      var ro = new ResizeObserver(align);
+      notes.forEach(function (n) { var t = document.getElementById(n.getAttribute('data-beside')); if (t) ro.observe(t); });
+    }
+  }
   function boot(fn) { try { fn(); } catch (err) { if (window.console) console.error(err); } }
-  [initHero, initHeroCopy, initRegimes, initMassGap, initCorollary, initTrap, initInstab, initCritical, initExamples].forEach(boot);
+  [initHero, initHeroCopy, initRegimes, initMassGap, initCorollary, initTrap, initInstab, initCritical, initExamples, initBeside].forEach(boot);
 })();
 </script>
 </body>
