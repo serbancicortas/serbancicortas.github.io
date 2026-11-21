@@ -45,7 +45,7 @@ Lean verified proof (10/27/2026) of the following AI written [extension principl
 
 * Analysis Seminar, upcoming talk, Princeton University, November 2026
 
-* Analysis Seminar, upcoming talk, Stony Brook University, November 2026
+* Analysis Seminar, Stony Brook University, November 2026
 
 * Analysis Seminar, NYU, October 2026
 
