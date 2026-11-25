@@ -43,7 +43,7 @@ Lean verified proof (10/27/2026) of the following AI written [extension principl
 
 * Joint Online Mathematical Relativity Colloquium (JoMaReC), upcoming talk, March 2027
 
-* Analysis Seminar, upcoming talk, Princeton University, November 2026
+* Analysis Seminar, Princeton University, November 2026
 
 * Analysis Seminar, Stony Brook University, November 2026
 
